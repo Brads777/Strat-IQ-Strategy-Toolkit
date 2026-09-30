@@ -67,6 +67,15 @@ Values below are synthetic.
   },
 
   "industry_layer": {
+    "overview": {                              // written by Competitive Analysis Step 0b
+      "market_size": [ { "value": "…", "unit": "USD bn", "year": 2025, "publisher": "…",
+                         "definition": "…", "matches_scope": true, "evidence": ["E040"] } ],
+      "growth": { "historical_cagr": "…", "period": "2020-2025",
+                  "forecasts": [ { "cagr": "…", "to_year": 2030, "publisher": "…", "published": "2026-03-01" } ] },
+      "timeline": [ { "year": 2023, "event": "…", "why_it_mattered": "…", "evidence": ["E041"] } ],
+      "competition": { "meaningful_players": 12, "top4_share": "…", "hhi": null,
+                       "direction": "consolidating", "evidence": [] }
+    },
     "pestel": [ {
       "id": "P3", "dimension": "E", "finding": "…",
       "velocity": "accelerating",              // slow | accelerating | exponential

@@ -105,7 +105,7 @@ When the orchestrator opens it shows an intro screen and asks how you want to wo
 
 | Mode | What happens |
 |---|---|
-| **A. Walk me through it** | All seven steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list. |
+| **A. Walk me through it** | All seven steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list. |
 | **B. Ask a specific question** | Runs only the steps your question depends on, says which it ran, and answers. |
 | **Resume** | Attach a saved `strategy-ledger-*.json` and continue where you stopped. |
 

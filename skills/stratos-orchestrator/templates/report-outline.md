@@ -1,28 +1,64 @@
 # External Analysis: <Industry> (<Geography>, <Horizon>)
+_Base company: <firm> · Perspective: <incumbent | entrant | investor | neutral> · As of <YYYY-MM-DD>_
 
 ## Executive Summary
-5–7 bullets. Each one answers a key question from the brief.
+5–7 bullets. Each one answers a key question from the brief. Lead with the governing thought.
+
+---
+
+# Part I — External Factors
+
+## Industry Overview
+Plain narrative, 1–2 pages, for a reader new to the industry.
+
+**Recent history.** The significant events of the last 5–10 years:
+
+| Year | Event | Why it mattered |
+|---|---|---|
+
+**Market size.**
+
+| Estimate | Year | Source | Definition | Matches our scope? |
+|---|---|---|---|---|
+
+One sentence on why the estimates differ, and which one this report uses.
+
+**Level of competition.** Number of meaningful players, top-4 share, consolidating or fragmenting,
+and the rivalry score from Porter's Five Forces.
+
+**Growth and projections.** Historical growth ([x]% CAGR, [years]), then forecasts to [horizon year]:
+a range of [a]–[b]% from [named forecasters], labelled as forecasts, with what drives the spread.
+
+**Trends influencing the industry.** The top 3–5 trending influence factors, one or two lines each
+(detail in the section below).
 
 ## Industry Attractiveness
-The verdict (Attractive / Mixed / Unattractive) and its trend (improving / stable / deteriorating). Support it with the Porter's Five Forces intensity summary and the top PESTEL factors. Link: 01, 02.
+Verdict (Attractive / Mixed / Unattractive) and trend (improving / stable / deteriorating), with the
+Porter's Five Forces summary (now → horizon) and the top PESTEL factors.
 
-## Forces Shaping the Next 3–5 Years
-The top 3–5 trending influence factors, each with its direction, magnitude, timing, and effect on the forces. Link: 03.
+## Trending Influence Factors
+Each driver: direction, magnitude, timing, P&L line, and the forces it moves.
 
 ## Competitive Landscape
-The peer set, the benchmark highlights (condensed table), and cross-peer insights. Link: 04.
+Peer set, condensed benchmark table, cross-peer insights.
 
 ## Key Success Factors and Competitor Scorecard
-The KSF table (weight, status), the weighted strength matrix and ranks, sensitivity notes, and white space. Link: 05.
+KSF table (weight, status), weighted strength matrix and ranks, sensitivity notes, white space, and the
+base company's Tier 2 view (strategy-weighted strength and its own critical success factors).
 
-## Strategic Map
-The map image or table, the axes and why they were chosen, clusters, and open positions. Link: 06.
+---
+
+# Part II — Position and Opportunity
+
+## Strategic Maps
+Conventional map and disruption map: axes and why they were chosen, clusters, whitespace, and ranked
+blue-ocean candidates with ERRC (each stamped demand: unpriced · capability: UNVALIDATED).
 
 ## Implications for <Perspective>
-3–5 implications or recommended moves, each tied to a KSF gap or white space.
+3–5 recommended moves, each tied to a KSF gap or whitespace.
 
 ## Watch List
-Leading indicators to monitor, with a threshold that would trigger a re-run for each.
+Leading indicators, each with the threshold that would trigger a re-run.
 
 ## Consistency Check and Confidence
-Results of the cross-stage checks, unresolved conflicts, data gaps, and overall confidence.
+Cross-stage check results, unresolved conflicts, data gaps, overall confidence.

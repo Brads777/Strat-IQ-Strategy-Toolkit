@@ -53,6 +53,7 @@ from wherever the ledger stands.
 
 | The question is about… | Stages to run (in order) |
 |---|---|
+| Market size, growth and projections, industry history, an industry overview | CI (industry profile, Step 0b) |
 | A competitor's financials, news, moves or moat | CI |
 | Macro threats, regulation, economy, social or tech trends | CI (filings scan) → PESTEL |
 | Industry attractiveness, profitability, bargaining power | CI → PESTEL → Five Forces |
@@ -172,17 +173,36 @@ linking every number to the stage that sourced it:
 
 1. **Executive summary** — 5-7 bullets, each answering a key question from the brief. Lead with the
    governing thought: where this industry's profit is going, and where the base company could stand.
-2. **Industry attractiveness** — verdict and trend (now → horizon).
-3. **Trending influence factors** shaping the next 3-5 years.
-4. **Competitive landscape** — benchmark highlights and cross-peer insights.
-5. **KSFs** — Tier 1 scorecard with sensitivity notes and white space; the base company's Tier 2 view.
-6. **Strategic maps** — conventional and disruption, with blue-ocean candidates stamped
+
+**Part I — External factors**
+
+2. **Industry overview** — the opening of the external analysis, written the way the industry
+   section of a business plan is: 1-2 pages of plain narrative with small tables, readable by someone
+   who knows nothing about the industry. From `industry_layer.overview` plus the later stages:
+   - **Recent history** — the significant events of roughly the last 5-10 years as a short dated
+     timeline, each with why it mattered.
+   - **Market size** — value and volume, with the sources side by side and the definition that matches
+     this scope. Say plainly when estimates disagree and why.
+   - **Level of competition** — number of meaningful players, concentration, consolidating or
+     fragmenting, and the rivalry score from Five Forces in one sentence.
+   - **Growth and projections** — historical growth, then the forecast range to the horizon with the
+     forecasters named. Present forecasts as a range, never a single certain number.
+   - **Trends influencing the industry** — the top trending influence factors, one or two lines each;
+     the full analysis follows in section 4.
+3. **Industry attractiveness** — verdict and trend (now → horizon), from Five Forces and PESTEL.
+4. **Trending influence factors** shaping the next 3-5 years, with mechanisms and forces moved.
+5. **Competitive landscape** — benchmark highlights and cross-peer insights.
+6. **KSFs** — Tier 1 scorecard with sensitivity notes and white space; the base company's Tier 2 view.
+
+**Part II — Position and opportunity**
+
+7. **Strategic maps** — conventional and disruption, with blue-ocean candidates stamped
    `demand: "unpriced"` and `capability: "UNVALIDATED"` until the internal analysis runs. An
    unvalidated gap may be a **Mirage Trap**: empty because nobody wants it, or because this firm
    cannot serve it.
-7. **Implications for the perspective** — 3-5 moves, each tied to a KSF gap or whitespace.
-8. **Watch list** — leading indicators, each with the threshold that would trigger a re-run.
-9. **Consistency check and confidence** — cross-stage results, open conflicts, data gaps.
+8. **Implications for the perspective** — 3-5 moves, each tied to a KSF gap or whitespace.
+9. **Watch list** — leading indicators, each with the threshold that would trigger a re-run.
+10. **Consistency check and confidence** — cross-stage results, open conflicts, data gaps.
 
 Then hand over the ledger file and say where to save it.
 
