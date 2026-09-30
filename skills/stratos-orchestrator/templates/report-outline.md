@@ -62,3 +62,15 @@ Leading indicators, each with the threshold that would trigger a re-run.
 
 ## Consistency Check and Confidence
 Cross-stage check results, unresolved conflicts, data gaps, overall confidence.
+
+---
+
+## References
+Numbered list matching the in-text citations: [n] Publisher or filer, *Title*, date, URL.
+
+## Appendices
+- A. Full PESTEL findings table
+- B. Complete competitor financial benchmark (with normalisation notes)
+- C. Full KSF scorecard, weights rationale and sensitivity results
+- D. Vector shortlist, roles and firm coordinates
+- E. Methodology and scoring method (`api` or `public-screen`)

@@ -22,9 +22,9 @@ and everything is saved so you can pick up in a new chat.
 ### How would you like to work?
 
 **A. Walk me through it** — We go step by step. After each step you review the results and can
-revise before moving on. At the end you get a full report: executive summary, an industry overview
-(history, market size, competition, growth outlook, trends), attractiveness verdict, KSF scorecard,
-strategic maps, recommended moves, and a watch list. *(About 30-60 minutes.)*
+revise before moving on. At the end you get **two deliverables**: a detailed, fully cited research
+report (industry overview, attractiveness, trends, competitive landscape, KSF scorecard, strategic
+maps, recommended moves, watch list) and a **15-slide executive PowerPoint** that presents it. *(About 30-60 minutes.)*
 
 **B. I have a specific question** — Ask anything, such as *"What are the KSFs for EVs?"*,
 *"How does [a competitor] compare financially?"* or *"Where is the whitespace?"*. StratOS runs only the steps your

@@ -1,6 +1,6 @@
 ---
 name: stratos-orchestrator
-description: "StratOS External Analysis — the orchestrator for an end-to-end industry and competitor analysis. Walks the user through choosing an industry (EVs are pre-loaded; they can add another), the competitor list, the base company, perspective and depth, then runs the StratOS skills in order: Competitive Analysis (10-Ks, financials, news), PESTEL Analysis, Porter's Five Forces, Trending Influence Factors, KSFs (industry scorecard plus a per-company view), and Strategic Mapping with blue-ocean candidates. Saves every step to one ledger in Project knowledge so work resumes across chats and the base company can be swapped. Use for 'external analysis', 'run StratOS', 'analyze the EV industry', 'industry and competitor analysis', or 'make X the base company'. Not for running one framework alone."
+description: "StratOS External Analysis — the orchestrator for an end-to-end industry and competitor analysis. Walks the user through choosing an industry (EVs are pre-loaded; they can add another), the competitor list, the base company, perspective and depth, then runs the StratOS skills in order: Competitive Analysis (10-Ks, financials, news), PESTEL Analysis, Porter's Five Forces, Trending Influence Factors, KSFs (industry scorecard plus a per-company view), and Strategic Mapping with blue-ocean candidates — then delivers a detailed, cited Deep Research-style report (Word) and a 15-slide executive PowerPoint deck. Saves every step to one ledger in Project knowledge so work resumes across chats and the base company can be swapped. Use for 'external analysis', 'run StratOS', 'analyze the EV industry', 'industry and competitor analysis', or 'make X the base company'. Not for running one framework alone."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -19,6 +19,7 @@ stage's output before moving on, and keeps the ledger. The stage skills must als
 | 5 | Trending Influence Factors | `stratos-driving-forces` | S3 | 3-5 drivers from all sources; forces re-scored at the horizon |
 | 6 | KSFs | `stratos-ksf` | KSF | Tier 1 industry scorecard; Tier 2 per-company view |
 | 7 | Strategic Mapping | `stratos-strategic-mapping` | S4-S6 | Vector shortlist, conventional and disruption maps, blue-ocean candidates |
+| 8 | Executive Deck | `stratos-exec-deck` | Deck | 15-slide executive PowerPoint built from the ledger and the report |
 
 Competitive Analysis runs **first** because competitors' 10-K risk factors and MD&A are primary
 evidence for PESTEL and for the trending influence factors. Stage ids S1-S6 follow the StratOS build
@@ -61,6 +62,7 @@ from wherever the ledger stands.
 | What it takes to win, KSFs, who is strongest | … → KSFs |
 | Positioning, strategic groups, whitespace, blue ocean | … → KSFs → Strategic Mapping |
 | "What if X were the base company?" | the base-company swap (below) |
+| A deck, slides, a presentation | the full chain if the ledger is incomplete → Executive Deck |
 
 4. **Say what you ran.** Start the answer with one line: which stages ran, which came from the ledger,
    and any stage run in quick depth. Then answer the question directly, citing evidence ids.
@@ -168,8 +170,24 @@ classroom chat), stages use their public fallbacks and stamp `method: "public-sc
 
 ## Final report
 
-Write it from `templates/report-outline.md`, synthesising rather than copying the stage outputs, and
-linking every number to the stage that sourced it:
+The run ends with **two deliverables**: a detailed research report and an executive deck.
+
+### 1. The detailed report (Deep Research style)
+
+A long-form research document, not a summary: typically 15-30 pages at full depth. Write it from
+`templates/report-outline.md` as connected narrative — each section explains what the evidence shows,
+why it matters, and how it links to the sections around it — with the stage tables embedded where they
+carry the argument.
+
+- **Numbered citations** in the text ([1], [2] …) for every figure and factual claim, resolving to a
+  **References** list at the end (publisher or filing, title, date, URL). Evidence ids map to reference
+  numbers.
+- **Appendices** hold the full stage tables (all PESTEL findings, the complete benchmark, the full KSF
+  scorecard and sensitivity results, vector shortlist and coordinates) so the body can stay readable.
+- Deliver it as a **Word document** (`.docx`) when file creation is available, otherwise as Markdown in
+  the chat. File name: `external-analysis_<industry>_<base-company>_<YYYY-MM-DD>.docx`.
+
+Sections:
 
 1. **Executive summary** — 5-7 bullets, each answering a key question from the brief. Lead with the
    governing thought: where this industry's profit is going, and where the base company could stand.
@@ -204,6 +222,20 @@ linking every number to the stage that sourced it:
 9. **Watch list** — leading indicators, each with the threshold that would trigger a re-run.
 10. **Consistency check and confidence** — cross-stage results, open conflicts, data gaps.
 
-Then hand over the ledger file and say where to save it.
+11. **References** — the numbered source list.
+12. **Appendices** — full stage tables, methodology, and the scoring method used (`api` or
+    `public-screen`).
+
+### 2. The executive deck
+
+Invoke `stratos-exec-deck` with the ledger and the finished report. It produces a 15-slide PowerPoint
+(12 at quick depth) with action titles, one visual per slide, sources on every data slide, and the
+detail in speaker notes. Every number must match the report.
+
+### 3. Hand-off
+
+Give the user the report, the deck, and the ledger file, and say where to save the ledger (Project
+knowledge in Claude.ai) so the next chat can resume or swap the base company. On a base-company swap,
+offer to regenerate the report sections in Part II and the deck.
 
 Sources and licences: `references/SOURCES.md`.
