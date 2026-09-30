@@ -1,6 +1,6 @@
 ---
 name: stratos-competitor-intel
-description: "StratOS competitor intelligence pass. First builds the industry profile (market size from two or more sources with definitions, historical growth and forecast ranges, a timeline of significant recent events, concentration and level of competition). Then, for every firm in the competitor set, gathers financials (growth, margins, R&D and SG&A intensity, segment mix), mines 10-K / annual-report risk factors and MD&A for macro and industry trends, reads news, hiring, patent and regulatory signals, and rates each firm's moat. Runs first in the StratOS pipeline so PESTEL and driving forces start from audited, primary evidence. Use for competitor analysis, competitive landscape, peer benchmarking, comps, 'who competes with X', or competitor financials and news."
+description: "StratOS competitor intelligence pass. Starting from the Industry Overview's market structure, for every firm in the competitor set gathers financials (growth, margins, R&D and SG&A intensity, segment mix), mines 10-K / annual-report risk factors and MD&A for macro and industry trends, reads news, hiring, patent and regulatory signals, and rates each firm's moat. Runs first in the StratOS pipeline so PESTEL and driving forces start from audited, primary evidence. Use for competitor analysis, competitive landscape, peer benchmarking, comps, 'who competes with X', or competitor financials and news."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -30,32 +30,11 @@ ones for every competitor. Examples:
 
 For an industry not listed, pick what its investors and operators benchmark on, and say why.
 
-## Step 0b — Industry profile (feeds the report's Industry Overview)
-
-Before the firm-by-firm work, gather the industry-level facts. Write them to `industry_layer.overview`.
-
-1. **Market size** — in value (revenue) and, where the industry reports it, volume (units). For every
-   figure record the year, the publisher, and **how the source defines the market**. Market-size
-   estimates for the same industry often differ several-fold because of definitions (units vs
-   revenue, which products count, retail vs wholesale value, geography). Show at least two sources
-   side by side, say which definition matches the scope's boundary, and explain the gap. Never quote
-   one number as "the" market size.
-2. **Growth and projections** — the historical growth rate (e.g. 5-year CAGR, from actual data) and
-   forecasts to the horizon **as a range from named forecasters**, each with its publisher and date.
-   Label forecasts `[Forecast]`; note the spread and what drives the difference (usually adoption or
-   price assumptions).
-3. **Recent history** — a timeline of 6-12 significant events over roughly the last 5-10 years:
-   entries and exits, major M&A, technology breakthroughs, regulatory changes, price wars, supply
-   shocks. One line each, dated, with an evidence id, and one clause on why it mattered.
-4. **Level of competition** — the number of meaningful players, concentration (top-4 or top-5 share,
-   HHI if computable), how stable shares have been, and whether the industry is consolidating or
-   fragmenting. Cite share data; if shares are unavailable, say so.
-5. **Industry economics in one line** — typical gross and operating margin range across the peer set
-   (filled from Step 1).
-
-Where good industry data costs money (paid research reports), use what is public — press summaries of
-those reports, trade associations, government statistics, company filings — and cite the summary as
-the source.
+**Start from the Industry Overview.** Market size, segments, the value chain, history, the leaders
+and the life-cycle stage come from `stratos-industry-overview` (`industry_layer.overview`), which runs
+before this skill. Use its segments and leaders to frame the peer set, and after Step 1 write the peer
+set's margin range back to `overview.economics` so the overview's economics line is filled from real
+financials. If the overview has not run, say so and proceed.
 
 ## Step 1 — Financials for each competitor
 
@@ -168,12 +147,6 @@ research and label every figure as an estimate.
 
 **Defining metrics:** […]
 
-### Industry profile
-| Market size | Year | Source | Definition | Matches scope? |
-|---|---|---|---|---|
-**Growth:** historical [x]% CAGR ([years], source) · forecast [a]-[b]% to [year] [Forecast] ([publishers])
-**Timeline:** [year] — [event] — why it mattered (E0xx) …
-**Competition:** [n] meaningful players · top-4 share [x]% · consolidating / fragmenting
 
 | Firm | Ownership | FY | Revenue | Growth | Gross margin | R&D % | Key segment | Moat (N/S/Sc/I) | Evidence |
 |---|---|---|---|---|---|---|---|---|---|

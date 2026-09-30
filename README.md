@@ -4,7 +4,7 @@
 does — from annual reports to blue-ocean whitespace — with every claim traced to evidence.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-![Skills: 8](https://img.shields.io/badge/skills-8-brightgreen)
+![Skills: 9](https://img.shields.io/badge/skills-9-brightgreen)
 ![Works in: Claude.ai · Claude Code · Cowork](https://img.shields.io/badge/works%20in-Claude.ai%20%C2%B7%20Claude%20Code%20%C2%B7%20Cowork-orange)
 
 Built by **Brad Scheller** for MGT4850 Strategic Management (Northeastern University, Fall 2026) and
@@ -19,7 +19,7 @@ external analysis:
 
 ```mermaid
 flowchart LR
-    A[Intake<br/>industry · competitors<br/>base company] --> B[Competitive Analysis<br/>10-Ks · financials · news]
+    A[Intake<br/>industry · competitors<br/>base company] --> IO[Industry Overview<br/>size · segments · history ·<br/>life cycle] --> B[Competitive Analysis<br/>10-Ks · financials · news]
     B --> C[PESTEL Analysis<br/>macro → P&L line]
     C --> D[Porter's Five Forces<br/>scored 1–5 · profit pool]
     D --> E[Trending Influence Factors<br/>3–5 drivers · forces re-scored]
@@ -51,6 +51,7 @@ base rendered five ways**, so they cannot contradict each other:
 | Display name | Skill ID | What it produces |
 |---|---|---|
 | **External Analysis** | [`stratos-orchestrator`](skills/stratos-orchestrator/SKILL.md) | Intro screen, guided or question mode, intake, chain checks, ledger, final report |
+| **Industry Overview** | [`stratos-industry-overview`](skills/stratos-industry-overview/SKILL.md) | Ten-component, business-plan-style introduction: scope, market size, growth, segments, economics, history, players, life-cycle stage, trends, roadmap |
 | **Competitive Analysis** | [`stratos-competitor-intel`](skills/stratos-competitor-intel/SKILL.md) | Financial benchmark (3 yrs + LTM), 10-K seeds, hiring/patent/news signals, moats |
 | **PESTEL Analysis** | [`stratos-pestel`](skills/stratos-pestel/SKILL.md) | 15–25 findings with impact, certainty, velocity, P&L line, transmission mechanism |
 | **Porter's Five Forces** | [`stratos-five-forces`](skills/stratos-five-forces/SKILL.md) | Forces scored 1–5 on evidence, attractiveness, profit-pool close |
@@ -73,8 +74,8 @@ The short version:
 1. In **Settings → Capabilities**, turn on **Code execution and file creation** (needed for skills).
    On a university or company plan, an admin may need to enable skills for you.
 2. Download **`stratos-all-skills.zip`** from the **[latest release](../../releases/latest)** and unzip
-   it — inside are eight zips, one per skill (leave those zipped).
-3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all eight zips.
+   it — inside are nine zips, one per skill (leave those zipped).
+3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all nine zips.
    *Instructors:* if your admin provisions the skills org-wide, students skip steps 1–3.
 4. Create a **Project** (e.g. "StratOS — EV industry") and add
    [`project-data/industries.json`](project-data/industries.json) to its **Project knowledge**.
@@ -106,7 +107,7 @@ When the orchestrator opens it shows an intro screen and asks how you want to wo
 
 | Mode | What happens |
 |---|---|
-| **A. Walk me through it** | All seven steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list — delivered as a detailed, cited Word report plus a 15-slide executive PowerPoint. |
+| **A. Walk me through it** | All eight steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list — delivered as a detailed, cited Word report plus a 15-slide executive PowerPoint. |
 | **B. Ask a specific question** | Runs only the steps your question depends on, says which it ran, and answers. |
 | **Resume** | Attach a saved `strategy-ledger-*.json` and continue where you stopped. |
 

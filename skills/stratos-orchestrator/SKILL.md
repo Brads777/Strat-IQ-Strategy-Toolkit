@@ -1,6 +1,6 @@
 ---
 name: stratos-orchestrator
-description: "StratOS External Analysis — the orchestrator for an end-to-end industry and competitor analysis. Walks the user through choosing an industry (EVs are pre-loaded; they can add another), the competitor list, the base company, perspective and depth, then runs the StratOS skills in order: Competitive Analysis (10-Ks, financials, news), PESTEL Analysis, Porter's Five Forces, Trending Influence Factors, KSFs (industry scorecard plus a per-company view), and Strategic Mapping with blue-ocean candidates — then delivers a detailed, cited Deep Research-style report (Word) and a 15-slide executive PowerPoint deck. Saves every step to one ledger in Project knowledge so work resumes across chats and the base company can be swapped. Use for 'external analysis', 'run StratOS', 'analyze the EV industry', 'industry and competitor analysis', or 'make X the base company'. Not for running one framework alone."
+description: "StratOS External Analysis — the orchestrator for an end-to-end industry and competitor analysis. Walks the user through choosing an industry (EVs are pre-loaded; they can add another), the competitor list, the base company, perspective and depth, then runs the StratOS skills in order: Industry Overview (size, growth, segments, economics, history, players, life-cycle stage), Competitive Analysis (10-Ks, financials, news), PESTEL Analysis, Porter's Five Forces, Trending Influence Factors, KSFs (industry scorecard plus a per-company view), and Strategic Mapping with blue-ocean candidates — then delivers a detailed, cited Deep Research-style report (Word) and a 15-slide executive PowerPoint deck. Saves every step to one ledger in Project knowledge so work resumes across chats and the base company can be swapped. Use for 'external analysis', 'run StratOS', 'analyze the EV industry', 'industry and competitor analysis', or 'make X the base company'. Not for running one framework alone."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -13,17 +13,21 @@ stage's output before moving on, and keeps the ledger. The stage skills must als
 | Order | Display name | Skill ID | Stage | Produces |
 |---|---|---|---|---|
 | 1 | External Analysis | this skill | Intake | Industry, competitors, base company, perspective, depth |
-| 2 | Competitive Analysis | `stratos-competitor-intel` | CI | Financials, 10-K risk factors and MD&A trends, news and signals, candidate KSFs |
-| 3 | PESTEL Analysis | `stratos-pestel` | S1 | 15-25 macro findings, each tied to a P&L line |
-| 4 | Porter's Five Forces | `stratos-five-forces` | S2 | Forces scored 1-5 now, attractiveness, profit pool |
-| 5 | Trending Influence Factors | `stratos-driving-forces` | S3 | 3-5 drivers from all sources; forces re-scored at the horizon |
-| 6 | KSFs | `stratos-ksf` | KSF | Tier 1 industry scorecard; Tier 2 per-company view |
-| 7 | Strategic Mapping | `stratos-strategic-mapping` | S4-S6 | Vector shortlist, conventional and disruption maps, blue-ocean candidates |
-| 8 | Executive Deck | `stratos-exec-deck` | Deck | 15-slide executive PowerPoint built from the ledger and the report |
+| 2 | Industry Overview | `stratos-industry-overview` | IO | Definition, market size, growth, segments, economics, history, players, life-cycle stage (profile mode) |
+| 3 | Competitive Analysis | `stratos-competitor-intel` | CI | Financials, 10-K risk factors and MD&A trends, news and signals, candidate KSFs |
+| 4 | PESTEL Analysis | `stratos-pestel` | S1 | 15-25 macro findings, each tied to a P&L line |
+| 5 | Porter's Five Forces | `stratos-five-forces` | S2 | Forces scored 1-5 now, attractiveness, profit pool |
+| 6 | Trending Influence Factors | `stratos-driving-forces` | S3 | 3-5 drivers from all sources; forces re-scored at the horizon |
+| 7 | KSFs | `stratos-ksf` | KSF | Tier 1 industry scorecard; Tier 2 per-company view |
+| 8 | Strategic Mapping | `stratos-strategic-mapping` | S4-S6 | Vector shortlist, conventional and disruption maps, blue-ocean candidates |
+| 9 | Executive Deck | `stratos-exec-deck` | Deck | 15-slide executive PowerPoint built from the ledger and the report |
 
-Competitive Analysis runs **first** because competitors' 10-K risk factors and MD&A are primary
-evidence for PESTEL and for the trending influence factors. Stage ids S1-S6 follow the StratOS build
-plan; CI and KSF are named rather than numbered so the plan's cross-references stay valid.
+Industry Overview runs first to set the scene — what the industry is, how big, how it makes money, who
+plays. Competitive Analysis follows because competitors' 10-K risk factors and MD&A are primary
+evidence for PESTEL and for the trending influence factors. At report time the Industry Overview runs
+again in **finalise mode** to add the trends, the rivalry score and the roadmap. Stage ids S1-S6
+follow the StratOS build plan; IO, CI and KSF are named rather than numbered so the plan's
+cross-references stay valid.
 
 If a stage skill does not load, run that stage with the standard framework, put a note at the top of
 its output saying it ran without its skill, and continue.
@@ -54,7 +58,7 @@ from wherever the ledger stands.
 
 | The question is about… | Stages to run (in order) |
 |---|---|
-| Market size, growth and projections, industry history, an industry overview | CI (industry profile, Step 0b) |
+| An industry overview, market size, growth and projections, segments, history, life-cycle stage | IO (profile mode) |
 | A competitor's financials, news, moves or moat | CI |
 | Macro threats, regulation, economy, social or tech trends | CI (filings scan) → PESTEL |
 | Industry attractiveness, profitability, bargaining power | CI → PESTEL → Five Forces |
@@ -143,7 +147,7 @@ failure listed in `warnings` and shown at the checkpoint.
 
 The ledger has two layers:
 
-- **Industry layer** — Competitive Analysis evidence, PESTEL, Five Forces, trending influence
+- **Industry layer** — Industry Overview, Competitive Analysis evidence, PESTEL, Five Forces, trending influence
   factors, Tier 1 KSFs and scorecard, vector shortlist. The same whichever firm is the base.
 - **Company layer** — KSF Tier 2 (the firm's strategy-weighted view and its own critical success
   factors), and the maps, whitespace, blue-ocean candidates and ERRC read from that firm's side.
@@ -196,17 +200,12 @@ Sections:
 
 2. **Industry overview** — the opening of the external analysis, written the way the industry
    section of a business plan is: 1-2 pages of plain narrative with small tables, readable by someone
-   who knows nothing about the industry. From `industry_layer.overview` plus the later stages:
-   - **Recent history** — the significant events of roughly the last 5-10 years as a short dated
-     timeline, each with why it mattered.
-   - **Market size** — value and volume, with the sources side by side and the definition that matches
-     this scope. Say plainly when estimates disagree and why.
-   - **Level of competition** — number of meaningful players, concentration, consolidating or
-     fragmenting, and the rivalry score from Five Forces in one sentence.
-   - **Growth and projections** — historical growth, then the forecast range to the horizon with the
-     forecasters named. Present forecasts as a range, never a single certain number.
-   - **Trends influencing the industry** — the top trending influence factors, one or two lines each;
-     the full analysis follows in section 4.
+   who knows nothing about the industry. Run `stratos-industry-overview` in **finalise mode** and use
+   its ten components in order: definition and scope · market size · growth and projections ·
+   segments and customers · industry economics and value chain · recent history · key players and
+   level of competition (with the Five Forces rivalry score) · life-cycle stage · trends influencing
+   the industry (the Trending Influence Factors, one or two lines each; the full analysis follows in
+   section 4) · what this analysis covers.
 3. **Industry attractiveness** — verdict and trend (now → horizon), from Five Forces and PESTEL.
 4. **Trending influence factors** shaping the next 3-5 years, with mechanisms and forces moved.
 5. **Competitive landscape** — benchmark highlights and cross-peer insights.

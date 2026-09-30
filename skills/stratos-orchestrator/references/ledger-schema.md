@@ -67,14 +67,23 @@ Values below are synthetic.
   },
 
   "industry_layer": {
-    "overview": {                              // written by Competitive Analysis Step 0b
+    "overview": {                              // written by stratos-industry-overview
+      "mode": "profile",                       // profile | final
+      "scope": { "definition": "…", "in": [], "out": [], "codes": "NAICS 336110" },
       "market_size": [ { "value": "…", "unit": "USD bn", "year": 2025, "publisher": "…",
                          "definition": "…", "matches_scope": true, "evidence": ["E040"] } ],
       "growth": { "historical_cagr": "…", "period": "2020-2025",
                   "forecasts": [ { "cagr": "…", "to_year": 2030, "publisher": "…", "published": "2026-03-01" } ] },
+      "segments": [ { "name": "…", "share": "…", "growth": "…", "buyers": "…", "evidence": [] } ],
+      "economics": { "value_chain": "…", "margin_pool": "…", "gross_margin_range": "…",
+                     "capital_intensity": "high", "evidence": [] },   // margin range filled by CI
       "timeline": [ { "year": 2023, "event": "…", "why_it_mattered": "…", "evidence": ["E041"] } ],
-      "competition": { "meaningful_players": 12, "top4_share": "…", "hhi": null,
-                       "direction": "consolidating", "evidence": [] }
+      "players": { "leaders": [ { "name": "…", "share": "…" } ], "meaningful_players": 12,
+                   "top4_share": "…", "hhi": null, "direction": "consolidating",
+                   "rivalry_score": null, "evidence": [] },          // rivalry added in finalise mode
+      "lifecycle": { "stage": "shakeout", "by_segment": {}, "evidence": [], "implication": "…" },
+      "trends": [ { "text": "…", "driver_id": null, "preliminary": true } ],
+      "roadmap": "…"
     },
     "pestel": [ {
       "id": "P3", "dimension": "E", "finding": "…",

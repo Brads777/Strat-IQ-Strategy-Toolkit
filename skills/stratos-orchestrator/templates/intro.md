@@ -6,18 +6,19 @@
 
 **Understand an industry the way a strategy consultant does — then find where a company could win.**
 
-StratOS works through seven connected steps. Each step builds on the evidence from the one before,
+StratOS works through eight connected steps. Each step builds on the evidence from the one before,
 and everything is saved so you can pick up in a new chat.
 
 | Step | What you get |
 |---|---|
 | **1. Set up** | Choose the industry, the competitors, and the company you're analysing |
-| **2. Competitive Analysis** | The industry's size, growth outlook and recent history — then each competitor's financials, what their annual reports say they fear, and recent moves |
-| **3. PESTEL Analysis** | The macro forces — political, economic, social, tech, environmental, legal — and how each hits profit |
-| **4. Porter's Five Forces** | How hard it is to make money in this industry, and who captures the profit |
-| **5. Trending Influence Factors** | The 3-5 changes that will reshape the industry over the next few years |
-| **6. KSFs** | What it takes to win — and a scorecard showing how every competitor measures up |
-| **7. Strategic Mapping** | Where competitors cluster today, and the empty space where a new strategy could win |
+| **2. Industry Overview** | What the industry is, how big it is and how fast it's growing, its segments, how it makes money, its recent history, who leads, and where it is in its life cycle |
+| **3. Competitive Analysis** | Each competitor's financials, what their annual reports say they fear, and recent moves |
+| **4. PESTEL Analysis** | The macro forces — political, economic, social, tech, environmental, legal — and how each hits profit |
+| **5. Porter's Five Forces** | How hard it is to make money in this industry, and who captures the profit |
+| **6. Trending Influence Factors** | The 3-5 changes that will reshape the industry over the next few years |
+| **7. KSFs** | What it takes to win — and a scorecard showing how every competitor measures up |
+| **8. Strategic Mapping** | Where competitors cluster today, and the empty space where a new strategy could win |
 
 ### How would you like to work?
 

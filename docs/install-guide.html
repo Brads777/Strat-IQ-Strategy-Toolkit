@@ -43,7 +43,7 @@
 <body>
 <main>
   <h1>StratOS External Analysis — Install &amp; Use Guide</h1>
-  <p class="sub">Eight Claude skills that run a full industry and competitor analysis. © 2026 Brad Scheller · Apache-2.0 ·
+  <p class="sub">Nine Claude skills that run a full industry and competitor analysis. © 2026 Brad Scheller · Apache-2.0 ·
     <a href="https://github.com/Brads777/stratos-external-analysis">GitHub repo</a></p>
 
   <nav>
@@ -64,10 +64,10 @@
       and switch on <strong>Code execution and file creation</strong>. Skills need it.</li>
     <li><strong>Download the skills.</strong> Go to the
       <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest">latest release</a> and download
-      <code>stratos-all-skills.zip</code>. Unzip it — inside are <strong>eight</strong> smaller zips, one per skill.
-      Do not unzip those eight.</li>
-    <li><strong>Upload the eight skills.</strong> In <a href="https://claude.ai/settings/capabilities">Settings → Capabilities</a>, find
-      <strong>Skills</strong>, choose <strong>Upload skill</strong>, and upload each of the eight zips. Make sure all eight show as
+      <code>stratos-all-skills.zip</code>. Unzip it — inside are <strong>nine</strong> smaller zips, one per skill.
+      Do not unzip those nine.</li>
+    <li><strong>Upload the nine skills.</strong> In <a href="https://claude.ai/settings/capabilities">Settings → Capabilities</a>, find
+      <strong>Skills</strong>, choose <strong>Upload skill</strong>, and upload each of the nine zips. Make sure all nine show as
       enabled.</li>
     <li><strong>Create a Project.</strong> In the left sidebar choose <a href="https://claude.ai/projects">Projects</a> →
       <strong>New project</strong>, and name it, for example, <em>StratOS — EV industry</em>.</li>
@@ -83,7 +83,7 @@
   <ol class="steps">
     <li><strong>Ask your Claude admin</strong> (for NEU, the team that manages the Canvas-linked Claude.ai) whether members can upload
       custom skills, and whether web search is enabled — Competitive Analysis needs it for financials and news.</li>
-    <li><strong>Provision org-wide if you can.</strong> An admin can add the eight skills for everyone, so students skip steps 1–3 above.
+    <li><strong>Provision org-wide if you can.</strong> An admin can add the nine skills for everyone, so students skip steps 1–3 above.
       Use the per-skill zips from the <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest">latest release</a>.</li>
     <li><strong>Set the class list.</strong> Edit <code>project-data/industries.json</code>: keep your course industry at
       <code>"locked": true</code> so students analyse exactly the competitors you choose.</li>
@@ -122,7 +122,7 @@ openbb-mcp --transport streamable-http --default-categories admin</pre></li>
   <h3>The intro screen offers three choices</h3>
   <div class="wrap"><table>
     <tr><th>Choice</th><th>What happens</th></tr>
-    <tr><td><strong>A. Walk me through it</strong></td><td>All seven steps in order. After each step you see the results and choose continue,
+    <tr><td><strong>A. Walk me through it</strong></td><td>All eight steps in order. After each step you see the results and choose continue,
       revise, or stop. At the end you get a detailed, cited research report (Word) and a 15-slide executive PowerPoint. The report covers the industry overview, attractiveness, trends, competitive landscape,
       KSF scorecard, both strategic maps, recommended moves, a watch list, and a confidence check.</td></tr>
     <tr><td><strong>B. Ask a specific question</strong></td><td>Only the steps your question needs are run. The answer starts by saying which
@@ -130,9 +130,10 @@ openbb-mcp --transport streamable-http --default-categories admin</pre></li>
     <tr><td><strong>Resume</strong></td><td>Attach your saved ledger file and continue where you stopped.</td></tr>
   </table></div>
 
-  <h3>The seven steps</h3>
+  <h3>The eight steps</h3>
   <ol class="steps">
     <li><strong>Set up</strong> — industry, competitors, base company, perspective, quick or full depth.</li>
+    <li><strong>Industry Overview</strong> — what the industry is, its size and growth, segments, economics, history, leaders, and life-cycle stage.</li>
     <li><strong>Competitive Analysis</strong> — financials, annual-report risk factors, news and hiring signals, moats.</li>
     <li><strong>PESTEL Analysis</strong> — macro factors, each tied to a line of the P&amp;L.</li>
     <li><strong>Porter's Five Forces</strong> — how hard it is to make money here, and who captures the profit.</li>
@@ -143,7 +144,7 @@ openbb-mcp --transport streamable-http --default-categories admin</pre></li>
 
   <h3>Save your work at every checkpoint</h3>
   <p>StratOS keeps everything in one <em>ledger</em> file (<code>strategy-ledger-….json</code>). At each checkpoint, download it and
-    replace the copy in your Project's knowledge. A full seven-step run is long — if a chat gets too long or you hit a usage limit, open a
+    replace the copy in your Project's knowledge. A full eight-step run is long — if a chat gets too long or you hit a usage limit, open a
     <strong>new chat in the same Project</strong> and type <code>resume</code>.</p>
 
   <h3>Try these</h3>
@@ -158,7 +159,7 @@ openbb-mcp --transport streamable-http --default-categories admin</pre></li>
     <tr><th>Problem</th><th>Fix</th></tr>
     <tr><td>No <em>Skills</em> section or no upload button</td><td>Turn on <em>Code execution and file creation</em> first. If it still
       is not there, your organisation controls skills — ask your instructor or admin.</td></tr>
-    <tr><td>"Run StratOS External Analysis" does nothing special</td><td>Check all eight skills are uploaded and enabled, and that you
+    <tr><td>"Run StratOS External Analysis" does nothing special</td><td>Check all nine skills are uploaded and enabled, and that you
       are chatting inside the Project.</td></tr>
     <tr><td>It asks for the industry every time</td><td>Add <code>industries.json</code> to the Project knowledge (step 5).</td></tr>
     <tr><td>Financial figures marked <code>[E]</code> or <code>[unverified]</code></td><td>That is deliberate: private companies publish no

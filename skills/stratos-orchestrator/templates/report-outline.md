@@ -9,12 +9,10 @@ _Base company: <firm> · Perspective: <incumbent | entrant | investor | neutral>
 # Part I — External Factors
 
 ## Industry Overview
-Plain narrative, 1–2 pages, for a reader new to the industry.
+Plain narrative, 1–2 pages, for a reader new to the industry — produced by `stratos-industry-overview`
+in finalise mode.
 
-**Recent history.** The significant events of the last 5–10 years:
-
-| Year | Event | Why it mattered |
-|---|---|---|
+**Definition and scope.** What the industry is, and what is in and out.
 
 **Market size.**
 
@@ -23,14 +21,31 @@ Plain narrative, 1–2 pages, for a reader new to the industry.
 
 One sentence on why the estimates differ, and which one this report uses.
 
-**Level of competition.** Number of meaningful players, top-4 share, consolidating or fragmenting,
-and the rivalry score from Porter's Five Forces.
-
 **Growth and projections.** Historical growth ([x]% CAGR, [years]), then forecasts to [horizon year]:
 a range of [a]–[b]% from [named forecasters], labelled as forecasts, with what drives the spread.
 
+**Segments and customers.**
+
+| Segment | Size or share | Growth | Who buys, and why |
+|---|---|---|---|
+
+**Industry economics.** How money is made, where margin sits along the value chain, typical margins,
+capital intensity.
+
+**Recent history.** The significant events of the last 5–10 years:
+
+| Year | Event | Why it mattered |
+|---|---|---|
+
+**Key players and level of competition.** Leaders and shares, top-4 share, consolidating or
+fragmenting, and the rivalry score from Porter's Five Forces.
+
+**Life-cycle stage.** [Stage], the evidence, and what it implies for strategy.
+
 **Trends influencing the industry.** The top 3–5 trending influence factors, one or two lines each
 (detail in the section below).
+
+**What this analysis covers.** The key questions and the order in which the report answers them.
 
 ## Industry Attractiveness
 Verdict (Attractive / Mixed / Unattractive) and trend (improving / stable / deteriorating), with the

@@ -32,7 +32,7 @@ cost as prices fall", not "Competitive Landscape".
 |---|---|---|---|
 | 1 | Title — industry, base company, perspective, date | — | scope |
 | 2 | **Executive summary** — the governing thought plus 3-4 supporting points | Text, numbered | report exec summary |
-| 3 | **Industry overview** — size, growth outlook, competition in one view | Market-size range bar (each source, labelled) + growth callouts | `overview` |
+| 3 | **Industry overview** — size, growth, segments, life-cycle stage in one view | Market-size range bar (each source, labelled) + segment split + growth and stage callouts | `overview` |
 | 4 | **How we got here** — recent history | Horizontal timeline, 6-8 events | `overview.timeline` |
 | 5 | **Macro forces that hit the P&L** | Heat grid: PESTEL dimension × impact, each cell naming its P&L line | `pestel` |
 | 6 | **How attractive the industry is — now and at the horizon** | Paired bar chart, five forces now vs horizon; attractiveness score | `forces`, `attractiveness` |
