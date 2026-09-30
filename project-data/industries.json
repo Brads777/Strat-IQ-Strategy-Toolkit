@@ -1,0 +1,23 @@
+{
+  "_about": "StratOS industry registry. Read by stratos-orchestrator Steps 1-2. Upload to Claude.ai Project knowledge. Users may append industries; entries with locked=true keep a fixed class competitor list.",
+  "version": 1,
+  "updated": "2026-09-30",
+  "industries": [
+    {
+      "id": "ev",
+      "name": "Electric vehicles (passenger EVs)",
+      "boundary": "Battery-electric and plug-in hybrid passenger vehicles, including their batteries and vehicle software. Excludes commercial trucks and two-wheelers. Substitutes to weigh: combustion and hybrid vehicles, ride-hailing and robotaxi services, public transit.",
+      "geography": "Global",
+      "horizon": "2026-2029",
+      "scenario": "Academic",
+      "course": "MGT4850 Fall 2026",
+      "locked": true,
+      "competitors": [
+        { "name": "BYD", "ownership": "public", "ticker": "1211.HK" },
+        { "name": "Stellantis", "ownership": "public", "ticker": "STLA" },
+        { "name": "Xiaomi", "ownership": "public", "ticker": "1810.HK" }
+      ],
+      "_todo": "Brad to confirm the full class list. From the Week 3 image only BYD, Stellantis and Xiaomi are EV makers; Alibaba, Mars, Mondelez, Nubank and Saudi Aramco were not added."
+    }
+  ]
+}
