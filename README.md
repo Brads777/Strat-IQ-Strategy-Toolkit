@@ -64,7 +64,7 @@ Each stage skill also works on its own — ask for "a PESTEL of the EV industry"
 
 ## Install
 
-A full step-by-step guide with links is in **[docs/install-guide.html](docs/install-guide.html)**.
+A full step-by-step guide with links is in **[the install guide](https://brads777.github.io/stratos-external-analysis/install-guide.html)** (source: [docs/install-guide.html](docs/install-guide.html)).
 The short version:
 
 ### Claude.ai (web — no install; what MGT4850 students use)
