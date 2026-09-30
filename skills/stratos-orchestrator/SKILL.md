@@ -122,7 +122,7 @@ date, and resume from the next stage.
   a news item). The original rule required a PESTEL finding; drivers now come from all data sources.
 - **R2** — every force score cites at least one evidence id.
 - **R3** — drivers are a filtered subset, typically 3-5. If more than ~40% of candidates were
-  promoted, warn that the filter may not have run (warn, do not refuse).
+  promoted, flag that the filter may not have run — a warning, not a blocking error.
 - **R4** — every KSF traces to a force or a driver.
 - **R5** — map axes come from the KSFs and the vector shortlist, never free choice.
 - **R6** — every claim carries an evidence id or `[unverified]`; the competitor benchmark has no
