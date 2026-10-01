@@ -19,6 +19,11 @@ copyrightable; attribution is given anyway.
 
 Driving-force categories follow the standard strategy-textbook treatment of industry driving forces.
 
+The GLO-BUS Coach's rules of thumb marked *[tutorial rule of thumb]* summarise ideas (not text) from a
+public tutorial, "The ULTIMATE Glo Bus Business Strategy Game (BSG) Guide" (MegaMilez, YouTube). They
+are checked against the course's GLO-BUS overview. GLO-BUS is a product of GLO-BUS Software, Inc.; this
+toolkit is not affiliated with it.
+
 ## Data sources referenced (not bundled)
 
 - SEC EDGAR — public, free

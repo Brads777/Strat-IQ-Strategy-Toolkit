@@ -31,6 +31,10 @@ stage's output before moving on, and keeps the ledger. The stage skills must als
 | Decision Matrix | `stratos-decision-matrix` | Exhibits N (pros/cons) and M (weighted matrix, `decision_matrix.py`) |
 | Segment Value | `stratos-segment-value` | Exhibit O — segment CLV × customers (`segment_value.py`), when data exists |
 
+**Simulation tool:** `stratos-globus-coach` (GLO-BUS Coach) — for the GLO-BUS simulation (scenario
+`Simulation`). Questions about GLO-BUS decisions, rounds or scores go straight to it; it can use this
+analysis's Five Forces and KSFs when they have been run on the GLO-BUS industry.
+
 Industry Overview runs first to set the scene — what the industry is, how big, how it makes money, who
 plays. Competitive Analysis follows because competitors' 10-K risk factors and MD&A are primary
 evidence for PESTEL and for the trending influence factors. At report time the Industry Overview runs

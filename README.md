@@ -4,7 +4,7 @@
 does — from annual reports to blue-ocean whitespace — with every claim traced to evidence.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-![Skills: 13](https://img.shields.io/badge/skills-13-brightgreen)
+![Skills: 14](https://img.shields.io/badge/skills-14-brightgreen)
 ![Works in: Claude.ai · Claude Code · Cowork](https://img.shields.io/badge/works%20in-Claude.ai%20%C2%B7%20Claude%20Code%20%C2%B7%20Cowork-orange)
 
 Built by **Brad Scheller** for MGT4850 Strategic Management (Northeastern University, Fall 2026) and
@@ -63,6 +63,7 @@ base rendered five ways**, so they cannot contradict each other:
 | **Decision Criteria** | [`stratos-decision-criteria`](skills/stratos-decision-criteria/SKILL.md) | Exhibit L — criteria tied to the case goals, weighted 1–5 |
 | **Decision Matrix** | [`stratos-decision-matrix`](skills/stratos-decision-matrix/SKILL.md) | Exhibits N and M — pros/cons, then weighted scoring ([`decision_matrix.py`](skills/stratos-decision-matrix/scripts/decision_matrix.py)) with ties and sensitivity |
 | **Segment Value** | [`stratos-segment-value`](skills/stratos-segment-value/SKILL.md) | Exhibit O — segment CLV × customers ([`segment_value.py`](skills/stratos-segment-value/scripts/segment_value.py)) |
+| **GLO-BUS Coach** | [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Decision support for the GLO-BUS simulation: strategy anchor, diagnosis against the five KPIs (EPS, ROE, stock price, credit rating, image rating), 3–5 testable moves with guardrails |
 
 Each stage skill also works on its own — ask for "a PESTEL of the EV industry" and only that skill runs.
 
@@ -78,8 +79,8 @@ The short version:
 1. In **Settings → Capabilities**, turn on **Code execution and file creation** (needed for skills).
    On a university or company plan, an admin may need to enable skills for you.
 2. Download **`stratos-all-skills.zip`** from the **[latest release](../../releases/latest)** and unzip
-   it — inside are thirteen zips, one per skill (leave those zipped).
-3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all thirteen zips.
+   it — inside are fourteen zips, one per skill (leave those zipped).
+3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all fourteen zips.
    *Instructors:* if your admin provisions the skills org-wide, students skip steps 1–3.
 4. Create a **Project** (e.g. "StratOS — EV industry") and add
    [`project-data/industries.json`](project-data/industries.json) to its **Project knowledge**.
