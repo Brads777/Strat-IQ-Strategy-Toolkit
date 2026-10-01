@@ -86,6 +86,11 @@ axis from evidence (the vector's spectrum defines 0 and 1). Then:
    question), it is too hard or costly to reach (a capability or cost question), or incumbents are
    structurally blocked (a business-model conflict — the best kind).
 
+**Top-3 mode** (used for the case-memo Exhibit F, or when asked for "alternatives"): build **three**
+disruption maps from three different axis pairs. Each pair must pass the pairing rules on its own, and
+no two maps may share both axes. Rank them by the value of their whitespace, chart each one, and say in
+one line what each reveals that the others do not. Store them as a list in `s6_disruption`.
+
 ## Blue-ocean candidates (company layer)
 
 For the 1-3 best whitespace coordinates, **from the base company's side**:

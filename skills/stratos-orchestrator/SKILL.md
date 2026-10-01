@@ -22,6 +22,15 @@ stage's output before moving on, and keeps the ledger. The stage skills must als
 | 8 | Strategic Mapping | `stratos-strategic-mapping` | S4-S6 | Vector shortlist, conventional and disruption maps, blue-ocean candidates |
 | 9 | Executive Deck | `stratos-exec-deck` | Deck | 15-slide executive PowerPoint built from the ledger and the report |
 
+**Case-memo tools** (mode C — the course's Case Analysis Memo):
+
+| Display name | Skill ID | Produces |
+|---|---|---|
+| Case Memo Exhibits | `stratos-case-exhibits` | The template's Exhibits C-G and L-O in order, Impact Summaries blank |
+| Decision Criteria | `stratos-decision-criteria` | Exhibit L — goal-linked criteria, weights 1-5 |
+| Decision Matrix | `stratos-decision-matrix` | Exhibits N (pros/cons) and M (weighted matrix, `decision_matrix.py`) |
+| Segment Value | `stratos-segment-value` | Exhibit O — segment CLV × customers (`segment_value.py`), when data exists |
+
 Industry Overview runs first to set the scene — what the industry is, how big, how it makes money, who
 plays. Competitive Analysis follows because competitors' 10-K risk factors and MD&A are primary
 evidence for PESTEL and for the trending influence factors. At report time the Industry Overview runs
@@ -42,6 +51,9 @@ with the interactive widget:
 - **A. Guided walkthrough** — Steps 1-4 below in order, a checkpoint after every stage, and the full
   final report at the end.
 - **B. Ask a specific question** — the question resolver below.
+- **C. Build my case-memo exhibits** — hand off to `stratos-case-exhibits`, which sets the scope from
+  the case (its industry, competitors, and the case company as base) and builds the course template's
+  Exhibits C-G and L-O. The student writes the memo, Exhibits A-B and every Impact Summary.
 - **Resume** — if a ledger is attached or in Project knowledge, offer to continue from its last stage.
 
 The user can switch modes at any time: "walk me through the rest" turns a question into a guided run
@@ -67,6 +79,7 @@ from wherever the ledger stands.
 | Positioning, strategic groups, whitespace, blue ocean | … → KSFs → Strategic Mapping |
 | "What if X were the base company?" | the base-company swap (below) |
 | A deck, slides, a presentation | the full chain if the ledger is incomplete → Executive Deck |
+| Case-memo exhibits, decision criteria, decision matrix, pros/cons, segment CLV | Case Memo Exhibits (mode C), or the single case-memo tool asked for |
 
 4. **Say what you ran.** Start the answer with one line: which stages ran, which came from the ledger,
    and any stage run in quick depth. Then answer the question directly, citing evidence ids.

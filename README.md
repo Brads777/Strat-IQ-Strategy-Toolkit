@@ -4,7 +4,7 @@
 does — from annual reports to blue-ocean whitespace — with every claim traced to evidence.**
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-![Skills: 9](https://img.shields.io/badge/skills-9-brightgreen)
+![Skills: 13](https://img.shields.io/badge/skills-13-brightgreen)
 ![Works in: Claude.ai · Claude Code · Cowork](https://img.shields.io/badge/works%20in-Claude.ai%20%C2%B7%20Claude%20Code%20%C2%B7%20Cowork-orange)
 
 Built by **Brad Scheller** for MGT4850 Strategic Management (Northeastern University, Fall 2026) and
@@ -59,6 +59,10 @@ base rendered five ways**, so they cannot contradict each other:
 | **KSFs** | [`stratos-ksf`](skills/stratos-ksf/SKILL.md) | 6–10 KSFs, weighted scorecard ([`score_ksf.py`](skills/stratos-ksf/scripts/score_ksf.py)), sensitivity, white space |
 | **Strategic Mapping** | [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Conventional and disruption maps, whitespace, blue-ocean candidates with ERRC |
 | **Executive Deck** | [`stratos-exec-deck`](skills/stratos-exec-deck/SKILL.md) | 15-slide executive PowerPoint: action titles, one chart per slide, sources, speaker notes |
+| **Case Memo Exhibits** | [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Builds the course Case Analysis Memo exhibits C–G and L–O in template order; Impact Summaries left for the student |
+| **Decision Criteria** | [`stratos-decision-criteria`](skills/stratos-decision-criteria/SKILL.md) | Exhibit L — criteria tied to the case goals, weighted 1–5 |
+| **Decision Matrix** | [`stratos-decision-matrix`](skills/stratos-decision-matrix/SKILL.md) | Exhibits N and M — pros/cons, then weighted scoring ([`decision_matrix.py`](skills/stratos-decision-matrix/scripts/decision_matrix.py)) with ties and sensitivity |
+| **Segment Value** | [`stratos-segment-value`](skills/stratos-segment-value/SKILL.md) | Exhibit O — segment CLV × customers ([`segment_value.py`](skills/stratos-segment-value/scripts/segment_value.py)) |
 
 Each stage skill also works on its own — ask for "a PESTEL of the EV industry" and only that skill runs.
 
@@ -74,8 +78,8 @@ The short version:
 1. In **Settings → Capabilities**, turn on **Code execution and file creation** (needed for skills).
    On a university or company plan, an admin may need to enable skills for you.
 2. Download **`stratos-all-skills.zip`** from the **[latest release](../../releases/latest)** and unzip
-   it — inside are nine zips, one per skill (leave those zipped).
-3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all nine zips.
+   it — inside are thirteen zips, one per skill (leave those zipped).
+3. In **Settings → Capabilities → Skills**, choose **Upload skill** and upload all thirteen zips.
    *Instructors:* if your admin provisions the skills org-wide, students skip steps 1–3.
 4. Create a **Project** (e.g. "StratOS — EV industry") and add
    [`project-data/industries.json`](project-data/industries.json) to its **Project knowledge**.
@@ -109,6 +113,7 @@ When the orchestrator opens it shows an intro screen and asks how you want to wo
 |---|---|
 | **A. Walk me through it** | All eight steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list — delivered as a detailed, cited Word report plus a 15-slide executive PowerPoint. |
 | **B. Ask a specific question** | Runs only the steps your question depends on, says which it ran, and answers. |
+| **C. Build my case-memo exhibits** | For the course Case Analysis Memo: give it the case and your Exhibits A–B; it builds Exhibits C–G and L–O. You write the memo and every Impact Summary. |
 | **Resume** | Attach a saved `strategy-ledger-*.json` and continue where you stopped. |
 
 Example prompts:

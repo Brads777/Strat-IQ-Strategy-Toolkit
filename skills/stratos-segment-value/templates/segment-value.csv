@@ -1,0 +1,3 @@
+segment,avg_purchase_value,purchase_frequency,lifespan_years,margin,cac,retention_cost_per_year,addressable_customers,expected_share
+Premium,180,1,5,0.30,,,50000000,1
+Ad-Supported,60,1,3,0.20,,,150000000,1

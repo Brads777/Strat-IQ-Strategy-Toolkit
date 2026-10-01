@@ -31,4 +31,8 @@ maps, recommended moves, watch list) and a **15-slide executive PowerPoint** tha
 *"How does [a competitor] compare financially?"* or *"Where is the whitespace?"*. StratOS runs only the steps your
 question needs, tells you which ones it ran, and answers.
 
+**C. Build my case-memo exhibits** — For the course's Case Analysis Memo. Give StratOS the case and
+your Exhibits A and B, and it builds Exhibits C-G and L-O in the template's order. You write the memo,
+Exhibits A and B, and every Impact Summary.
+
 *Picking up earlier work? Upload or attach your saved `strategy-ledger` file and say "resume".*
