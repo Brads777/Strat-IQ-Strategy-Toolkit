@@ -60,7 +60,7 @@ base rendered five ways**, so they cannot contradict each other:
 | **Strategic Mapping** | [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Conventional and disruption maps, whitespace, blue-ocean candidates with ERRC |
 | **Executive Deck** | [`stratos-exec-deck`](skills/stratos-exec-deck/SKILL.md) | 15-slide executive PowerPoint: action titles, one chart per slide, sources, speaker notes |
 | **Case Memo Exhibits** | [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Builds the course Case Analysis Memo exhibits C–G and L–O in template order; Impact Summaries left for the student |
-| **Decision Criteria** | [`stratos-decision-criteria`](skills/stratos-decision-criteria/SKILL.md) | Exhibit L — criteria tied to the case goals, weighted 1–5 |
+| **Decision Criteria** | [`stratos-decision-criteria`](skills/stratos-decision-criteria/SKILL.md) | Exhibit L — criteria tied to the goals in the student's Exhibit B, weighted 1–5 |
 | **Decision Matrix** | [`stratos-decision-matrix`](skills/stratos-decision-matrix/SKILL.md) | Exhibits N and M — pros/cons, then weighted scoring ([`decision_matrix.py`](skills/stratos-decision-matrix/scripts/decision_matrix.py)) with ties and sensitivity |
 | **Segment Value** | [`stratos-segment-value`](skills/stratos-segment-value/SKILL.md) | Exhibit O — segment CLV × customers ([`segment_value.py`](skills/stratos-segment-value/scripts/segment_value.py)) |
 | **GLO-BUS Coach** | [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Decision support for the GLO-BUS simulation: strategy anchor, diagnosis against the five KPIs (EPS, ROE, stock price, credit rating, image rating), 3–5 testable moves with guardrails |
@@ -114,7 +114,7 @@ When the orchestrator opens it shows an intro screen and asks how you want to wo
 |---|---|
 | **A. Walk me through it** | All eight steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list — delivered as a detailed, cited Word report plus a 15-slide executive PowerPoint. |
 | **B. Ask a specific question** | Runs only the steps your question depends on, says which it ran, and answers. |
-| **C. Build my case-memo exhibits** | For the course Case Analysis Memo: give it the case and your Exhibits A–B; it builds Exhibits C–G and L–O. You write the memo and every Impact Summary. |
+| **C. Build my case-memo exhibits** | For the course Case Analysis Memo: enter the case facts you gathered (company, industry, competitors, interview notes) and your Exhibits A–B; it builds Exhibits C–G and L–O. You write the memo and every Impact Summary. |
 | **Resume** | Attach a saved `strategy-ledger-*.json` and continue where you stopped. |
 
 Example prompts:

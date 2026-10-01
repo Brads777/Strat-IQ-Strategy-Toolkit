@@ -55,8 +55,9 @@ with the interactive widget:
 - **A. Guided walkthrough** — Steps 1-4 below in order, a checkpoint after every stage, and the full
   final report at the end.
 - **B. Ask a specific question** — the question resolver below.
-- **C. Build my case-memo exhibits** — hand off to `stratos-case-exhibits`, which sets the scope from
-  the case (its industry, competitors, and the case company as base) and builds the course template's
+- **C. Build my case-memo exhibits** — hand off to `stratos-case-exhibits`, which asks the student
+  for the case facts (the cases are persona interviews, so there is no case document): company,
+  industry, competitors and interview notes. It sets the scope from them and builds the course template's
   Exhibits C-G and L-O. The student writes the memo, Exhibits A-B and every Impact Summary.
 - **Resume** — if a ledger is attached or in Project knowledge, offer to continue from its last stage.
 

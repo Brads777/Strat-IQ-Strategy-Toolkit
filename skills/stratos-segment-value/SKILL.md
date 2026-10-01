@@ -1,16 +1,16 @@
 ---
 name: stratos-segment-value
-description: "StratOS Customer Segment Lifetime Value (case-memo CLV exhibit). Values market segments, not single customers: CLV per customer from purchase value, frequency, lifespan and margin (net of acquisition and retention cost when the case gives them), multiplied by the estimated customers in each segment, so strategic alternatives can be compared on total segment value. Computed with a script. Include only when the case supplies the data. Use for 'CLV', 'customer lifetime value', 'segment value', 'which segment is worth more', or the CLV exhibit."
+description: "StratOS Customer Segment Lifetime Value (case-memo CLV exhibit). Values market segments, not single customers: CLV per customer from purchase value, frequency, lifespan and margin (net of acquisition and retention cost when the student's case facts give them), multiplied by the estimated customers in each segment, so strategic alternatives can be compared on total segment value. Computed with a script. Include only when the student's case facts supply the data. Use for 'CLV', 'customer lifetime value', 'segment value', 'which segment is worth more', or the CLV exhibit."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
 
 # Customer Segment Lifetime Value (StratOS · CLV exhibit)
 
-**Reads:** the case's customer and segment data; segment sizes from the Industry Overview (Exhibit C)
-where the case lacks them. **Writes:** `case.segment_value[]` and the CLV exhibit.
+**Reads:** the customer and segment data the student gathered (persona interview notes); segment sizes from the Industry Overview (Exhibit C)
+where the notes lack them. **Writes:** `case.segment_value[]` and the CLV exhibit.
 
-**Include this exhibit only if it is relevant to the case and the case provides the data.** Otherwise
+**Include this exhibit only if it is relevant to the case and the student's interview notes provide the data.** Otherwise
 leave it out. Never fill it with invented numbers.
 
 ## The core idea
@@ -36,12 +36,12 @@ For each segment:
 > Gross CLV = average purchase value × purchase frequency × years × margin
 > Net CLV = Gross CLV − acquisition cost − (retention cost × years)   *(when those costs are given)*
 
-Use **net CLV** when the case gives acquisition and retention costs, and say which one is used. If a
+Use **net CLV** when the notes give acquisition and retention costs, and say which one is used. If a
 segment's net CLV is negative, it destroys value at any size, so flag it.
 
 ## Step 2 — Estimated customers
 
-Estimated customers = **total addressable customers × expected market share**. Use the case's figures;
+Estimated customers = **total addressable customers × expected market share**. Use the figures from the student's notes;
 where it gives none, use Exhibit C's market size and state the assumption. Note the qualitative factors
 the template asks for — **growth potential, penetration rate, competition intensity** (Exhibit E) — in
 one line per segment, because they decide how believable the share assumption is.
@@ -79,7 +79,7 @@ Leave the Impact Summary blank.
 
 ## Rules
 
-- Every input comes from the case or a cited exhibit; label any assumption `[Assumption]`.
+- Every input comes from the student's interview notes or a cited exhibit; label any assumption `[Assumption]`.
 - Use the same years, margin basis and currency for every segment so the totals compare.
 - This exhibit compares segments. It does not pick the recommendation; the decision matrix and the
   student's memo do that.

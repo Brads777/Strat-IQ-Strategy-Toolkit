@@ -17,7 +17,7 @@ judge the recommendations. If they are wrong, management sends the analysis back
 
 ## Step 1 — Get the goals
 
-Criteria can only be derived from the case's own goals. Read the student's Exhibit B. If it is missing
+Criteria can only be derived from the case's own goals, as the student recorded them. Read the student's Exhibit B. If it is missing
 or has no required goals, **stop and ask the student to write Exhibit B first**. Do not invent the
 goals; framing the problem is the student's work.
 
@@ -39,7 +39,7 @@ is a criterion. Typically 4-6 criteria in total.
 
 ## Step 3 — Weight each criterion 1-5
 
-5 = decisive, 1 = minor. Base each weight on the goals as the case states them: explicit priorities,
+5 = decisive, 1 = minor. Base each weight on the goals as Exhibit B and the student's interview notes state them: explicit priorities,
 constraints ("must", "cannot exceed") and emphasis from management. Give every weight a one-line
 rationale that points to the case. Weights need not differ, but if every criterion is a 5, nothing
 was prioritised; say which goal dominates.
@@ -51,7 +51,7 @@ was prioritised; say which goal dominates.
 
 | Criterion | Weight (1-5) | Rationale |
 |---|---|---|
-| [Criterion 1] | [w] | [Which required goal it measures, and why this weight — cite the case or Exhibit C-G] |
+| [Criterion 1] | [w] | [Which required goal it measures, and why this weight — cite the interview notes or Exhibit C-G] |
 | [Criterion 2] | [w] | … |
 
 **Impact Summary — Decision Criteria and Weights**
@@ -64,6 +64,6 @@ Leave the Impact Summary blank: the student writes it to show understanding.
 
 - Do not write or suggest the recommendations. Criteria describe how options will be judged, not which
   option wins.
-- Do not refer to "I" or "we", and state nothing as a belief — criteria rest on the case's stated goals.
+- Do not refer to "I" or "we", and state nothing as a belief — criteria rest on the goals stated in Exhibit B.
 - If a goal cannot be turned into any measurable criterion, say so and ask the student to sharpen the
   goal.

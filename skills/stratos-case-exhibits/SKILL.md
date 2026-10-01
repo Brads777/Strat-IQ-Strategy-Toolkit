@@ -1,6 +1,6 @@
 ---
 name: stratos-case-exhibits
-description: "StratOS Case Memo Exhibits. Builds the Exhibits section of the MGT4850 Case Analysis Memo in the course template's exact order and headings — C Industry Overview, D PESTEL, E Five Forces, F Strategic Map (current plus top 3 disruptions), G Key Success Factors, L Decision Criteria and Weights, M Decision Matrix, N Pros and Cons, O Segment CLV — by running the StratOS skills on the case, with every Impact Summary left blank for the student. Never writes the memo, Exhibit A or Exhibit B. Use for 'case exhibits', 'build my exhibits', 'case memo exhibits', or 'fill in the template exhibits'."
+description: "StratOS Case Memo Exhibits. Builds the Exhibits section of the MGT4850 Case Analysis Memo in the course template's exact order and headings — C Industry Overview, D PESTEL, E Five Forces, F Strategic Map (current plus top 3 disruptions), G Key Success Factors, L Decision Criteria and Weights, M Decision Matrix, N Pros and Cons, O Segment CLV — by running the StratOS skills on the case facts the student enters (the course cases are interactive persona interviews, so there is no case document), with every Impact Summary left blank for the student. Never writes the memo, Exhibit A or Exhibit B. Use for 'case exhibits', 'build my exhibits', 'case memo exhibits', or 'fill in the template exhibits'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -14,7 +14,17 @@ from; the Impact Summaries are where they show they understood it.
 
 ## What the student provides first
 
-1. **The case** — the case document (uploaded or in Project knowledge).
+1. **The case facts, entered by the student.** The course cases are interactive: most of the facts
+   live in personas the student interviews, so there is **no case document to read**. Ask the student
+   for:
+   - the case company, what it sells, and where;
+   - the industry and geography it competes in;
+   - its main competitors;
+   - their **interview notes**: figures, constraints, goals, customers and segments, and anything
+     else the personas said (pasted text or an uploaded file);
+   - anything they found in their own research.
+
+   This is how the toolkit is used at work, too: nobody hands you the case, you gather the facts.
 2. **Exhibit A — Guiding Questions** and **Exhibit B — Key Issues** (central problem, management
    questions, required goals), written by the student.
 3. **Alternatives** for each management question, if the student has them.
@@ -22,11 +32,17 @@ from; the Impact Summaries are where they show they understood it.
 If Exhibit B is missing, the industry exhibits (C-G) can still be built, but **L, M and N cannot**:
 ask the student for Exhibit B before building them. Never write A or B.
 
-## Scope from the case
+## Scope from the student's facts
 
-Set the StratOS scope from the case: the **industry** the case company competes in, its **main
-competitors** (from the case, plus any the student names), and the **case company as the base
-company**. Run the orchestrator's intake with these values rather than asking from scratch.
+Set the StratOS scope from what the student entered: the **industry** the case company competes in,
+its **main competitors**, and the **case company as the base company**. Run the orchestrator's intake
+with these values rather than asking from scratch.
+
+Industry-level exhibits (C-G) use public evidence as usual. Case-specific facts come **only** from the
+student's notes: cite them as `Interview notes ([persona])`. **Never invent a case fact** or what a
+persona said. If an exhibit needs a fact only the case can supply (a cost, a goal, a segment size),
+mark it `[ask in interview]` and list it at the end as a question for the student's next persona
+interview.
 
 ## Exhibit map
 
@@ -44,7 +60,7 @@ company**. Run the orchestrator's intake with these values rather than asking fr
 | L. Decision Criteria and Weights | `stratos-decision-criteria` | Needs Exhibit B |
 | M. Decision Matrix | `stratos-decision-matrix` | One matrix per management question |
 | N. Pros and Cons Analysis | `stratos-decision-matrix` | Built before M |
-| O. Customer Segment Lifetime Value | `stratos-segment-value` | **Only if relevant and the case gives the data**; otherwise omit it (the template marks it optional) |
+| O. Customer Segment Lifetime Value | `stratos-segment-value` | **Only if relevant and the student's interview notes give the data**; otherwise omit it (the template marks it optional) |
 
 The template letters the CLV exhibit "I", which duplicates VRIO; use **O** unless the instructor says
 otherwise.
@@ -109,5 +125,7 @@ that the memo, Exhibits A-B and all Impact Summaries are theirs to write.
   paragraphs or conclusion.
 - Do not draft Impact Summaries, even if asked to "finish the exhibits". Explain that the summary is
   the student's evidence of understanding, and leave it blank.
+- Never invent case facts or persona statements; case-specific facts come only from the student's
+  notes, and gaps become `[ask in interview]` questions.
 - Follow the memo's own standards inside the exhibits: no "I"/"we", no beliefs, no predictions; facts
   and cited evidence only.

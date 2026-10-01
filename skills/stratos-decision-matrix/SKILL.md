@@ -94,4 +94,4 @@ Leave both Impact Summaries blank.
 - The matrix **informs** the recommendation; it does not write it. The student writes the
   Recommendations and Analysis sections of the memo.
 - Never rate an alternative without a reason, and never change a rating to produce a preferred winner.
-- No predictions and no "I believe"; ratings rest on the case and the exhibits.
+- No predictions and no "I believe"; ratings rest on the student's case facts (interview notes) and the exhibits.
