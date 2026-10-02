@@ -1,0 +1,7 @@
+item,type,valuable,rare,inimitable,organized,ksf,ksf_weight
+48-hour repair turnaround,capability,yes,yes,yes,yes,K2,0.20
+Automated assembly line,capability,yes,no,,,K1,0.25
+Patented sensor design,resource,yes,yes,no,,K4,0.15
+Proprietary 8K optics,capability,yes,yes,yes,no,K6,0.05
+Regional dealer relationships,resource,yes,yes,?,,K3,0.15
+Legacy in-house freight fleet,resource,no,,,,,

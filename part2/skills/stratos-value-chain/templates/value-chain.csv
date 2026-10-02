@@ -1,0 +1,7 @@
+activity,porter_category,stage,sourcing,cost_share,value_share
+Component sourcing contracts,Procurement,product,in-house,0.10,0.05
+Final assembly in owned plant,Operations,product,in-house,0.35,0.20
+Regional freight and warehousing,Outbound logistics,commodity,in-house,0.10,0.05
+Retailer and online selling,Marketing and sales,product,mixed,0.25,0.15
+48-hour repair and replacement,Service,custom,in-house,0.12,0.35
+Control software development,Technology development,custom,in-house,0.08,0.20

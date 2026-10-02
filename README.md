@@ -67,6 +67,15 @@ base rendered five ways**, so they cannot contradict each other:
 
 Each stage skill also works on its own — ask for "a PESTEL of the EV industry" and only that skill runs.
 
+### Part 2 — internal analysis (second session)
+
+Part 1, above, reads the industry. **[Part 2](part2/README.md)** reads the company: **Value Chain**,
+**Resources and Capabilities**, **VRIO** and **SWOT** (Case Memo Exhibits H–K), with a replacement
+orchestrator that finds your saved Part 1 work and continues from there. It is a separate, smaller
+upload — `stratos-part2-skills.zip` in the [latest release](../../releases/latest) — installed after
+Part 1. Everything on this page describes Part 1 and is unchanged by it. Instructions:
+**[the Part 2 guide](https://brads777.github.io/stratos-external-analysis/part2-guide.html)**.
+
 ---
 
 ## Install
