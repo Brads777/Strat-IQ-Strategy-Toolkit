@@ -72,7 +72,12 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
   "pages": [ { "id": "cir-cameras-na", "group": "class-report", "title": "Competitive Intelligence Report — Cameras — North America",
                "url_path": "/…", "text": "…", "screenshot": "cir-cameras-na.png", "warnings": [] } ],
   "decisions": { "mkt.camera.na.price": 249, "mkt.camera.na.ads": 6800, "comp.base": 21500 },
-  "cir_rows": [ { "company": "A", "product": "camera", "region": "Global", "price": 279, "pq": 4.2, "share": 14.0, "models": 5 } ] }
+  "cir_rows": [ { "company": "A", "product": "camera", "region": "Global", "price": 279, "pq": 4.2, "share": 14.0, "models": 5 } ],
+  "results": { "kpis": { "eps": { "actual": 1.85, "target": 2.00 }, "credit": { "actual": "B+", "target": "BB" } },
+               "company": { "score": 78, "rank": 3, "revenue": 412000, "net_profit": 18500, "cash": 14200 },
+               "product": { "camera": { "units": 1450, "price": 264, "pq": 4.0, "cost_unit": 182, "op_margin": 0.11,
+                                        "ind_price": 276, "ind_pq": 4.0, "ind_cost_unit": 186,
+                                        "share": { "na": 12.0, "ea": 11.5, "ap": 12.4, "la": 13.0 } } } } }
 ```
 
 - **`decisions`**: transcribe the value of every decision field read on the team's own decision
@@ -80,12 +85,16 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
   Workbook's GLO-BUS Planner). Copy numbers exactly from the page text; leave out any field you could
   not read rather than guessing.
 - **`cir_rows`**: one row per company, product and region from the Competitive Intelligence Report.
+- **`results`**: the year's outcomes, keyed as in `references/globus-results.json`: the five scored KPIs
+  with investor expectations, company results, and per-product results with market share by region.
+  The StratOS Workbook turns each capture into a **Y# Results** tab and charts the years on **Tracking**.
 
 Run `scripts/capture_check.py globus-capture-<company>-Y<year>.json`. It compares the pages with the
 checklist and lists what is missing or thin. Offer to fetch the missing screens once; then stop.
 
 Give the student the capture file to download and suggest adding it to the Project knowledge, so later
-chats (and next year's review) can use it.
+chats (and next year's review) can use it. Offer to rebuild the StratOS Workbook with all the capture
+files so far (`stratos-workbook --capture …`): one results tab per year plus the Tracking charts.
 
 ## Step 4 — Hand off to the coach
 

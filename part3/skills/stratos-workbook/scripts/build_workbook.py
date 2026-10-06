@@ -161,6 +161,10 @@ def sheet_start(wb, L, title, mode):
             ("Balanced Scorecard", "Objectives and measures in four perspectives, leading vs lagging, status vs target, balance check."),
             ("Strategy Map", "Objectives by perspective and their cause-and-effect links; picture included when built from a ledger."),
             ("GLO-BUS CIR", "Paste the CIR figures; each company is placed in a strategic group automatically."),
+            ("Y# Results", "One tab per GLO-BUS year: the five scored KPIs against investor expectations, company and "
+                           "product results, market share by region, the decisions entered and the CIR."),
+            ("Tracking", "Trends across the years, pulled from the Year tabs, with charts: EPS, ROE, stock price, "
+                         "image and credit rating, market share, cost per unit, revenue and profit, margins."),
             ("GLO-BUS Planner", "Plan every decision for each year in one place, in screen order; flags changes bigger than "
                                 "your threshold and years where price and advertising are both cut. You enter the "
                                 "decisions in GLO-BUS yourself; the capture skill can then check them against this plan."),
@@ -849,6 +853,211 @@ def sheet_planner(wb, L, mode, caps, years):
     ws.freeze_panes = "E6"
 
 
+def _results_spec():
+    return json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "references",
+                                       "globus-results.json"), encoding="utf-8"))
+
+
+EXAMPLE_RESULTS = {
+    6: {"kpis": {"eps": [1.85, 2.00], "roe": [0.142, 0.15], "stock": [22.4, 25.0], "credit": ["B+", "BB"], "image": [68, 70]},
+        "company": {"score": 78, "rank": 3, "revenue": 412000, "net_profit": 18500, "cash": 14200},
+        "product": {"camera": {"units": 1450, "price": 264, "pq": 4.0, "cost_unit": 182, "op_margin": 0.11, "ind_price": 276, "ind_pq": 4.0, "ind_cost_unit": 186,
+                               "share": {"na": 12.0, "ea": 11.5, "ap": 12.4, "la": 13.0}},
+                    "drone": {"units": 120, "price": 1237, "pq": 4.2, "cost_unit": 905, "op_margin": 0.09, "ind_price": 1195, "ind_pq": 4.1, "ind_cost_unit": 890,
+                              "share": {"na": 12.0, "ea": 12.6, "ap": 11.1, "la": 12.2}}}},
+    7: {"kpis": {"eps": [2.10, 2.15], "roe": [0.155, 0.155], "stock": [26.1, 27.0], "credit": ["BB-", "BB"], "image": [71, 72]},
+        "company": {"score": 84, "rank": 2, "revenue": 455000, "net_profit": 21900, "cash": 19800},
+        "product": {"camera": {"units": 1610, "price": 259, "pq": 4.2, "cost_unit": 176, "op_margin": 0.125, "ind_price": 271, "ind_pq": 4.1, "ind_cost_unit": 184,
+                               "share": {"na": 13.1, "ea": 12.2, "ap": 13.0, "la": 13.6}},
+                    "drone": {"units": 131, "price": 1229, "pq": 4.4, "cost_unit": 884, "op_margin": 0.105, "ind_price": 1188, "ind_pq": 4.2, "ind_cost_unit": 879,
+                              "share": {"na": 12.8, "ea": 13.0, "ap": 11.9, "la": 12.5}}}},
+    8: {"kpis": {"eps": [2.32, 2.30], "roe": [0.168, 0.16], "stock": [29.5, 29.0], "credit": ["BB", "BB"], "image": [74, 74]},
+        "company": {"score": 89, "rank": 1, "revenue": 498000, "net_profit": 24800, "cash": 23500},
+        "product": {"camera": {"units": 1720, "price": 255, "pq": 4.3, "cost_unit": 171, "op_margin": 0.135, "ind_price": 268, "ind_pq": 4.2, "ind_cost_unit": 181,
+                               "share": {"na": 13.8, "ea": 12.9, "ap": 13.5, "la": 14.1}},
+                    "drone": {"units": 142, "price": 1219, "pq": 4.6, "cost_unit": 870, "op_margin": 0.112, "ind_price": 1181, "ind_pq": 4.3, "ind_cost_unit": 871,
+                              "share": {"na": 13.4, "ea": 13.6, "ap": 12.5, "la": 13.0}}}},
+}
+
+
+def sheet_year_results(wb, year, res, decisions, cir_rows, spec, fields, mode):
+    """One tab per GLO-BUS year. Returns {metric_key: cell} for the Tracking sheet."""
+    ws = wb.create_sheet(f"Y{year} Results")
+    head(ws, f"GLO-BUS Year {year} results", ("Example values (illustrative)." if mode == "example" else
+         "From the team's capture of this year's reports. Correct any value that was misread.") +
+         " Figures in the units shown; edit the cream cells.", [34, 16, 16, 16, 14])
+    cells = {}
+    r = 5
+    header(ws, r, ["Scored KPI", "Actual", "Investor expectation", "Gap", "Met?"])
+    ws.freeze_panes = None
+    kp = (res or {}).get("kpis", {})
+    for k in spec["kpis"]:
+        r += 1
+        a, t = (kp.get(k["key"]) or [None, None]) if isinstance(kp.get(k["key"]), list) else \
+            ((kp.get(k["key"]) or {}).get("actual"), (kp.get(k["key"]) or {}).get("target"))
+        label(ws, f"A{r}", k["label"], bold=False)
+        inp(ws, f"B{r}", a, None if k["fmt"] == "@" else k["fmt"])
+        inp(ws, f"C{r}", t, None if k["fmt"] == "@" else k["fmt"])
+        if k["key"] == "credit":
+            fx(ws, f"D{r}", f'=IF(OR(B{r}="",C{r}=""),"",IFERROR(MATCH(C{r},CreditScale,0)-MATCH(B{r},CreditScale,0),""))', "+0;-0;0")
+            fx(ws, f"E{r}", f'=IF(D{r}="","",IF(D{r}>=0,"Yes","No"))')
+        else:
+            fx(ws, f"D{r}", f'=IF(AND(ISNUMBER(B{r}),ISNUMBER(C{r})),B{r}-C{r},"")', k["fmt"])
+            fx(ws, f"E{r}", f'=IF(D{r}="","",IF(D{r}>=0,"Yes","No"))')
+        cells[f"kpi.{k['key']}"] = f"B{r}"
+        cells[f"kpi.{k['key']}.target"] = f"C{r}"
+    traffic(ws, f"E6:E{r}", f'E6="Yes"', "FALSE", f'E6="No"')
+    ws[f"D5"].comment = Comment("Credit rating gap is in notches (positive = at or above expectation).", "StratOS")
+    r += 2
+    header(ws, r, ["Company result", "Value"])
+    co = (res or {}).get("company", {})
+    for k in spec["company"]:
+        r += 1
+        label(ws, f"A{r}", f"{k['label']} ({k['unit']})", bold=False)
+        inp(ws, f"B{r}", co.get(k["key"]), k["fmt"])
+        cells[f"co.{k['key']}"] = f"B{r}"
+    r += 2
+    header(ws, r, ["Product result", "Cameras", "Drones"])
+    pr = (res or {}).get("product", {})
+    top = r
+    for k in spec["product"]:
+        r += 1
+        label(ws, f"A{r}", f"{k['label']} ({k['unit']})", bold=False)
+        for j, p in enumerate(["camera", "drone"]):
+            col = "BC"[j]
+            inp(ws, f"{col}{r}", (pr.get(p) or {}).get(k["key"]), k["fmt"])
+            cells[f"{p}.{k['key']}"] = f"{col}{r}"
+    r += 1
+    label(ws, f"A{r}", "Price vs industry average")
+    for j, p in enumerate(["camera", "drone"]):
+        col = "BC"[j]
+        fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".price"]}),ISNUMBER({cells[p + ".ind_price"]})),'
+                            f'{cells[p + ".price"]}/{cells[p + ".ind_price"]}-1,"")', "+0.0%;-0.0%;0.0%")
+    r += 1
+    label(ws, f"A{r}", "Cost per unit vs industry average")
+    for j, p in enumerate(["camera", "drone"]):
+        col = "BC"[j]
+        fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".cost_unit"]}),ISNUMBER({cells[p + ".ind_cost_unit"]})),'
+                            f'{cells[p + ".cost_unit"]}/{cells[p + ".ind_cost_unit"]}-1,"")', "+0.0%;-0.0%;0.0%")
+    r += 2
+    header(ws, r, ["Market share (%)", "Cameras", "Drones"])
+    s0 = r + 1
+    for rk, rl in [("na", "North America"), ("ea", "Europe-Africa"), ("ap", "Asia-Pacific"), ("la", "Latin America")]:
+        r += 1
+        label(ws, f"A{r}", rl, bold=False)
+        for j, p in enumerate(["camera", "drone"]):
+            inp(ws, f"{'BC'[j]}{r}", ((pr.get(p) or {}).get("share") or {}).get(rk), "0.0")
+    r += 1
+    label(ws, f"A{r}", "Average across regions")
+    for j, p in enumerate(["camera", "drone"]):
+        col = "BC"[j]
+        fx(ws, f"{col}{r}", f'=IF(COUNT({col}{s0}:{col}{r-1})=0,"",AVERAGE({col}{s0}:{col}{r-1}))', "0.0")
+        cells[f"{p}.share_avg"] = f"{col}{r}"
+    # decisions entered
+    if decisions:
+        r += 2
+        header(ws, r, ["Decision entered this year", "Value", "Key"])
+        labels = {f["key"]: f["label"] for f in fields}
+        for k_, v in decisions.items():
+            r += 1
+            label(ws, f"A{r}", labels.get(k_, k_), bold=False)
+            inp(ws, f"B{r}", v)
+            ws[f"C{r}"] = k_
+            ws[f"C{r}"].font = Font(name=F, size=8, color="888888")
+    if cir_rows:
+        r += 2
+        header(ws, r, ["CIR: company", "Product", "Price", "P/Q", "Share (%)"])
+        for row in cir_rows:
+            r += 1
+            for col, v in zip("ABCDE", [row.get("company"), (row.get("product") or "").title(), row.get("price"),
+                                       row.get("pq"), row.get("share")]):
+                inp(ws, f"{col}{r}", v)
+    return ws.title, cells
+
+
+TRACK_ROWS = [("EPS", "kpi.eps", "$0.00"), ("EPS expectation", "kpi.eps.target", "$0.00"),
+              ("ROE", "kpi.roe", "0.0%"), ("ROE expectation", "kpi.roe.target", "0.0%"),
+              ("Stock price", "kpi.stock", "$0.00"), ("Stock price expectation", "kpi.stock.target", "$0.00"),
+              ("Credit rating", "kpi.credit", "@"), ("Credit rating score (AAA = 21)", "credit_score", "0"),
+              ("Image rating", "kpi.image", "0"), ("Image rating expectation", "kpi.image.target", "0"),
+              ("Overall score", "co.score", "0"), ("Rank", "co.rank", "0"),
+              ("Net revenues ($000s)", "co.revenue", "#,##0"), ("Net profit ($000s)", "co.net_profit", "#,##0"),
+              ("Ending cash ($000s)", "co.cash", "#,##0"),
+              ("Cameras: market share (avg %)", "camera.share_avg", "0.0"), ("Drones: market share (avg %)", "drone.share_avg", "0.0"),
+              ("Cameras: cost per unit ($)", "camera.cost_unit", "$#,##0"), ("Cameras: industry cost per unit ($)", "camera.ind_cost_unit", "$#,##0"),
+              ("Drones: cost per unit ($)", "drone.cost_unit", "$#,##0"), ("Drones: industry cost per unit ($)", "drone.ind_cost_unit", "$#,##0"),
+              ("Cameras: price ($)", "camera.price", "$#,##0"), ("Drones: price ($)", "drone.price", "$#,##0"),
+              ("Cameras: P/Q", "camera.pq", "0.0"), ("Drones: P/Q", "drone.pq", "0.0"),
+              ("Cameras: operating margin", "camera.op_margin", "0.0%"), ("Drones: operating margin", "drone.op_margin", "0.0%")]
+
+
+def sheet_tracking(wb, year_tabs, spec):
+    from openpyxl.chart import LineChart, Reference
+    from openpyxl.workbook.defined_name import DefinedName
+    ws = wb.create_sheet("Tracking")
+    years = sorted(year_tabs)
+    head(ws, "GLO-BUS trends", "Pulled by formula from the Year tabs. Rebuild the workbook after each round to add "
+         "the new year. Charts update when a Year tab changes.", [36] + [12] * max(1, len(years)))
+    # credit scale on a hidden column
+    sc = spec["credit_scale"]
+    colx = get_column_letter(3 + max(1, len(years)) + 6)
+    for i, v in enumerate(sc):
+        ws[f"{colx}{6+i}"] = v
+        ws[f"{colx}{6+i}"].font = Font(name=F, size=8, color="BBBBBB")
+    ws.column_dimensions[colx].hidden = True
+    wb.defined_names["CreditScale"] = DefinedName("CreditScale", attr_text=f"Tracking!${colx}$6:${colx}${5+len(sc)}")
+    header(ws, 5, ["Measure"] + [f"Year {y}" for y in years])
+    rowof = {}
+    for i, (lab, key, fmt) in enumerate(TRACK_ROWS):
+        r = 6 + i
+        rowof[key] = r
+        label(ws, f"A{r}", lab, bold=not lab.endswith("expectation") and "industry" not in lab)
+        for j, y in enumerate(years):
+            col = get_column_letter(2 + j)
+            tab, cells = year_tabs[y]
+            if key == "credit_score":
+                cr = f"{col}{rowof['kpi.credit']}"
+                fx(ws, f"{col}{r}", f'=IF({cr}="","",IFERROR({len(sc)+1}-MATCH({cr},CreditScale,0),""))', fmt)
+            else:
+                ref = f"'{tab}'!{cells[key]}"
+                fx(ws, f"{col}{r}", f'=IF({ref}="","",{ref})', None if fmt == "@" else fmt)
+    last_col = get_column_letter(1 + len(years))
+    charts = [("EPS vs investor expectation", ["kpi.eps", "kpi.eps.target"], "$"),
+              ("ROE vs investor expectation", ["kpi.roe", "kpi.roe.target"], "%"),
+              ("Stock price vs expectation", ["kpi.stock", "kpi.stock.target"], "$"),
+              ("Image rating and credit score", ["kpi.image", "kpi.image.target", "credit_score"], ""),
+              ("Market share (average of regions, %)", ["camera.share_avg", "drone.share_avg"], ""),
+              ("Cost per unit vs industry", ["camera.cost_unit", "camera.ind_cost_unit", "drone.cost_unit", "drone.ind_cost_unit"], "$"),
+              ("Net revenues and net profit ($000s)", ["co.revenue", "co.net_profit"], ""),
+              ("Operating margin by product", ["camera.op_margin", "drone.op_margin"], "%")]
+    anchor_row = 6 + len(TRACK_ROWS) + 2
+    for n, (title, keys, unit) in enumerate(charts):
+        ch = LineChart()
+        ch.title = title
+        ch.height, ch.width = 7.2, 13.5
+        ch.legend.position = "b"
+        for key in keys:
+            r = rowof[key]
+            data = Reference(ws, min_col=1, max_col=1 + len(years), min_row=r, max_row=r)
+            ch.add_data(data, from_rows=True, titles_from_data=True)
+        ch.set_categories(Reference(ws, min_col=2, max_col=1 + len(years), min_row=5, max_row=5))
+        palette = ["1D3557", "C9A55C", "2D936C", "C44536"]
+        for k_, srs in enumerate(ch.series):
+            srs.graphicalProperties.line.solidFill = palette[k_ % 4]
+            srs.graphicalProperties.line.width = 28000
+            srs.smooth = False
+            if "target" in keys[k_] or "ind_" in keys[k_]:
+                srs.graphicalProperties.line.dashStyle = "dash"
+        if unit == "%":
+            ch.y_axis.numFmt = "0%"
+        ch.y_axis.majorGridlines = None
+        ch.x_axis.delete = False
+        ch.y_axis.delete = False
+        col = "A" if n % 2 == 0 else get_column_letter(2 + max(5, len(years)) + 1)
+        ws.add_chart(ch, f"{col}{anchor_row + (n // 2) * 16}")
+    ws.freeze_panes = "B6"
+
+
 def main():
     a = sys.argv
     ledger = a[a.index("--ledger") + 1] if "--ledger" in a else None
@@ -884,8 +1093,24 @@ def main():
         sheet_map(wb, L, mode, tmp)
         sheet_cir(wb, L, mode, caps)
         sheet_planner(wb, L, mode, caps, years)
+        rspec = _results_spec()
+        fspec = expand_fields(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                                                          "references", "globus-fields.json"), encoding="utf-8")))
+        year_tabs = {}
+        if caps:
+            for c in sorted(caps, key=lambda c: c.get("year", 0)):
+                if c.get("results") or c.get("decisions"):
+                    year_tabs[c.get("year")] = sheet_year_results(wb, c.get("year"), c.get("results"), c.get("decisions"),
+                                                                  c.get("cir_rows"), rspec, fspec, mode)
+        elif mode == "example":
+            for y, res in EXAMPLE_RESULTS.items():
+                year_tabs[y] = sheet_year_results(wb, y, res, None, None, rspec, fspec, mode)
+        else:
+            year_tabs[years[0]] = sheet_year_results(wb, years[0], None, None, None, rspec, fspec, mode)
+        sheet_tracking(wb, year_tabs, rspec)
         for ws in wb.worksheets:
-            ws.sheet_properties.tabColor = GOLD if ws.title in ("Start", "GLO-BUS CIR", "GLO-BUS Planner") else NAVY
+            ws.sheet_properties.tabColor = GOLD if (ws.title.startswith("GLO-BUS") or ws.title in ("Start", "Tracking")
+                                                    or ws.title.endswith(" Results")) else NAVY
         wb.save(out)
     print(json.dumps({"out": out, "mode": mode, "sheets": [ws.title for ws in wb.worksheets]}))
 

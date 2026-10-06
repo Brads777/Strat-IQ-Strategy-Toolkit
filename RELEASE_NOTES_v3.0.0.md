@@ -31,6 +31,11 @@ a branded Excel file of live worksheets for every framework, pre-filled from the
 - **GLO-BUS Decision Planner** sheet in the StratOS Workbook: every decision for Years 6-15 in screen
   order, the strategy anchor, projected KPIs, a change-vs-last-year flag and a price-and-advertising-cut
   guardrail. Teams enter the decisions in GLO-BUS themselves.
+- **Year results tabs and Tracking:** each GLO-BUS capture becomes a Y# Results tab (KPIs vs
+  investor expectations, product results, market share by region); the Tracking tab charts the trends
+  across years.
+- **Process flow diagram:** `docs/img/StratOS_Process_Flow.png` (and the editable `.excalidraw`): every
+  skill, what it does, what it passes down, and its P&L or valuation impact.
 
 ## Updated Part 1 skills (replace on upload)
 `stratos-case-exhibits` (optional J-1, K-1, K-2, P-T), `stratos-strategic-mapping`, `stratos-globus-coach`.
