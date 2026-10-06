@@ -1,0 +1,6 @@
+driver,today,benchmark,source,controllability
+price,38000,39500,Peer median ASP (illustrative),controllable
+mix_premium,0,600,Best-in-class trim mix (illustrative),controllable
+volume,240000,265000,Peer median utilisation (illustrative),capability-bound
+variable_cost,25000,23500,Peer median cost per unit (illustrative),capability-bound
+fixed_cost,2600000000,2450000000,Peer median SG&A % revenue (illustrative),controllable

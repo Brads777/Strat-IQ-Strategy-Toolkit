@@ -1,0 +1,11 @@
+field,value
+unit,one vehicle (illustrative)
+price,38000
+variable_cost,25000
+fixed_costs,2600000000
+volume,240000
+cac,1500
+units_per_customer_year,0.2
+retention,0.6
+discount_rate,0.10
+service_margin_year,300

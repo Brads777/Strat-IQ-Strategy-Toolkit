@@ -1,0 +1,10 @@
+option,scenario,probability,npv
+A. Move upmarket,strong,30,12
+A. Move upmarket,moderate,50,4
+A. Move upmarket,weak,20,-6
+B. Cut costs,strong,30,6
+B. Cut costs,moderate,50,4
+B. Cut costs,weak,20,1
+C. Do nothing,strong,30,0
+C. Do nothing,moderate,50,0
+C. Do nothing,weak,20,0

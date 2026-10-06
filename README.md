@@ -67,14 +67,18 @@ base rendered five ways**, so they cannot contradict each other:
 
 Each stage skill also works on its own — ask for "a PESTEL of the EV industry" and only that skill runs.
 
-### Part 2 — internal analysis (second session)
+### Parts 2 and 3 — the company, and making the strategy work (v3.0.0)
 
-Part 1, above, reads the industry. **[Part 2](part2/README.md)** reads the company: **Value Chain**,
-**Resources and Capabilities**, **VRIO** and **SWOT** (Case Memo Exhibits H–K), with a replacement
-orchestrator that finds your saved Part 1 work and continues from there. It is a separate, smaller
-upload — `stratos-part2-skills.zip` in the [latest release](../../releases/latest) — installed after
-Part 1. Everything on this page describes Part 1 and is unchanged by it. Instructions:
-**[the Part 2 guide](https://brads777.github.io/stratos-external-analysis/part2-guide.html)**.
+Part 1, above, reads the industry. **[Part 2](part2/README.md)** reads the company: Value Chain, Unit
+Economics, Resources and Capabilities, VRIO, Full Potential, Growth Barriers and SWOT (Case Memo
+Exhibits H-K, with J-1, K-1 and K-2). **[Part 3](part3/README.md)** makes the strategy work: options,
+business case, expected value, a stress test, go-to-market, the plan, KPIs and the pitch (optional
+Exhibits P-T). The release also adds the **GLO-BUS camera and drone industries** to
+[`industries.json`](project-data/industries.json) and a **CIR gap analysis** to the GLO-BUS Coach.
+
+Both parts install together as one upload, `stratos-part2-3-skills.zip` in the
+[latest release](../../releases/latest), on top of Part 1. Instructions:
+**[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: stratos-orchestrator-final
-description: "StratOS Strategic Analysis — the orchestrator for the complete analysis, external and internal. Replaces stratos-orchestrator and takes precedence over it whenever both are installed. On opening it checks the saved ledger to see whether Part 1 (the external analysis: Industry Overview, Competitive Analysis, PESTEL, Porter's Five Forces, Trending Influence Factors, KSFs, Strategic Mapping) has already been done. If it has, it continues from there into Part 2 (the internal analysis of the base company: Value Chain, Resources and Capabilities, VRIO, SWOT with TOWS). If it has not, it runs the entire process from the start. Delivers a detailed, cited research report (Word) and a 15-slide executive PowerPoint, builds the case-memo exhibits C-O, and saves every step to one ledger in Project knowledge so work resumes across chats. Use for 'run StratOS', 'strategic analysis', 'external analysis', 'internal analysis', 'continue my analysis', 'Part 2', 'analyze the EV industry', or 'make X the base company'. Not for running one framework alone."
+description: "StratOS Strategic Analysis: the orchestrator for the whole toolkit. Replaces stratos-orchestrator and takes precedence over it. Reads the saved ledger and continues from the last finished step: Part 1 external analysis (industry, competitors, PESTEL, Five Forces, trends, KSFs, maps), Part 2 internal analysis (value chain, unit economics, VRIO, full potential, growth barriers, SWOT), Part 3 making the strategy work (options, business case, expected value, stress test, go-to-market, plan, KPIs, pitch). Also routes GLO-BUS questions to the GLO-BUS Coach and builds case-memo exhibits. Use for 'run StratOS', 'continue my analysis', 'Part 2', 'Part 3', 'make the strategy work', 'GLO-BUS', or 'make X the base company'. Not for running one framework alone."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -49,10 +49,37 @@ must also be installed.
 | Order | Display name | Skill ID | Stage | Produces |
 |---|---|---|---|---|
 | 9 | Value Chain | `stratos-value-chain` | S8 | The firm's activities by cost, value and evolution stage |
-| 10 | Resources and Capabilities | `stratos-resources-capabilities` | RC | Resources, capabilities, candidate core competencies (inventory mode) |
-| 11 | VRIO Analysis | `stratos-vrio` | S9 | Advantage verdicts, the reality check, the capability stamp on each blue-ocean candidate |
-| 12 | Resources and Capabilities | `stratos-resources-capabilities` | RC | Confirmed core competencies and competitive advantage (finalise mode) |
-| 13 | SWOT Analysis | `stratos-swot` | S10 | Four traced lists and the TOWS strategic options |
+| 10 | Unit Economics | `stratos-unit-economics` | UE | Contribution per unit, break-even, CAC and LTV, sensitivity (J-1) |
+| 11 | Resources and Capabilities | `stratos-resources-capabilities` | RC | Resources, capabilities, candidate core competencies (inventory mode) |
+| 12 | VRIO Analysis | `stratos-vrio` | S9 | Advantage verdicts, the reality check, the capability stamp on each blue-ocean candidate |
+| 13 | Resources and Capabilities | `stratos-resources-capabilities` | RC | Confirmed core competencies and competitive advantage (finalise mode) |
+| 14 | Full Potential | `stratos-full-potential` | FP | The profit gap to benchmark, driver by driver, and how controllable it is (K-1) |
+| 15 | Growth Barriers | `stratos-growth-barriers` | GB | The binding constraint on growth (K-2) |
+| 16 | SWOT Analysis | `stratos-swot` | S10 | Four traced lists and the TOWS strategic options |
+
+**Part 3 — Making the strategy work** (what to do, whether it survives attack, how to make it work).
+Mode D runs it in four moves, with a checkpoint after each step:
+
+| Move | Order | Display name | Skill ID | Produces |
+|---|---|---|---|---|
+| Choose | 17 | Strategic Options | `stratos-strategic-options` | SCQ framing, 3+ options plus do nothing, staged bets (P) |
+| Choose | 18 | Decision Criteria and Matrix | `stratos-decision-criteria`, `stratos-decision-matrix` | Criteria, pros/cons, weighted scoring of the options |
+| Choose | 19 | Business Case | `stratos-business-case` | NPV, IRR, payback, break-even sentence (Q-1) |
+| Choose | — | Pricing | `stratos-pricing` | Only when price is a lever |
+| Choose | — | Synergy Case | `stratos-synergy-case` | Only when an option is a deal |
+| Choose | 20 | Expected Value | `stratos-expected-value` | Expected NPV, maximin, flip point, EVPI (Q-2) |
+| Test | 21 | Stress Test | `stratos-stress-test` | Assumption audit, war-game, risk register, hostile drill (R) |
+| Plan | 22 | Go-to-Market | `stratos-gtm` | Beachhead, ICP, channels, funnel and CAC, launch gates (T) |
+| Plan | 23 | Initiative Prioritizer | `stratos-initiative-prioritizer` | Ranked, traced initiatives cut to capacity (S) |
+| Plan | 24 | Operating Model | `stratos-operating-model` | Must-win capabilities, RAPID, structure, 7S |
+| Plan | 25 | Stakeholder Map | `stratos-stakeholder-map` | Power-interest grid, coalition math, plans for sceptics |
+| Plan | — | Negotiation Prep | `stratos-negotiation-prep` | Only when a deal must be struck |
+| Plan | 26 | Execution Roadmap | `stratos-execution-roadmap` | First 100 days, milestones, stage gates (S) |
+| Track | 27 | Value Realization | `stratos-value-realization` | KPIs now; plan vs actual later |
+| Track | — | Memo Coach | `stratos-memo-coach` | Checks a case memo draft; never writes it |
+| Track | — | Executive and VC Pitch | `stratos-pitch` | Board or VC pitch from the ledger, readiness scorecard |
+
+Steps marked — run only when an option needs them or the user asks. Say when one is skipped and why.
 
 **Deliverable:** `stratos-exec-deck` (Deck) — the 15-slide executive PowerPoint built from the ledger
 and the report.
@@ -66,16 +93,21 @@ and the report.
 | Decision Matrix | `stratos-decision-matrix` | Exhibits N (pros/cons) and M (weighted matrix, `decision_matrix.py`) |
 | Segment Value | `stratos-segment-value` | Exhibit O — segment CLV × customers (`segment_value.py`), when data exists |
 
-**Simulation tool:** `stratos-globus-coach` (GLO-BUS Coach) — for the GLO-BUS simulation (scenario
-`Simulation`). Questions about GLO-BUS decisions, rounds or scores go straight to it; it can use this
-analysis's Five Forces and KSFs when they have been run on the GLO-BUS industry.
+**Simulation tool (mode E):** `stratos-globus-coach` (GLO-BUS Coach). Any question about GLO-BUS
+decisions, rounds, scores, the CIR or the Camera & Drone Journal goes straight to it. It has three
+modes: learn the real camera or drone industry (`cameras` and `drones` in `industries.json`, run as a
+quick StratOS chain), a CIR gap analysis (strategic group maps, white space and next-year moves), and
+year-by-year coaching with guardrails. Part 2 and Part 3 skills also work on a GLO-BUS company: Unit
+Economics, Growth Barriers, Pricing and Value Realization read the team's own reports instead of
+filings.
 
 In Part 1, Industry Overview runs first to set the scene. Competitive Analysis follows because
 competitors' 10-K risk factors and MD&A are primary evidence for PESTEL and for the trending influence
 factors. At report time the Industry Overview runs again in **finalise mode** to add the trends, the
 rivalry score and the roadmap. In Part 2, the Value Chain runs first because capabilities are found in
-the activities; VRIO tests what the inventory lists; and SWOT runs last because it is where the two
-parts meet. Stage ids S1-S10 follow the StratOS build plan (S7, market research, is not in this
+the activities; Unit Economics follows because every later number rests on what one unit earns; VRIO
+tests what the inventory lists; Full Potential and Growth Barriers size the gap and find what binds;
+and SWOT runs last because it is where the two parts meet. Part 3 starts from the SWOT's TOWS options. Stage ids S1-S10 follow the StratOS build plan (S7, market research, is not in this
 toolkit); IO, CI, KSF and RC are named rather than numbered so the plan's cross-references stay valid.
 
 If a stage skill does not load, run that stage with the standard framework, put a note at the top of
@@ -84,7 +116,7 @@ its output saying it ran without its skill, and continue.
 ## Step 0 — Intro screen and mode
 
 When this skill opens, show the intro screen from `templates/intro.md`: what StratOS does, the steps in
-the two parts, and the ways to work. In Claude.ai, render it as a clean, visually structured card (a
+the three parts, and the ways to work. In Claude.ai, render it as a clean, visually structured card (a
 simple self-contained artifact is fine); elsewhere, as formatted text. Then offer the choice with the
 interactive widget:
 
@@ -94,7 +126,13 @@ interactive widget:
 - **C. Build my case-memo exhibits** — hand off to `stratos-case-exhibits`, which asks the student
   for the case facts (the cases are persona interviews, so there is no case document): company,
   industry, competitors and interview notes. It sets the scope from them and builds the course
-  template's Exhibits C-O. The student writes the memo, Exhibits A-B and every Impact Summary.
+  template's Exhibits C-O (and, if asked, the optional J-1, K-1, K-2 and P-T). The student writes the
+  memo, Exhibits A-B and every Impact Summary.
+- **D. Make the strategy work** — Part 3 from the saved ledger: confirm the 1-3 decisions it must
+  answer, then Choose → Test → Plan → Track, with a checkpoint after every step. Needs Part 2 at least
+  through SWOT (R15); if it is missing, offer to run it first.
+- **E. Help with GLO-BUS** — hand off to `stratos-globus-coach`, which asks which of its three modes
+  the team needs (learn the real industry, CIR gap analysis, year coaching).
 
 The user can switch modes at any time: "walk me through the rest" turns a question into a guided run
 from wherever the ledger stands.
@@ -130,8 +168,10 @@ Judge by the sections present, not only by the `checkpoint` field.
 |---|---|
 | **Part 1 complete** | Say so, with the industry, base company and `asof` date. Skip the intake. **Continue from there: start Part 2** at Value Chain. |
 | **Part 1 partly done** | Say which stage it reached. Resume Part 1 at the next missing stage, finish it, then run Part 2. |
-| **Part 2 partly done** | Resume Part 2 at the next missing stage. |
-| **Both parts complete** | Offer the report and deck, a base-company swap, or a refresh of stale items. |
+| **Part 2 partly done** | Resume Part 2 at the next missing stage. A ledger from v2 without `unit_economics`, `full_potential` or `growth_barriers` is Part 2 partly done: run only those three. |
+| **Parts 1 and 2 complete** | Say so. Offer mode D (Part 3), the report and deck, a base-company swap, or a refresh of stale items. |
+| **Part 3 partly done** | Resume mode D at the next missing step of `strategy_layer`. |
+| **The request is about GLO-BUS** | Skip the check; go to `stratos-globus-coach`. A GLO-BUS ledger is separate from the course-industry ledger. |
 | **No ledger, or the ledger is for a different industry** | **Run the entire process**: the intake (Steps 2-4), Part 1, then Part 2. |
 
 **4. Before continuing from an existing Part 1, check three things:**
@@ -173,6 +213,20 @@ them, `stratos-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | "What if X were the base company?" | the base-company swap (below) |
 | A deck, slides, a presentation | the full chain if the ledger is incomplete → Executive Deck |
 | Case-memo exhibits, decision criteria, decision matrix, pros/cons, segment CLV | Case Memo Exhibits (mode C), or the single case-memo tool asked for |
+| Contribution per unit, break-even volume, CAC, LTV | … → Value Chain → Unit Economics |
+| How much better the company could perform, the profit gap | … → Unit Economics → VRIO → Full Potential |
+| What is holding growth back, the bottleneck | … → Full Potential → Growth Barriers |
+| What the company's options are, build vs partner vs buy | Part 2 through SWOT → Strategic Options |
+| Whether an option is worth it, NPV, IRR | … → Strategic Options → Business Case |
+| Which option is the better bet under uncertainty | … → Business Case → Expected Value |
+| What price to charge; whether a deal's synergies cover the premium; how to negotiate it | Pricing; Synergy Case; Negotiation Prep (each needs Strategic Options and Business Case) |
+| What could go wrong, war-game, risk register, hostile questions | … → Expected Value → Stress Test (one module if asked) |
+| How to win customers, beachhead, channels, CAC | … → Stress Test → Go-to-Market |
+| What to do first, organisation, stakeholders, first 100 days | … → Initiative Prioritizer → Operating Model → Stakeholder Map → Execution Roadmap |
+| KPIs, plan vs actual | Value Realization |
+| Feedback on a memo draft | Memo Coach |
+| A board or investor pitch | the Part 3 chain the ledger lacks → Pitch |
+| Anything about GLO-BUS, the CIR or the Camera & Drone Journal | `stratos-globus-coach` |
 
 4. **Say what you ran.** Start the answer with one line: which stages ran, which came from the ledger,
    and any stage run in quick depth. Then answer the question directly, citing evidence ids.
@@ -266,9 +320,30 @@ stated reason. Resolve conflicts or record them.
   pairs.
 - **R12** — after VRIO, no blue-ocean candidate is still stamped `capability: "UNVALIDATED"`.
 
+- **R13** — Unit Economics keeps fixed and variable costs apart, and every input is cited, `[estimate]`
+  or `[ask in interview]`.
+- **R14** — Growth Barriers names one binding constraint (or a justified pair), with evidence.
+
 **Consistency check after SWOT:** no strength rests on a competence trap; no SO option rests on a
 candidate stamped `capability: "gap"`; and the base company's KSF Tier 2 strategy agrees with the
 competitive advantage Part 2 found — or the disagreement is reported as a finding.
+
+**Part 3**
+
+- **R15** — Part 3 does not start until Part 2 has reached SWOT. Options built without TOWS, VRIO and
+  the binding constraint are guesses.
+- **R16** — at least three structurally different options plus do nothing, each tracing to a TOWS
+  option, KSF gap, supported whitespace or the binding constraint. In a case, the student confirms the
+  list; anything Claude adds is marked `SUGGESTED`.
+- **R17** — every Business Case and Expected Value input is cited or listed as an assumption, and every
+  listed assumption appears in the Stress Test's audit.
+- **R18** — every initiative, milestone and KPI traces to a finding, an option, a mitigation or the GTM
+  plan. Nothing new appears in the plan.
+- **R19** — in a graded case, Part 3 never writes the recommendation, memo text or an Impact Summary.
+  GTM's CAC fits Unit Economics, or the conflict is reported.
+
+**Between Choose and Test**, checkpoint even on "run it all": show the options with NPV and expected
+value, and ask which option to stress-test. The choice is the user's.
 
 A failed check sends the stage back once with the reason. If it fails again, pass it through with the
 failure listed in `warnings` and shown at the checkpoint.
@@ -284,7 +359,8 @@ The ledger has two layers:
 
 When the user says "make X the base company", keep the industry layer, set the new base company, and
 rerun **KSF Tier 2**, **Strategic Mapping**, and then **Part 2 in full** — a different firm has
-different activities, resources and capabilities. Say which layer was reused and its `asof` date. This
+different activities, resources and capabilities. Any `strategy_layer` (Part 3) belongs to the old base
+company: archive it under `strategy_layer_archive[]` and offer to run mode D again. Say which layer was reused and its `asof` date. This
 is the class's central point: industry forces are shared, and positioning is a choice.
 
 ## Where the ledger lives
@@ -356,18 +432,30 @@ Sections:
     cannot serve it.
 11. **SWOT and strategic options** — the four traced lists and the TOWS matrix.
 
+    Before SWOT in this part: **unit economics**, **full potential** (the bridge) and **growth
+    barriers** (the binding constraint).
+
 **Part III — Position and opportunity**
 
 12. **Implications for the perspective** — 3-5 moves, each tied to a TOWS option, a KSF gap or a
-    supported whitespace.
+    supported whitespace. (When Part 3 has run, this section summarises it and points to Part IV.)
 13. **Watch list** — leading indicators, each with the threshold that would trigger a re-run.
 14. **Consistency check and confidence** — cross-stage results, open conflicts, data gaps.
 
-15. **References** — the numbered source list.
-16. **Appendices** — full stage tables, methodology, and the scoring method used (`api` or
+**Part IV — Making the strategy work** (only when mode D has run)
+
+15. **Options and the choice** — SCQ, options, decision matrix, business case, expected value.
+16. **Stress test** — danger-zone assumptions, war-game, top risks.
+17. **Go-to-market and plan** — beachhead and CAC, ranked initiatives, operating model, stakeholders,
+    first 100 days and gates.
+18. **KPIs** — the scorecard and its triggers.
+
+19. **References** — the numbered source list.
+20. **Appendices** — full stage tables, methodology, and the scoring method used (`api` or
     `public-screen`).
 
-If the user stops after Part 1, deliver the report without Part II and say that the blue-ocean
+In a graded case, Part IV presents the student's confirmed options and inputs and contains no
+recommendation. If the user stops after Part 1, deliver the report without Part II and say that the blue-ocean
 candidates remain `capability: "UNVALIDATED"`.
 
 ### 2. The executive deck

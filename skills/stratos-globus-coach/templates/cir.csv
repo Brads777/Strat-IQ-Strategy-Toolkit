@@ -1,0 +1,17 @@
+company,product,region,price,pq,models,ads,support,warranty,share
+A,camera,Global,279,4.2,5,8.5,6,90,14.0
+B,camera,Global,239,3.4,4,6.0,4,60,16.5
+C,camera,Global,264,4.0,5,7.5,5,90,12.0
+D,camera,Global,319,5.1,6,9.0,7,180,11.0
+E,camera,Global,299,3.6,5,10.5,8,90,9.5
+F,camera,Global,229,3.0,3,5.0,3,60,13.0
+G,camera,Global,259,4.4,5,7.0,5,120,12.5
+H,camera,Global,249,3.8,4,6.5,4,90,11.5
+A,drone,Global,1199,4.0,4,5.0,10,90,13.0
+B,drone,Global,1049,3.2,3,4.0,12,60,17.0
+C,drone,Global,1237,4.2,4,5.5,12,90,12.0
+D,drone,Global,1449,5.6,5,6.5,10,180,10.5
+E,drone,Global,1349,3.9,4,7.5,15,90,9.0
+F,drone,Global,999,3.0,3,3.5,10,60,14.5
+G,drone,Global,1289,4.6,4,5.0,12,120,12.5
+H,drone,Global,1149,3.7,3,4.5,11,90,11.5

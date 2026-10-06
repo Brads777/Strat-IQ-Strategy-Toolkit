@@ -1,70 +1,85 @@
-# StratOS Part 2 — Internal Analysis
+# StratOS Parts 2 + 3 — Internal Analysis and Making the Strategy Work
 
-**The second session of StratOS.** Part 1 (the skills in [`../skills`](../skills)) reads the industry:
-what it rewards and where the empty space is. Part 2 reads the **company**: what it can actually do
-about it.
+**Released together as v3.0.0.** Part 1 (the skills in [`../skills`](../skills)) reads the industry.
+**Part 2** (this folder) reads the **company**. **[Part 3](../part3/README.md)** turns both into a
+strategy that works. This release also adds the **GLO-BUS camera and drone industries** and a CIR gap
+analysis to the GLO-BUS Coach.
 
-Part 2 is a separate, smaller upload. It adds to the fourteen Part 1 skills; it does not replace them,
-apart from the orchestrator.
+One upload, `stratos-part2-3-skills.zip`, installs both parts on top of Part 1.
 
-## What it adds
+## What Part 2 adds
 
-| Display name | Skill ID | What it produces |
+| Display name | Skill ID | Exhibit |
 |---|---|---|
-| **Strategic Analysis** | [`stratos-orchestrator-final`](skills/stratos-orchestrator-final/SKILL.md) | Replaces `stratos-orchestrator`. Checks the saved ledger: if Part 1 is done it continues into Part 2; if not, it runs the entire process |
-| **Value Chain** | [`stratos-value-chain`](skills/stratos-value-chain/SKILL.md) | Exhibit J — Porter's activities with cost share against value share ([`value_chain.py`](skills/stratos-value-chain/scripts/value_chain.py)), each filed under its evolution stage: commodity, product, custom, genesis |
-| **Resources and Capabilities** | [`stratos-resources-capabilities`](skills/stratos-resources-capabilities/SKILL.md) | Exhibit H — resources, capabilities, core competencies, competitive advantage |
-| **VRIO Analysis** | [`stratos-vrio`](skills/stratos-vrio/SKILL.md) | Exhibit I — four tests in order on cited evidence ([`vrio_screen.py`](skills/stratos-vrio/scripts/vrio_screen.py)), competence-trap check against the KSFs, and the capability stamp on each blue-ocean candidate |
-| **SWOT Analysis** | [`stratos-swot`](skills/stratos-swot/SKILL.md) | Exhibit K — four lists traced to the earlier stages, crossed into SO, WO, ST and WT strategic options |
+| **Strategic Analysis** | [`stratos-orchestrator-final`](skills/stratos-orchestrator-final/SKILL.md) | Replaces `stratos-orchestrator`. Finds the saved ledger and continues from the last finished step through Parts 1, 2 and 3. Modes A-E, including **D. Make the strategy work** and **E. Help with GLO-BUS** |
+| **Value Chain** | [`stratos-value-chain`](skills/stratos-value-chain/SKILL.md) | J — activities by cost share, value share and evolution stage ([`value_chain.py`](skills/stratos-value-chain/scripts/value_chain.py)) |
+| **Unit Economics** | [`stratos-unit-economics`](skills/stratos-unit-economics/SKILL.md) | J-1 — contribution per unit, break-even, CAC, LTV, sensitivity ([`unit_economics.py`](skills/stratos-unit-economics/scripts/unit_economics.py)) |
+| **Resources and Capabilities** | [`stratos-resources-capabilities`](skills/stratos-resources-capabilities/SKILL.md) | H — resources, capabilities, core competencies, competitive advantage |
+| **VRIO Analysis** | [`stratos-vrio`](skills/stratos-vrio/SKILL.md) | I — the four tests on cited evidence ([`vrio_screen.py`](skills/stratos-vrio/scripts/vrio_screen.py)) and the capability stamp on each blue-ocean candidate |
+| **Full Potential** | [`stratos-full-potential`](skills/stratos-full-potential/SKILL.md) | K-1 — the profit bridge to benchmark, driver by driver ([`full_potential.py`](skills/stratos-full-potential/scripts/full_potential.py)) |
+| **Growth Barriers** | [`stratos-growth-barriers`](skills/stratos-growth-barriers/SKILL.md) | K-2 — the one binding constraint on growth |
+| **SWOT Analysis** | [`stratos-swot`](skills/stratos-swot/SKILL.md) | K — four traced lists crossed into SO, WO, ST and WT options |
 
-Two Part 1 skills are updated to work with these:
+Three Part 1 skills are updated and replace their Part 1 copies:
 
 | Skill | Change |
 |---|---|
-| [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Builds the Case Analysis Memo exhibits C–O, including H–K |
-| [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Blue-ocean candidates move from `capability: UNVALIDATED` to `supported` or `gap` once VRIO has run |
+| [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Exhibits C-O plus the optional J-1, K-1, K-2 and P-T |
+| [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Blue-ocean candidates move from `UNVALIDATED` to `supported` or `gap` once VRIO has run |
+| [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Three modes: learn the real camera and drone industries · **CIR gap analysis** with strategic group maps ([`globus_groups.py`](skills/stratos-globus-coach/scripts/globus_groups.py)) · year coaching with guardrails. Student fill-in template: [`cir-gap-prompt.md`](skills/stratos-globus-coach/references/cir-gap-prompt.md) |
 
-## How Part 2 connects to Part 1
+## GLO-BUS: cameras and drones
 
-- **It picks up where Part 1 stopped.** Everything Part 1 produced is in the `strategy-ledger` file.
-  The new orchestrator reads it, keeps the finished work, and starts at Value Chain.
-- **VRIO tests the map.** A whitespace found in Part 1 is only an opportunity if this company can
-  reach it. VRIO sets each candidate to `supported` or `gap`.
-- **Nothing is brainstormed.** Every strength, weakness, opportunity and threat points to the finding
-  it came from. Internal facts come from filings or the user's own notes; gaps are marked
-  `[ask in interview]`, never filled in.
+[`../project-data/industries.json`](../project-data/industries.json) (version 2) adds two industries
+that mirror the GLO-BUS product lines:
+
+| id | Mirrors | Competitors |
+|---|---|---|
+| `cameras` | AC cameras | GoPro, Garmin, DJI (Osmo), Insta360, Akaso |
+| `drones` | UAV drones | DJI, Parrot, Skydio, Autel Robotics, Yuneec |
+
+They are **analogues, not answer keys**: students use them to understand why a lever matters (margins,
+retailer discounts, R&D intensity, low-cost vs premium positioning), never to copy numbers into the
+game. After each round, students paste their Competitive Intelligence Report and get strategic group
+maps, the share leader's driver, the weakest rival, reachable white space, and 3-5 moves checked
+against the guardrails. **The team still makes and enters every decision.**
 
 ## Install
 
-Step-by-step, with links: **[the Part 2 guide](https://brads777.github.io/stratos-external-analysis/part2-guide.html)**
-(source: [`../docs/part2-guide.html`](../docs/part2-guide.html)). The short version:
+Step by step, with links:
+**[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**
+(source: [`../docs/part2-3-guide.html`](../docs/part2-3-guide.html)). The short version:
 
 ### Claude.ai
 
-1. Download **`stratos-part2-skills.zip`** from the **[latest release](https://github.com/Brads777/stratos-external-analysis/releases/latest)** and
-   unzip it once. Inside are seven zips, one per skill (leave those zipped).
-2. In **Settings → Capabilities → Skills**, upload the five new skills, then upload
-   `stratos-case-exhibits` and `stratos-strategic-mapping` again to replace the Part 1 versions.
-3. Switch **off** `stratos-orchestrator`. Leave `stratos-orchestrator-final` on.
-4. Make sure your saved `strategy-ledger` file is in the Project's knowledge.
-5. Open a new chat in the Project and type **"Run StratOS and continue my analysis from where I left
-   off."**
+1. Download **`stratos-part2-3-skills.zip`** from the
+   **[latest release](https://github.com/Brads777/stratos-external-analysis/releases/latest)** and unzip
+   it once. Inside are 26 zips, one per skill. Leave those zipped.
+2. In **Settings → Capabilities → Skills**, **delete** your current copies of
+   `stratos-case-exhibits`, `stratos-strategic-mapping` and `stratos-globus-coach` (and
+   `stratos-orchestrator-final` and the other Part 2 skills, if you installed v1.7.0).
+3. Upload all 26 zips.
+4. Switch **off** `stratos-orchestrator` (the Part 1 orchestrator). You should have **36 StratOS skills
+   on**.
+5. Replace `industries.json` in your Project knowledge with the new version (it adds `cameras` and
+   `drones`), and make sure your saved `strategy-ledger` file is there too.
+6. New chat in the Project: **"Run StratOS."** The intro should show three parts and modes A-E.
+
+If your account limits how many skills can be on at once, keep the orchestrator and the skills you are
+using this week switched on; the others still run from the standard framework, with a note.
 
 ### Claude Code
 
 ```bash
 cp -r stratos-external-analysis/part2/skills/stratos-* ~/.claude/skills/
+cp -r stratos-external-analysis/part3/skills/stratos-* ~/.claude/skills/
 rm -r ~/.claude/skills/stratos-orchestrator      # the final orchestrator replaces it
 ```
 
-The ledger at `.strategy/ledgers/<scope>.json` is found automatically. The two scripts need Python
-3.10+.
-
 ## What is not included
 
-The proprietary capability-fit scoring (SFI) runs behind the private StratOS API and is not in this
-repository. Without it, VRIO uses a transparent public screen — a link check against the industry's
-KSFs — and stamps its output `method: "public-screen"`.
+The proprietary capability-fit scoring (SFI) runs behind the private StratOS API. Without it, VRIO uses
+a transparent public screen and stamps its output `method: "public-screen"`.
 
 ## Licence
 

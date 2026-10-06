@@ -1,0 +1,4 @@
+channel,target_customers,stage_rates,cost_per_lead,cost_per_sale,fixed_cost
+Online configurator,30000,0.25>0.30>0.20,15,250,4000000
+Dealer partners,50000,0.35>0.40,80,1050,0
+Fleet sales,20000,0.30>0.50,150,300,3000000

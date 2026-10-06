@@ -193,8 +193,47 @@ Values below are synthetic.
         "threats":       [ { "id": "T1", "text": "…", "source": ["P3"] } ]
       },
       "tows": [ { "id": "SO1", "pairs": ["S1", "O1"], "option": "…" } ],
+      "unit_economics": {                      // written by stratos-unit-economics (J-1)
+        "unit": "one vehicle", "lines": [ { "line": "ASP", "value": 0, "peer_median": 0,
+        "position": "behind", "evidence": [] } ], "break_even": 0, "margin_of_safety": 0.17,
+        "ltv_cac": 4.5, "payback_months": 6, "top_driver": "price"
+      },
+      "full_potential": {                      // written by stratos-full-potential (K-1)
+        "drivers": [ { "driver": "variable_cost", "today": 0, "benchmark": 0, "benchmark_source": "peer median",
+                       "gap_value": 0, "controllability": "capability-bound", "traces_to": "K3" } ],
+        "bridge": { "current": 0, "full_potential": 0 }, "largest_controllable": "price"
+      },
+      "growth_barriers": {                     // written by stratos-growth-barriers (K-2)
+        "binding": "supply", "to_lift": "…", "unlocked": "…",
+        "barriers": [ { "barrier": "demand", "status": "slack", "evidence": [] } ]
+      },
       "ask_in_interview": [ "…" ]
     }
+  },
+
+  "strategy_layer": {                          // Part 3 — written in mode D
+    "decisions": [ "How should Firm A compete below $35k by 2029?" ],
+    "options": { "scq": {}, "issue_tree": [], "options": [ { "id": "O-A", "name": "…", "route": "partner",
+                 "exploits": ["SO1"], "staged_step": "…", "gate": "…", "suggested": false } ],
+                 "confirmed_by_user": true },
+    "business_case": [ { "option": "O-A", "npv": 0, "irr": 0.095, "payback": 4.2,
+                         "break_even_revenue_change": 0.005, "assumptions": [] } ],
+    "pricing": {}, "synergy_case": {}, "negotiations": [],
+    "expected_value": { "leader": "O-A", "maximin": "O-B", "evpi": 0, "flip_points": {} },
+    "chosen_option": "O-A",                    // set by the user, never by Claude
+    "stress_test": { "assumptions": [], "war_game": [], "risks": [], "drill": [] },
+    "gtm": { "beachhead": "…", "icp": "…", "value_prop": "…", "channels": [], "blended_cac": 0, "phases": [] },
+    "initiatives": [ { "id": "I1", "initiative": "…", "traces_to": "GB:supply", "rice": 0, "status": "now" } ],
+    "operating_model": {}, "stakeholders": {},
+    "roadmap": { "first_100_days": [], "milestones": [], "gates": [] },
+    "kpis": [ { "kpi": "…", "traces_to": "K2", "leading": "…", "target": "…", "owner": "…", "trigger": "…" } ],
+    "actuals": [], "pitch": {}
+  },
+
+  "globus": {                                  // GLO-BUS Coach; kept in its own ledger file
+    "company": "C", "strategy": { "cameras": "best-cost", "drones": "differentiation" },
+    "cir_log": [ { "year": 6, "groups": {}, "leader": {}, "white_space": [], "moves": [] } ],
+    "decisions_log": [ { "year": 7, "moves": [], "projected": {}, "actual": {} } ]
   },
 
   "stale": [],
@@ -211,8 +250,10 @@ Values below are synthetic.
 - **Part 1 and Part 2.** Part 1 (external) is complete when `industry_layer` holds the overview,
   PESTEL, forces, drivers and KSFs and `company_layer` holds `ksf_view`, the maps and `candidates`.
   Part 2 (internal) writes `company_layer.internal`. A ledger with no `internal` key is a finished or
-  unfinished Part 1, not a broken ledger. `checkpoint` takes the stage ids IO, CI, S1-S6, KSF, S8, RC,
-  S9, S10.
+  unfinished Part 1, not a broken ledger. `checkpoint` takes the stage ids IO, CI, S1-S6, KSF, S8, UE,
+  RC, S9, FP, GB, S10, and for Part 3 OPT, BC, EV, ST, GTM, IP, OM, SM, RM, VR.
+- **Part 3** writes only `strategy_layer`. It never edits Parts 1-2, except that Value Realization adds
+  actuals as new evidence and marks dependent ids `stale`.
 - **Staleness.** When an evidence item passes `expires`, add every dependent id (findings, forces,
   drivers, KSFs) to `stale` and say so on the next hydration. Re-check cadence follows `volatility`:
   fast weekly, seasonal quarterly, stable annually.

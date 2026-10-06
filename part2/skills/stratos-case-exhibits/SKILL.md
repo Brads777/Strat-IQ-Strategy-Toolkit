@@ -1,6 +1,6 @@
 ---
 name: stratos-case-exhibits
-description: "StratOS Case Memo Exhibits. Builds the Exhibits section of the MGT4850 Case Analysis Memo in the course template's exact order and headings — C Industry Overview, D PESTEL, E Five Forces, F Strategic Map (current plus top 3 disruptions), G Key Success Factors, H Resources and Capabilities, I VRIO, J Value Chain, K SWOT, L Decision Criteria and Weights, M Decision Matrix, N Pros and Cons, O Segment CLV — by running the StratOS skills on the case facts the student enters (the course cases are interactive persona interviews, so there is no case document), with every Impact Summary left blank for the student. Never writes the memo, Exhibit A or Exhibit B. Use for 'case exhibits', 'build my exhibits', 'case memo exhibits', or 'fill in the template exhibits'."
+description: "StratOS Case Memo Exhibits. Builds the Exhibits section of the MGT4850 Case Analysis Memo in the course template's exact order and headings — C Industry Overview, D PESTEL, E Five Forces, F Strategic Map (current plus top 3 disruptions), G Key Success Factors, H Resources and Capabilities, I VRIO, J Value Chain, K SWOT, L Decision Criteria and Weights, M Decision Matrix, N Pros and Cons, O Segment CLV, plus optional supplementary exhibits (J-1 Unit Economics, K-1 Full Potential, K-2 Growth Barriers, P Strategic Options, Q-1 Business Case, Q-2 Expected Value, R Stress Test, S Implementation Plan, T Go-to-Market) — by running the StratOS skills on the case facts the student enters (the course cases are interactive persona interviews, so there is no case document), with every Impact Summary left blank for the student. Never writes the memo, Exhibit A or Exhibit B. Use for 'case exhibits', 'build my exhibits', 'case memo exhibits', or 'fill in the template exhibits'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -62,6 +62,27 @@ interview.
 | M. Decision Matrix | `stratos-decision-matrix` | One matrix per management question |
 | N. Pros and Cons Analysis | `stratos-decision-matrix` | Built before M |
 | O. Customer Segment Lifetime Value | `stratos-segment-value` | **Only if relevant and the student's interview notes give the data**; otherwise omit it (the template marks it optional) |
+
+### Optional exhibits (not in the template)
+
+Build these **only when the student asks**, and only when they strengthen the argument, not to pad the
+memo. Each carries a blank Impact Summary; none contains the recommendation.
+
+| Exhibit | Built by | Built from |
+|---|---|---|
+| J-1. Unit Economics | `stratos-unit-economics` | Interview-note costs and prices; gaps `[ask in interview]` |
+| K-1. Full Potential | `stratos-full-potential` | Unit Economics and peer benchmarks |
+| K-2. Growth Barriers | `stratos-growth-barriers` | Parts 1-2 evidence; one binding constraint |
+| P. Strategic Options | `stratos-strategic-options` | **The student's confirmed alternatives**, with the SCQ and issue tree |
+| Q-1. Business Case | `stratos-business-case` | **Inputs the student confirms**: NPV, IRR, payback, break-even |
+| Q-2. Expected Value | `stratos-expected-value` | **The student's probabilities**: expected NPV, risk, sensitivity, EVPI |
+| R. Stress Test | `stratos-stress-test` | The student's recommendation as written: assumptions, responses, risks |
+| S. Implementation Plan | `stratos-initiative-prioritizer`, `stratos-execution-roadmap`, `stratos-value-realization` | Ranked initiatives, first 100 days, milestones, KPIs |
+| T. Go-to-Market Plan | `stratos-gtm` | Beachhead, ICP, channels, funnel and CAC from the student's strategy |
+
+Place J-1 after J, K-1 and K-2 after K, and P-T after O. Claude may propose options, ranges or
+probabilities only when the student asks, each marked `SUGGESTED`; the student confirms before the
+exhibit is built.
 
 The template letters the CLV exhibit "I", which duplicates VRIO; use **O** unless the instructor says
 otherwise.
@@ -139,6 +160,7 @@ write.
 
 ## Rules
 
+- In P-T, never state or imply which alternative should be chosen; that is the memo's job.
 - Do not write the memo or any part of it: no Key Issues paragraph, recommendations, analysis
   paragraphs or conclusion.
 - Do not draft Impact Summaries, even if asked to "finish the exhibits". Explain that the summary is

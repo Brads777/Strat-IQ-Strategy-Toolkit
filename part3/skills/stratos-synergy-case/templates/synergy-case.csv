@@ -1,0 +1,12 @@
+item,type,run_rate,start_year,ramp_years,haircut
+rate,setting,0.10,,,
+horizon,setting,10,,,
+margin,setting,0.25,,,
+tax,setting,0.21,,,
+Joint battery procurement,cost,180000000,1,3,
+Shared platform R&D,cost,120000000,2,3,
+Overlapping SG&A,cost,60000000,1,2,
+Cross-selling through partner dealers,revenue,900000000,2,4,0.40
+Systems and plant integration,integration,350000000,1,,
+Retention and severance,integration,120000000,1,,
+Premium over standalone value,premium,1500000000,0,,

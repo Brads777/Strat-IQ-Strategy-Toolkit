@@ -1,0 +1,7 @@
+id,initiative,traces_to,reach,impact,confidence,effort,cost_of_delay,depends_on,binding
+I1,Qualify a second cell supplier,Growth Barriers: supply (binding),100000,3,0.8,12,3,,yes
+I2,Close the variable-cost gap to peer median,Full Potential: variable cost,100000,2,0.8,10,2,I1,
+I3,Launch fleet-sales team for the beachhead,Go-to-Market: beachhead,20000,2,0.8,6,2,,
+I4,Pilot in one EU market before the plant decision,Strategic Options: staged step,15000,1,1.0,4,2,,
+I5,Build in-house battery-management software,VRIO: capability gap,100000,2,0.5,24,1,I1,
+I6,Index supply contracts to lithium with a cap,Stress Test: R4 mitigation,100000,0.5,1.0,2,1,,

@@ -1,7 +1,7 @@
 {
-  "_about": "StratOS industry registry. Read by stratos-orchestrator Steps 1-2. Upload to Claude.ai Project knowledge. Users may append industries; entries with locked=true keep a fixed class competitor list.",
-  "version": 1,
-  "updated": "2026-09-30",
+  "_about": "StratOS industry registry. Read by the StratOS orchestrator (Steps 1-2) and the GLO-BUS Coach (benchmark mode). Upload to Claude.ai Project knowledge. Users may append industries; entries with locked=true keep a fixed class competitor list. Entries with a 'globus' block are real-world analogues of a GLO-BUS product line: use them to learn the economics, never to copy numbers into the simulation.",
+  "version": 2,
+  "updated": "2026-10-05",
   "industries": [
     {
       "id": "ev",
@@ -13,11 +13,107 @@
       "course": "MGT4850 Fall 2026",
       "locked": true,
       "competitors": [
-        { "name": "BYD", "ownership": "public", "ticker": "1211.HK" },
-        { "name": "Stellantis", "ownership": "public", "ticker": "STLA" },
-        { "name": "Xiaomi", "ownership": "public", "ticker": "1810.HK" }
+        {
+          "name": "BYD",
+          "ownership": "public",
+          "ticker": "1211.HK"
+        },
+        {
+          "name": "Stellantis",
+          "ownership": "public",
+          "ticker": "STLA"
+        },
+        {
+          "name": "Xiaomi",
+          "ownership": "public",
+          "ticker": "1810.HK"
+        }
       ],
       "_todo": "Brad to confirm the full class list. From the Week 3 image only BYD, Stellantis and Xiaomi are EV makers; Alibaba, Mars, Mondelez, Nubank and Saudi Aramco were not added."
+    },
+    {
+      "id": "cameras",
+      "name": "Action-capture cameras (GLO-BUS AC camera analogue)",
+      "boundary": "Compact, wearable and mountable action-capture video cameras and their accessories, software and retail distribution across four regions. Excludes DSLR and mirrorless professional cameras, fixed CCTV and security cameras, and smartphone camera modules. Substitutes to weigh: flagship smartphones with stabilised video, 360-degree handheld cameras, and smartphone gimbals.",
+      "geography": "Global (North America, Europe-Africa, Asia-Pacific, Latin America)",
+      "horizon": "2026-2029",
+      "scenario": "Academic (GLO-BUS benchmark)",
+      "course": "MGT4850 Fall 2026",
+      "locked": true,
+      "globus": {
+        "product_line": "AC cameras",
+        "use": "Real-world analogue for camera pricing, P/Q trade-offs, retailer channel margins and marketing intensity."
+      },
+      "competitors": [
+        {
+          "name": "GoPro",
+          "ownership": "public",
+          "ticker": "GPRO"
+        },
+        {
+          "name": "Garmin",
+          "ownership": "public",
+          "ticker": "GRMN"
+        },
+        {
+          "name": "DJI (Osmo series)",
+          "ownership": "private",
+          "ticker": null
+        },
+        {
+          "name": "Insta360 (Arashi Vision)",
+          "ownership": "public",
+          "ticker": "688775.SS"
+        },
+        {
+          "name": "Akaso",
+          "ownership": "private",
+          "ticker": null
+        }
+      ],
+      "_note": "GoPro is the closest public pure-play analogue. Garmin reports action cameras inside a larger segment, so its camera economics are partly hidden. Akaso illustrates low-cost, high-volume assembly; Garmin and Insta360 illustrate premium, feature-led differentiation."
+    },
+    {
+      "id": "drones",
+      "name": "Camera drones (GLO-BUS UAV drone analogue)",
+      "boundary": "Unmanned aerial vehicle (UAV) quadcopters and multi-rotors with integrated stabilised cameras, for consumer imaging and commercial uses (inspection, agriculture, real estate, construction, surveying). Covers airframes, flight controllers, obstacle-avoidance sensors, batteries and online and retail sales. Excludes military and defence aerospace, cargo drones and passenger eVTOL. Substitutes to weigh: satellite remote sensing, fixed mast cameras, manned aerial survey, and handheld camera rigs.",
+      "geography": "Global (North America, Europe-Africa, Asia-Pacific, Latin America)",
+      "horizon": "2026-2029",
+      "scenario": "Academic (GLO-BUS benchmark)",
+      "course": "MGT4850 Fall 2026",
+      "locked": true,
+      "globus": {
+        "product_line": "UAV drones",
+        "use": "Real-world analogue for drone R&D intensity, vertical integration, battery and component cost trade-offs, online sales and warranty dynamics."
+      },
+      "competitors": [
+        {
+          "name": "DJI",
+          "ownership": "private",
+          "ticker": null
+        },
+        {
+          "name": "Parrot",
+          "ownership": "public",
+          "ticker": "PARRO.PA"
+        },
+        {
+          "name": "Skydio",
+          "ownership": "private",
+          "ticker": null
+        },
+        {
+          "name": "Autel Robotics",
+          "ownership": "private",
+          "ticker": null
+        },
+        {
+          "name": "Yuneec",
+          "ownership": "private",
+          "ticker": null
+        }
+      ],
+      "_note": "DJI is the benchmark for share, product-line segmentation and vertical integration but files no public accounts; use reported estimates marked [estimate]. Skydio and Autel illustrate software-led and commercial-segment differentiation. US restrictions on Chinese drone makers are a live PESTEL factor."
     }
   ]
 }

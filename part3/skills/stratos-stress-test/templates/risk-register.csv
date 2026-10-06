@@ -1,0 +1,6 @@
+id,risk,category,likelihood,impact,velocity,owner,mitigation
+R1,Second cell supplier fails qualification,operational,3,5,medium,VP Quality,Dual-track qualification with a third supplier from month 4
+R2,EU tariff on imported EVs rises,regulatory,3,4,fast,,Monitor closely
+R3,Price war in the sub-€30k segment,strategic,4,4,medium,CCO,Monitor
+R4,Battery cost falls slower than plan,financial,3,3,slow,CFO,Index supply contracts to lithium price with a cap
+R5,Software recall damages brand,reputational,2,4,fast,CTO,Staged over-the-air rollout with 5% canary fleet
