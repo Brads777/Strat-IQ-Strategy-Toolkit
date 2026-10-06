@@ -62,21 +62,22 @@ Mode D runs it in four moves, with a checkpoint after each step:
 
 | Move | Order | Display name | Skill ID | Produces |
 |---|---|---|---|---|
-| Choose | 17 | Strategic Options | `stratos-strategic-options` | SCQ framing, 3+ options plus do nothing, staged bets (P) |
-| Choose | 18 | Decision Criteria and Matrix | `stratos-decision-criteria`, `stratos-decision-matrix` | Criteria, pros/cons, weighted scoring of the options |
-| Choose | 19 | Business Case | `stratos-business-case` | NPV, IRR, payback, break-even sentence (Q-1) |
+| Choose | 17 | Strategy Interview | `stratos-strategy-interview` | One question at a time, the student chooses their own strategy and positioning from the evidence; positioning statement and fit check |
+| Choose | 18 | Strategic Options | `stratos-strategic-options` | SCQ framing, 3+ options plus do nothing, staged bets (P) |
+| Choose | 19 | Decision Criteria and Matrix | `stratos-decision-criteria`, `stratos-decision-matrix` | Criteria, pros/cons, weighted scoring of the options |
+| Choose | 20 | Business Case | `stratos-business-case` | NPV, IRR, payback, break-even sentence (Q-1) |
 | Choose | — | Pricing | `stratos-pricing` | Only when price is a lever |
 | Choose | — | Synergy Case | `stratos-synergy-case` | Only when an option is a deal |
-| Choose | 20 | Expected Value | `stratos-expected-value` | Expected NPV, maximin, flip point, EVPI (Q-2) |
-| Test | 21 | Stress Test | `stratos-stress-test` | Assumption audit, war-game, risk register, hostile drill (R) |
-| Plan | 22 | Go-to-Market | `stratos-gtm` | Beachhead, ICP, channels, funnel and CAC, launch gates (T) |
-| Plan | 23 | Initiative Prioritizer | `stratos-initiative-prioritizer` | Ranked, traced initiatives cut to capacity (S) |
-| Plan | 24 | Operating Model | `stratos-operating-model` | Must-win capabilities, RAPID, structure, 7S |
-| Plan | 25 | Stakeholder Map | `stratos-stakeholder-map` | Power-interest grid, coalition math, plans for sceptics |
+| Choose | 21 | Expected Value | `stratos-expected-value` | Expected NPV, maximin, flip point, EVPI (Q-2) |
+| Test | 22 | Stress Test | `stratos-stress-test` | Assumption audit, war-game, risk register, hostile drill (R) |
+| Plan | 23 | Go-to-Market | `stratos-gtm` | Beachhead, ICP, channels, funnel and CAC, launch gates (T) |
+| Plan | 24 | Initiative Prioritizer | `stratos-initiative-prioritizer` | Ranked, traced initiatives cut to capacity (S) |
+| Plan | 25 | Operating Model | `stratos-operating-model` | Must-win capabilities, RAPID, structure, 7S |
+| Plan | 26 | Stakeholder Map | `stratos-stakeholder-map` | Power-interest grid, coalition math, plans for sceptics |
 | Plan | — | Negotiation Prep | `stratos-negotiation-prep` | Only when a deal must be struck |
-| Plan | 26 | Execution Roadmap | `stratos-execution-roadmap` | First 100 days, milestones, stage gates (S) |
-| Track | 27 | Value Realization | `stratos-value-realization` | Balanced Scorecard and Strategy Map now (U); plan vs actual later |
-| Track | — | StratOS Workbook | `stratos-workbook` | The whole analysis as live Excel worksheets, pre-filled from the ledger |
+| Plan | 27 | Execution Roadmap | `stratos-execution-roadmap` | First 100 days, milestones, stage gates (S) |
+| Track | 28 | Value Realization | `stratos-value-realization` | Balanced Scorecard and Strategy Map now (U); plan vs actual later |
+| Track | — | StratOS Workbook | `stratos-workbook` | The whole analysis as live Excel worksheets, pre-filled from the ledger, plus the GLO-BUS Decision Planner |
 | Track | — | Memo Coach | `stratos-memo-coach` | Checks a case memo draft; never writes it |
 | Track | — | Executive and VC Pitch | `stratos-pitch` | Board or VC pitch from the ledger, readiness scorecard |
 
@@ -219,7 +220,8 @@ them, `stratos-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | Contribution per unit, break-even volume, CAC, LTV | … → Value Chain → Unit Economics |
 | How much better the company could perform, the profit gap | … → Unit Economics → VRIO → Full Potential |
 | What is holding growth back, the bottleneck | … → Full Potential → Growth Barriers |
-| What the company's options are, build vs partner vs buy | Part 2 through SWOT → Strategic Options |
+| Which strategy or positioning to choose (the student decides) | Part 1 through Strategic Mapping (ideally Part 2) → Strategy Interview |
+| What the company's options are, build vs partner vs buy | Part 2 through SWOT → Strategy Interview → Strategic Options |
 | Whether an option is worth it, NPV, IRR | … → Strategic Options → Business Case |
 | Which option is the better bet under uncertainty | … → Business Case → Expected Value |
 | What price to charge; whether a deal's synergies cover the premium; how to negotiate it | Pricing; Synergy Case; Negotiation Prep (each needs Strategic Options and Business Case) |
@@ -227,7 +229,8 @@ them, `stratos-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | How to win customers, beachhead, channels, CAC | … → Stress Test → Go-to-Market |
 | What to do first, organisation, stakeholders, first 100 days | … → Initiative Prioritizer → Operating Model → Stakeholder Map → Execution Roadmap |
 | KPIs, balanced scorecard, strategy map, plan vs actual | Value Realization |
-| An Excel workbook or worksheets of the analysis | `stratos-workbook` (from the ledger as it stands) |
+| An Excel workbook or worksheets of the analysis, or a GLO-BUS decision planner | `stratos-workbook` (from the ledger as it stands, plus any GLO-BUS capture files) |
+| Checking GLO-BUS entries against the plan | `stratos-globus-capture` Step 5 |
 | Feedback on a memo draft | Memo Coach |
 | A board or investor pitch | the Part 3 chain the ledger lacks → Pitch |
 | Anything about GLO-BUS, the CIR or the Camera & Drone Journal | `stratos-globus-coach` |
@@ -336,6 +339,8 @@ competitive advantage Part 2 found — or the disagreement is reported as a find
 
 - **R15** — Part 3 does not start until Part 2 has reached SWOT. Options built without TOWS, VRIO and
   the binding constraint are guesses.
+- **R16a** — the Strategy Interview never chooses for the student; the positioning statement is in
+  the student's words, and Strategic Options includes the chosen position among its options.
 - **R16** — at least three structurally different options plus do nothing, each tracing to a TOWS
   option, KSF gap, supported whitespace or the binding constraint. In a case, the student confirms the
   list; anything Claude adds is marked `SUGGESTED`.
@@ -448,7 +453,7 @@ Sections:
 
 **Part IV — Making the strategy work** (only when mode D has run)
 
-15. **Options and the choice** — SCQ, options, decision matrix, business case, expected value.
+15. **Options and the choice** — the student's positioning statement and fit check, SCQ, options, decision matrix, business case, expected value.
 16. **Stress test** — danger-zone assumptions, war-game, top risks.
 17. **Go-to-market and plan** — beachhead and CAC, ranked initiatives, operating model, stakeholders,
     first 100 days and gates.

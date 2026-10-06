@@ -188,7 +188,8 @@ five as equally weighted unless the course instructions give weights.
 
 Ask (or read from the ledger) which strategy the team has committed to: low-cost, differentiation
 (high P/Q), best-cost, or a focused version, by product and region. Every suggestion must serve that
-strategy. If the team has none, help them pick one first. A team that drifts between strategies year
+strategy. If the team has none, or is unsure, run `stratos-strategy-interview` first: it
+leads the team, question by question, to choose its own strategy from the evidence. A team that drifts between strategies year
 to year is "stuck in the middle".
 
 If mode 1 has been run on the `cameras` or `drones` analogue, use its Five Forces and KSFs as context

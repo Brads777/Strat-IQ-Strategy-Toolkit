@@ -1,6 +1,6 @@
 ---
 name: stratos-workbook
-description: "StratOS Workbook. Builds a StratOS-branded Excel workbook of working worksheets, pre-filled from the student's strategy ledger when there is one: PESTEL with impact x certainty priority, Five Forces scored up to industry attractiveness, a weighted KSF scorecard with ranks, VRIO with the verdict ladder and KSF reality check, SWOT and TOWS, a decision matrix, expected value with maximin and value of information, a driver-based business case with NPV and IRR, a Balanced Scorecard with status and balance checks, a Strategy Map with cause-and-effect checks and picture, and a GLO-BUS CIR sheet that places each company in a strategic group. Every result is a live formula. Use for 'StratOS workbook', 'Excel worksheets', 'spreadsheet version of my analysis', 'template', or 'worksheet'."
+description: "StratOS Workbook. Builds a StratOS-branded Excel workbook of working worksheets, pre-filled from the student's strategy ledger (and GLO-BUS capture files) when there are any: PESTEL with impact x certainty priority, Five Forces scored up to industry attractiveness, a weighted KSF scorecard with ranks, VRIO with the verdict ladder and KSF reality check, SWOT and TOWS, a decision matrix, expected value with maximin and value of information, a driver-based business case with NPV and IRR, a Balanced Scorecard with status and balance checks, a Strategy Map with cause-and-effect checks and picture, a GLO-BUS CIR sheet that places each company in a strategic group, and a GLO-BUS Decision Planner for every year of the game. Every result is a live formula. Use for 'StratOS workbook', 'Excel worksheets', 'spreadsheet version of my analysis', 'template', or 'worksheet'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -15,6 +15,7 @@ the report and the exhibits; it never replaces the reasoning in them.
 
 | Ask | Command | Result |
 |---|---|---|
+| "Build our GLO-BUS planner" | `python scripts/build_workbook.py --ledger <ledger> --capture globus-capture-C-Y6.json [--capture …] --out StratOS_Workbook_<team>.xlsx` | Adds each captured year's entered decisions to the Decision Planner and the latest CIR to the GLO-BUS CIR sheet |
 | "Build my StratOS workbook" (a ledger exists) | `python scripts/build_workbook.py --ledger strategy-ledger-<scope>.json --out StratOS_Workbook_<company>.xlsx` | Pre-filled from the ledger: PESTEL, forces, KSFs and competitor scores, VRIO, SWOT and TOWS, options, scorecard, strategy map with picture. Sections the ledger lacks stay blank |
 | "Give me the worksheets" (no ledger) | `python scripts/build_workbook.py --out StratOS_Workbook.xlsx` | Template with one realistic example row per sheet so the format is clear |
 | "A blank template" | `python scripts/build_workbook.py --blank --out StratOS_Workbook_blank.xlsx` | Empty template |
@@ -33,10 +34,11 @@ The strategy map picture needs matplotlib; without it the table and its checks s
 | SWOT-TOWS | Four traced lists with sources; TOWS options with the items they pair |
 | Decision Matrix | Weighted score (out of 5) and rank per option; do nothing included |
 | Expected Value | Probability check per option, expected NPV, worst and best case, leader, maximin choice, value of perfect information |
-| Business Case | Revenue, contribution, EBIT, tax, working capital (released in the final year), cash flow, cumulative cash, NPV, IRR, hurdle check. Matches `stratos-business-case` |
+| Business Case | Filled from `strategy_layer.business_case[0].inputs` when present. Revenue, contribution, EBIT, tax, working capital (released in the final year), cash flow, cumulative cash, NPV, IRR, hurdle check. Matches `stratos-business-case` |
 | Balanced Scorecard | % of target and status (on target / caution / below plan, inverted when lower is better); balance check: every perspective covered, at least a third of measures leading, measures with no owner |
 | Strategy Map | Flags objectives that drive nothing or that nothing drives; picture of the map when built from a ledger |
 | GLO-BUS CIR | Share-weighted industry average price and P/Q per product; each company placed as premium differentiator, value leader, low-cost or stuck in the middle |
+| GLO-BUS Planner | Every decision field for Years 6-15 in screen order (fields in `references/globus-fields.json`), the strategy anchor from the Strategy Interview, the projected KPIs; change-vs-last-year block flagged above a threshold you set (default 15%), and a guardrail flag when price and advertising are cut in the same year. The team enters the decisions in GLO-BUS itself; `stratos-globus-capture` Step 5 then checks the entries against this plan |
 
 ## Before handing it over
 
@@ -51,3 +53,4 @@ The strategy map picture needs matplotlib; without it the table and its checks s
 - In graded work, the inputs, choices and every Impact Summary are the student's. The workbook ranks
   and scores; it never decides, and Claude never fills it with invented case facts.
 - GLO-BUS sheets hold the team's own figures; they are not a source of numbers to enter in the game.
+- Never enter, upload or submit planner values into GLO-BUS; the team does that, screen by screen.

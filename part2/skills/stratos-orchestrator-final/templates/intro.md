@@ -40,7 +40,7 @@ work and continues from there.**
 
 | Move | What you get |
 |---|---|
-| **Choose** | Real options (always including "do nothing"), a business case for each, and the expected value under uncertainty, with pricing and deal tools when an option needs them |
+| **Choose** | A guided interview in which you choose your own strategy from the evidence, then real options (always including "do nothing"), a business case for each, and the expected value under uncertainty, with pricing and deal tools when an option needs them |
 | **Test** | The leading option attacked before anyone plans: assumptions, competitor responses, risks, and a hostile Q&A drill |
 | **Plan** | Go-to-market, what to do first, how to organise, who must say yes, and the first 100 days |
 | **Track** | KPIs that show whether it's working, a memo coach, and a board or investor pitch |

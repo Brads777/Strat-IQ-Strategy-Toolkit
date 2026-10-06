@@ -1,6 +1,6 @@
 ---
 name: stratos-globus-capture
-description: "StratOS GLO-BUS Capture. After a team signs in to GLO-BUS themselves in their own Chrome, walks the site with Claude in Chrome in read-only mode and captures one year: the team's own decision screens and projections, and the class-wide reports the team can see (scoreboard, Competitive Intelligence Report, Camera & Drone Journal, performance highlights). Saves the page text and screenshots into one capture file, checks it for missing screens, and hands it to the GLO-BUS Coach, which names the strategy the inputs reveal and gives general lessons (feedback, not recommendations). Never handles passwords and never changes or submits a decision. Also accepts uploaded screenshots or PDFs. Use for 'capture GLO-BUS', 'screenshot our GLO-BUS year', 'pull our GLO-BUS reports', or 'review our whole GLO-BUS year'."
+description: "StratOS GLO-BUS Capture. After a team signs in to GLO-BUS themselves in their own Chrome, walks the site with Claude in Chrome in read-only mode and captures one year: the team's own decision screens and projections, and the class-wide reports the team can see (scoreboard, Competitive Intelligence Report, Camera & Drone Journal, performance highlights). Saves the page text and screenshots into one capture file, checks it for missing screens, and hands it to the GLO-BUS Coach, which names the strategy the inputs reveal and gives general lessons (feedback, not recommendations). Never handles passwords and never changes or submits a decision. Also accepts uploaded screenshots or PDFs. Also checks entered decisions against the team's Decision Planner. Use for 'capture GLO-BUS', 'screenshot our GLO-BUS year', 'check our entries against the plan', or 'review our whole GLO-BUS year'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -70,8 +70,16 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
 ```json
 { "company": "C", "year": 6, "captured_at": "2026-10-06T14:05", "source": "chrome",
   "pages": [ { "id": "cir-cameras-na", "group": "class-report", "title": "Competitive Intelligence Report — Cameras — North America",
-               "url_path": "/…", "text": "…", "screenshot": "cir-cameras-na.png", "warnings": [] } ] }
+               "url_path": "/…", "text": "…", "screenshot": "cir-cameras-na.png", "warnings": [] } ],
+  "decisions": { "mkt.camera.na.price": 249, "mkt.camera.na.ads": 6800, "comp.base": 21500 },
+  "cir_rows": [ { "company": "A", "product": "camera", "region": "Global", "price": 279, "pq": 4.2, "share": 14.0, "models": 5 } ] }
 ```
+
+- **`decisions`**: transcribe the value of every decision field read on the team's own decision
+  screens, keyed exactly as in `references/globus-fields.json` (the same keys as the StratOS
+  Workbook's GLO-BUS Planner). Copy numbers exactly from the page text; leave out any field you could
+  not read rather than guessing.
+- **`cir_rows`**: one row per company, product and region from the Competitive Intelligence Report.
 
 Run `scripts/capture_check.py globus-capture-<company>-Y<year>.json`. It compares the pages with the
 checklist and lists what is missing or thin. Offer to fetch the missing screens once; then stop.
@@ -84,6 +92,21 @@ chats (and next year's review) can use it.
 Invoke `stratos-globus-coach` in **mode 4, full-year review**, with the capture file. The coach names
 the strategy the team's inputs reveal and gives general lessons from the inputs and results. It gives
 feedback, not specific recommendations.
+
+## Step 5 — Check the entries against the team's plan (optional)
+
+When the team planned the year in the StratOS Workbook's **GLO-BUS Planner** and has now entered its
+decisions in GLO-BUS, they can ask "check our GLO-BUS entries against the plan". Capture the decision
+screens (Steps 1-3, decision screens only is enough), then run:
+
+```bash
+python scripts/plan_check.py StratOS_Workbook.xlsx globus-capture-<company>-Y<year>.json
+```
+
+It lists **mismatches** (planned one value, entered another: often a typo), **planned but not seen**
+(a decision the plan has but the screens show blank or unchanged), and **entered but not planned**.
+Report them in a short table and let the team fix them in GLO-BUS themselves. The check never changes
+anything, in the game or in the workbook.
 
 ## Upload route (no extension, or automation not allowed)
 

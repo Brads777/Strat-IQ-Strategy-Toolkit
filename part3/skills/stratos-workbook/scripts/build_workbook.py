@@ -4,6 +4,9 @@ pre-filled from a strategy ledger.
 
 Usage: python build_workbook.py [--ledger strategy-ledger.json] [--out StratOS_Workbook.xlsx]
                                 [--blank] [--title "Company / industry"]
+                                [--capture globus-capture-C-Y6.json ...] [--first-year 6]
+  --capture: one or more GLO-BUS capture files (stratos-globus-capture). Their decision values fill that
+             year's column of the GLO-BUS Planner, and the latest one with CIR rows fills the GLO-BUS CIR sheet.
   --ledger : fill the sheets from a StratOS ledger (missing sections stay blank)
   --blank  : no ledger and no example rows (a clean template)
   Without --ledger or --blank, each sheet gets one or two example rows so students see the format.
@@ -158,6 +161,9 @@ def sheet_start(wb, L, title, mode):
             ("Balanced Scorecard", "Objectives and measures in four perspectives, leading vs lagging, status vs target, balance check."),
             ("Strategy Map", "Objectives by perspective and their cause-and-effect links; picture included when built from a ledger."),
             ("GLO-BUS CIR", "Paste the CIR figures; each company is placed in a strategic group automatically."),
+            ("GLO-BUS Planner", "Plan every decision for each year in one place, in screen order; flags changes bigger than "
+                                "your threshold and years where price and advertising are both cut. You enter the "
+                                "decisions in GLO-BUS yourself; the capture skill can then check them against this plan."),
             ("Your work stays yours", "In graded work, the inputs, choices and every Impact Summary are the student's. "
                                       "The workbook calculates; it never decides.")]
     r = 6
@@ -420,6 +426,9 @@ def sheet_matrix(wb, L, mode):
     opts, crits = [], []
     if mode == "ledger":
         opts = [o.get("name") for o in (g(L, "strategy_layer", "options", "options", default=[]) or [])][:6]
+        for c in g(L, "strategy_layer", "decision_matrix", "criteria", default=[]) or []:
+            sc = c.get("scores", {}) or {}
+            crits.append([c.get("name"), c.get("weight"), c.get("goal")] + [sc.get(o) for o in opts])
     elif mode == "example":
         opts = ["A. Build in-house", "B. Partner for cells", "C. Reposition", "0. Do nothing"]
         crits = [["Fits the 2029 profit goal", 5, "Exhibit B, goal 1", 3, 4, 3, 1]]
@@ -502,8 +511,14 @@ def sheet_bc(wb, L, mode):
          "year. Money in $.", [30, 15, 15, 15, 15, 15, 15])
     label(ws, "A5", "Assumptions")
     ex = mode == "example"
-    assume = [("Discount rate", 0.10 if ex else None, "0.0%"), ("Tax rate", 0.21 if ex else None, "0.0%"),
-              ("Working capital (% of revenue)", 0.05 if ex else None, "0.0%")]
+    bc = (g(L, "strategy_layer", "business_case", 0, default={}) or {}) if mode == "ledger" else {}
+    bi = bc.get("inputs", {}) or {}
+    led = bool(bi.get("years"))
+    assume = [("Discount rate", 0.10 if ex else bi.get("rate"), "0.0%"), ("Tax rate", 0.21 if ex else bi.get("tax"), "0.0%"),
+              ("Working capital (% of revenue)", 0.05 if ex else bi.get("wc_pct"), "0.0%")]
+    if led:
+        ws["A4"] = f"Option: {bc.get('option', '')} (from the ledger)"
+        ws["A4"].font = S_FONT
     for i, (k, v, f_) in enumerate(assume):
         label(ws, f"A{6+i}", k, bold=False)
         inp(ws, f"B{6+i}", v, f_)
@@ -519,10 +534,13 @@ def sheet_bc(wb, L, mode):
               ("Variable cost per unit", [20000] * 6, "$#,##0"), ("Fixed costs", [0] + [180000000] * 5, "$#,##0"),
               ("Capex", excap, "$#,##0")]
     r = header_row + 1
-    for name, vals, f_ in inputs:
+    keys = ["units", "price", "variable_cost", "fixed_cost", "capex"]
+    yrs = (bi.get("years") or [])[:6] if led else []
+    for k_i, (name, vals, f_) in enumerate(inputs):
         label(ws, f"A{r}", name, bold=False)
         for y in range(6):
-            inp(ws, f"{get_column_letter(2+y)}{r}", vals[y] if ex else None, f_)
+            v = vals[y] if ex else (yrs[y].get(keys[k_i]) if y < len(yrs) else None)
+            inp(ws, f"{get_column_letter(2+y)}{r}", v, f_)
         r += 1
     calc = [("Revenue", "={c}11*{c}12"), ("Contribution", "={c}11*({c}12-{c}13)"),
             ("Operating profit (EBIT)", "={c}17-{c}14"), ("Tax", "=MAX(0,{c}18)*$B$7"),
@@ -670,14 +688,21 @@ def sheet_map(wb, L, mode, tmpdir):
             ws["G5"].font = S_FONT
 
 
-def sheet_cir(wb, L, mode):
+def sheet_cir(wb, L, mode, caps=None):
     ws = wb.create_sheet("GLO-BUS CIR")
     head(ws, "GLO-BUS Competitive Intelligence Report", "One row per company and product. Groups are set "
          "against the share-weighted industry average for that product. Analogues, not answers: you decide.",
          [11, 11, 12, 10, 10, 12, 24])
     header(ws, 5, ["Company", "Product", "Price ($)", "P/Q (stars)", "Share (%)", "Models", "Strategic group"])
     rows = []
-    if mode == "example":
+    latest = sorted([c for c in (caps or []) if c.get("cir_rows")], key=lambda c: c.get("year", 0))[-1:]
+    if latest and latest[0].get("cir_rows"):
+        title_note = f"From the capture of Year {latest[0].get('year')}"
+        rows = [[r.get("company"), (r.get("product") or "").title(), r.get("price"), r.get("pq"), r.get("share"),
+                 r.get("models")] for r in latest[0]["cir_rows"] if (r.get("region") or "Global") in ("Global", "global", "")][:24]
+        ws["A4"] = title_note
+        ws["A4"].font = S_FONT
+    elif mode == "example":
         rows = [["A", "Camera", 279, 4.2, 14.0, 5], ["B", "Camera", 239, 3.4, 16.5, 4], ["C", "Camera", 264, 4.0, 12.0, 5],
                 ["D", "Camera", 319, 5.1, 11.0, 6], ["E", "Camera", 299, 3.6, 9.5, 5]]
     n = 24
@@ -708,12 +733,134 @@ def sheet_cir(wb, L, mode):
     label(ws, f"D{r}", "P/Q")
 
 
+def expand_fields(spec):
+    """Expand the field templates in globus-fields.json into one row per product / region."""
+    out = []
+    P, R = spec["products"], spec["regions"]
+    for f in spec["fields"]:
+        if f["per"] == "once":
+            out.append(dict(f))
+        elif f["per"] == "product":
+            for pk, pl in P.items():
+                out.append({**f, "key": f["key"].format(p=pk), "label": f["label"].format(P=pl)})
+        else:
+            for pk, pl in P.items():
+                for rk, rl in R.items():
+                    out.append({**f, "key": f["key"].format(p=pk, r=rk), "label": f["label"].format(P=pl, R=rl)})
+    return out
+
+
+def sheet_planner(wb, L, mode, caps, years):
+    ws = wb.create_sheet("GLO-BUS Planner")
+    spec = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "references",
+                                       "globus-fields.json"), encoding="utf-8"))
+    fields = expand_fields(spec)
+    ny = len(years)
+    head(ws, "GLO-BUS Decision Planner",
+         "Plan each year's decisions here, test them in the game's projections, then enter them in GLO-BUS screen "
+         "by screen in this order. Your team makes and enters every decision.",
+         [22, 24, 40, 12] + [12] * ny)
+    ws["A4"] = "Change threshold for the incremental-change check:"
+    ws["A4"].font = B_FONT
+    inp(ws, "D4", 0.15, "0%")
+    ws["D4"].comment = Comment("Course guardrail: incremental changes, one direction at a time. Moves bigger "
+                               "than this are flagged below.", "StratOS")
+    header(ws, 5, ["Key (do not edit)", "Decision area", "Decision", "Unit"] + [f"Year {y}" for y in years])
+    plans = {}
+    for c in caps or []:
+        for k, v in (c.get("decisions") or {}).items():
+            plans.setdefault(c.get("year"), {})[k] = v
+    if mode == "ledger":
+        for y, d in (g(L, "globus", "plans", default={}) or {}).items():
+            plans.setdefault(int(y), {}).update(d)
+        st = g(L, "globus", "strategy", default={}) or {}
+        if st and years:
+            plans.setdefault(years[0], {})
+            for pk in spec["products"]:
+                if st.get(pk) and not plans[years[0]].get(f"strategy.{pk}"):
+                    plans[years[0]][f"strategy.{pk}"] = st.get(pk)
+    if mode == "example" and years:
+        plans = {years[0]: {"strategy.camera": "Best-cost", "strategy.drone": "Focused differentiation",
+                            "mkt.camera.na.price": 264, "mkt.camera.na.ads": 7500},
+                 years[1]: {"strategy.camera": "Best-cost", "strategy.drone": "Focused differentiation",
+                            "mkt.camera.na.price": 249, "mkt.camera.na.ads": 6800}} if ny > 1 else {}
+    r0 = 6
+    area_prev = None
+    for i, f in enumerate(fields):
+        r = r0 + i
+        c = ws.cell(row=r, column=1, value=f["key"])
+        c.font = Font(name=F, size=8, color="888888")
+        label(ws, f"B{r}", f["area"] if f["area"] != area_prev else "", bold=True)
+        area_prev = f["area"]
+        label(ws, f"C{r}", f["label"], bold=False)
+        label(ws, f"D{r}", f["unit"], bold=False)
+        for j, y in enumerate(years):
+            v = (plans.get(y) or {}).get(f["key"])
+            fmt = {"$": "$#,##0.00", "%": "0%", "$000s": "#,##0", "count": "0", "days": "0", "stars": "0.0"}.get(f["unit"])
+            inp(ws, f"{get_column_letter(5+j)}{r}", v, fmt)
+    last = r0 + len(fields) - 1
+    # change block
+    top = last + 3
+    label(ws, f"B{top-1}", "Change vs the year before (numbers only); amber = bigger than the threshold")
+    header_cells = ["Key", "Decision area", "Decision", "Unit"] + [f"Year {y}" for y in years]
+    for i, h in enumerate(header_cells, 1):
+        c = ws.cell(row=top, column=i, value=h)
+        c.font, c.fill, c.alignment, c.border = H_FONT, H_FILL, CENTER, BOX
+    for i, f in enumerate(fields):
+        r = top + 1 + i
+        src = r0 + i
+        ws.cell(row=r, column=1, value=f["key"]).font = Font(name=F, size=8, color="888888")
+        label(ws, f"C{r}", f["label"], bold=False)
+        for j in range(1, ny):
+            cc, pc = get_column_letter(5 + j), get_column_letter(4 + j)
+            fx(ws, f"{cc}{r}", f'=IF(AND(ISNUMBER({cc}{src}),ISNUMBER({pc}{src}),{pc}{src}<>0),{cc}{src}/{pc}{src}-1,"")', "0%")
+    clast = top + len(fields)
+    lc = get_column_letter(4 + ny)
+    ws.conditional_formatting.add(f"F{top+1}:{lc}{clast}",
+                                  FormulaRule(formula=[f'AND(ISNUMBER(F{top+1}),ABS(F{top+1})>$D$4)'], fill=AMBER))
+    # guardrail: price and advertising cut together
+    g0 = clast + 3
+    label(ws, f"B{g0-1}", "Guardrail: price and advertising cut in the same year (course rule: protect gross margin)")
+    for i, h in enumerate(["", "Product, region", "", ""] + [f"Year {y}" for y in years], 1):
+        c = ws.cell(row=g0, column=i, value=h)
+        c.font, c.fill, c.alignment, c.border = H_FONT, H_FILL, CENTER, BOX
+    keys = [f["key"] for f in fields]
+    k = 0
+    for pk, pl in spec["products"].items():
+        for rk, rl in spec["regions"].items():
+            r = g0 + 1 + k
+            k += 1
+            label(ws, f"B{r}", f"{pl}, {rl}", bold=False)
+            pr = top + 1 + keys.index(f"mkt.{pk}.{rk}.price")
+            ad = top + 1 + keys.index(f"mkt.{pk}.{rk}.ads")
+            for j in range(1, ny):
+                cc = get_column_letter(5 + j)
+                fx(ws, f"{cc}{r}", f'=IF(AND(ISNUMBER({cc}{pr}),ISNUMBER({cc}{ad})),IF(AND({cc}{pr}<0,{cc}{ad}<0),"Both cut",""),"")')
+    ws.conditional_formatting.add(f"F{g0+1}:{lc}{g0+k}", FormulaRule(formula=[f'F{g0+1}="Both cut"'], fill=RED))
+    note = g0 + k + 2
+    for t_i, t in enumerate([
+            "How to use: 1) plan the year in its column; 2) enter the same values in GLO-BUS and test the projections; "
+            "3) record the projected KPIs; 4) after entering, run 'check our GLO-BUS entries against the plan' "
+            "(GLO-BUS Capture), which reads the screens and flags any difference. Nothing is uploaded or entered for you.",
+            "Labels follow the usual GLO-BUS screens; if your version differs, rename the Decision column but keep the "
+            "Key column unchanged (the plan check uses it)."]):
+        c = ws.cell(row=note + t_i, column=2, value=t)
+        c.font, c.alignment = Font(name=F, size=9, italic=True), Alignment(wrap_text=False)
+    ws.freeze_panes = "E6"
+
+
 def main():
     a = sys.argv
     ledger = a[a.index("--ledger") + 1] if "--ledger" in a else None
     out = a[a.index("--out") + 1] if "--out" in a else "StratOS_Workbook.xlsx"
     mode = "ledger" if ledger else ("blank" if "--blank" in a else "example")
     L = json.load(open(ledger, encoding="utf-8")) if ledger else {}
+    caps = []
+    for i, x in enumerate(a):
+        if x == "--capture":
+            caps.append(json.load(open(a[i + 1], encoding="utf-8")))
+    y0 = int(a[a.index("--first-year") + 1]) if "--first-year" in a else 6
+    years = list(range(y0, y0 + 10))
     title = a[a.index("--title") + 1] if "--title" in a else (
         f"{g(L, 'scope', 'industry', default='')} · base company {g(L, 'company_layer', 'focal_firm', default='')}"
         if ledger else "Strategy analysis worksheets")
@@ -735,9 +882,10 @@ def main():
         sheet_bc(wb, L, mode)
         sheet_bsc(wb, L, mode)
         sheet_map(wb, L, mode, tmp)
-        sheet_cir(wb, L, mode)
+        sheet_cir(wb, L, mode, caps)
+        sheet_planner(wb, L, mode, caps, years)
         for ws in wb.worksheets:
-            ws.sheet_properties.tabColor = GOLD if ws.title in ("Start", "GLO-BUS CIR") else NAVY
+            ws.sheet_properties.tabColor = GOLD if ws.title in ("Start", "GLO-BUS CIR", "GLO-BUS Planner") else NAVY
         wb.save(out)
     print(json.dumps({"out": out, "mode": mode, "sheets": [ws.title for ws in wb.worksheets]}))
 

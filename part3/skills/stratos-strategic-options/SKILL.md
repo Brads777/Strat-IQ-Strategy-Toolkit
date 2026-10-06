@@ -7,7 +7,8 @@ license: Apache-2.0
 
 # Strategic Options (StratOS · Part 3 · Choose · Exhibit P)
 
-**Runs:** first in Part 3. **Reads:** `company_layer.internal.tows`, `growth_barriers`, `full_potential`,
+**Runs:** after the Strategy Interview. **Reads:** `strategy_layer.positioning` (the student's chosen
+strategy), `company_layer.internal.tows`, `growth_barriers`, `full_potential`,
 `vrio`, `company_layer.candidates[]`, `industry_layer.drivers[]`, `ksf[]`. **Writes:**
 `strategy_layer.options`. **Feeds:** Decision Criteria and Matrix, Business Case, Expected Value,
 Stress Test.
@@ -29,6 +30,9 @@ Under the question, a short **issue tree**: the 2-4 sub-questions the choice dep
 capability, economics, competitor response). Each later Part 3 skill answers one of them.
 
 ## Step 2 — Build the options
+
+When the Strategy Interview has run, the student's chosen position is **one of the options**, stated
+in their words; the others are the strongest alternatives to it.
 
 At least **three structurally different** options, plus **0. Do nothing** (the baseline every option
 must beat; in a declining position, do nothing is not zero, so say what it costs).

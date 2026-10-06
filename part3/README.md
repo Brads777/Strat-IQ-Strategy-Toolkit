@@ -9,10 +9,11 @@ Part 3 ships **together with Part 2** in release v3.0.0 (`stratos-part2-3-skills
 instructions: [`../part2/README.md`](../part2/README.md#install) and
 **[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**.
 
-## The sixteen skills
+## The seventeen skills
 
 | Move | Display name | Skill ID | Exhibit | Script |
 |---|---|---|---|---|
+| Choose | Strategy Interview | [`stratos-strategy-interview`](skills/stratos-strategy-interview/SKILL.md) | — | — |
 | Choose | Strategic Options | [`stratos-strategic-options`](skills/stratos-strategic-options/SKILL.md) | P | — |
 | Choose | Business Case | [`stratos-business-case`](skills/stratos-business-case/SKILL.md) | Q-1 | `business_case.py` |
 | Choose | Pricing | [`stratos-pricing`](skills/stratos-pricing/SKILL.md) | — | `pricing.py` |
@@ -38,6 +39,8 @@ Prep run only when an option needs them.
 
 - **Nothing new appears in the plan.** Every option, initiative, milestone and KPI traces back to a
   finding in Parts 1-2 (checks R15-R19).
+- **The student chooses the strategy.** The Strategy Interview asks one question at a time, shows the
+  evidence behind it, and tests the reasoning; it never picks.
 - **Do nothing is always an option.** Every alternative has to beat standing still.
 - **Attack before planning.** The Stress Test runs on the leading option before any planning starts.
 - **Students own the choice.** In graded work, the alternatives, the inputs, the recommendation, the

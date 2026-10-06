@@ -213,13 +213,22 @@ Values below are synthetic.
 
   "strategy_layer": {                          // Part 3 — written in mode D
     "decisions": [ "How should Firm A compete below $35k by 2029?" ],
+    "positioning": { "strategy": "focused differentiation", "target": "…", "advantage": "…", "why_now": "…",
+                     "not_doing": "…", "statement": "(student's own words)", "team": [],
+                     "fit": { "market": "supported", "competitive": "open question", "capability": "supported",
+                              "economic": "conflicts" }, "evidence": [], "date": "2026-10-06" },
     "options": { "scq": {}, "issue_tree": [], "options": [ { "id": "O-A", "name": "…", "route": "partner",
                  "exploits": ["SO1"], "staged_step": "…", "gate": "…", "suggested": false } ],
                  "confirmed_by_user": true },
     "business_case": [ { "option": "O-A", "npv": 0, "irr": 0.095, "payback": 4.2,
-                         "break_even_revenue_change": 0.005, "assumptions": [] } ],
+                         "break_even_revenue_change": 0.005, "assumptions": [],
+                         "inputs": { "rate": 0.10, "tax": 0.21, "wc_pct": 0.05,
+                                     "years": [ { "units": 0, "price": 0, "variable_cost": 0, "fixed_cost": 0, "capex": 0 } ] } } ],
+    "decision_matrix": { "criteria": [ { "name": "…", "weight": 5, "goal": "B1", "scores": { "O-A": 4, "O-B": 3 } } ] },
     "pricing": {}, "synergy_case": {}, "negotiations": [],
-    "expected_value": { "leader": "O-A", "maximin": "O-B", "evpi": 0, "flip_points": {} },
+    "expected_value": { "leader": "O-A", "maximin": "O-B", "evpi": 0, "flip_points": {},
+                        "table": [ { "option": "O-A", "p_strong": 0.3, "npv_strong": 12, "p_moderate": 0.5,
+                                     "npv_moderate": 4, "p_weak": 0.2, "npv_weak": -6 } ] },
     "chosen_option": "O-A",                    // set by the user, never by Claude
     "stress_test": { "assumptions": [], "war_game": [], "risks": [], "drill": [] },
     "gtm": { "beachhead": "…", "icp": "…", "value_prop": "…", "channels": [], "blended_cac": 0, "phases": [] },
@@ -235,7 +244,8 @@ Values below are synthetic.
   },
 
   "globus": {                                  // GLO-BUS Coach; kept in its own ledger file
-    "company": "C", "strategy": { "cameras": "best-cost", "drones": "differentiation" },
+    "company": "C", "strategy": { "camera": "best-cost", "drone": "differentiation" },   // from the Strategy Interview
+    "plans": { "7": { "mkt.camera.na.price": 249 } },   // Decision Planner values by year (keys: globus-fields.json)
     "cir_log": [ { "year": 6, "groups": {}, "leader": {}, "white_space": [], "moves": [] } ],
     "decisions_log": [ { "year": 7, "moves": [], "projected": {}, "actual": {} } ],
     "captures": [ { "year": 6, "file": "globus-capture-C-Y6.json", "complete": true } ],
