@@ -1,0 +1,53 @@
+---
+name: stratos-workbook
+description: "StratOS Workbook. Builds a StratOS-branded Excel workbook of working worksheets, pre-filled from the student's strategy ledger when there is one: PESTEL with impact x certainty priority, Five Forces scored up to industry attractiveness, a weighted KSF scorecard with ranks, VRIO with the verdict ladder and KSF reality check, SWOT and TOWS, a decision matrix, expected value with maximin and value of information, a driver-based business case with NPV and IRR, a Balanced Scorecard with status and balance checks, a Strategy Map with cause-and-effect checks and picture, and a GLO-BUS CIR sheet that places each company in a strategic group. Every result is a live formula. Use for 'StratOS workbook', 'Excel worksheets', 'spreadsheet version of my analysis', 'template', or 'worksheet'."
+license: Apache-2.0
+---
+# ©2026 Brad Scheller
+
+# StratOS Workbook
+
+One Excel file that holds a whole StratOS analysis in working worksheets. Students can see the
+arithmetic, change an input, and watch the scores, verdicts, ranks and statuses update. It complements
+the report and the exhibits; it never replaces the reasoning in them.
+
+## Three ways to build it
+
+| Ask | Command | Result |
+|---|---|---|
+| "Build my StratOS workbook" (a ledger exists) | `python scripts/build_workbook.py --ledger strategy-ledger-<scope>.json --out StratOS_Workbook_<company>.xlsx` | Pre-filled from the ledger: PESTEL, forces, KSFs and competitor scores, VRIO, SWOT and TOWS, options, scorecard, strategy map with picture. Sections the ledger lacks stay blank |
+| "Give me the worksheets" (no ledger) | `python scripts/build_workbook.py --out StratOS_Workbook.xlsx` | Template with one realistic example row per sheet so the format is clear |
+| "A blank template" | `python scripts/build_workbook.py --blank --out StratOS_Workbook_blank.xlsx` | Empty template |
+
+The strategy map picture needs matplotlib; without it the table and its checks still work.
+
+## The sheets
+
+| Sheet | What the formulas do |
+|---|---|
+| Start | How to use it, the colour key, what each sheet does |
+| PESTEL | Priority = impact × certainty, coloured strategic focus / scenario-plan / monitor; counts findings missing a source |
+| Five Forces | Sub-factor scores (the course template's sub-factors) average to each force; a force score entered directly overrides; strength label; industry attractiveness = 6 − average force score, now and at the horizon |
+| KSF Scorecard | Weights must sum to 100% (flagged); SUMPRODUCT weighted score per competitor; rank |
+| VRIO | Verdict ladder stops at the first No or ?; reality check flags competence traps (passes V, R and I but the KSF it delivers weighs under 10%) and marks supported advantages |
+| SWOT-TOWS | Four traced lists with sources; TOWS options with the items they pair |
+| Decision Matrix | Weighted score (out of 5) and rank per option; do nothing included |
+| Expected Value | Probability check per option, expected NPV, worst and best case, leader, maximin choice, value of perfect information |
+| Business Case | Revenue, contribution, EBIT, tax, working capital (released in the final year), cash flow, cumulative cash, NPV, IRR, hurdle check. Matches `stratos-business-case` |
+| Balanced Scorecard | % of target and status (on target / caution / below plan, inverted when lower is better); balance check: every perspective covered, at least a third of measures leading, measures with no owner |
+| Strategy Map | Flags objectives that drive nothing or that nothing drives; picture of the map when built from a ledger |
+| GLO-BUS CIR | Share-weighted industry average price and P/Q per product; each company placed as premium differentiator, value leader, low-cost or stuck in the middle |
+
+## Before handing it over
+
+1. Recalculate (open in Excel, or LibreOffice headless) and confirm there are **no formula errors**.
+2. Spot-check two numbers against the ledger or the skill outputs (e.g. the Business Case NPV against
+   `business_case.py`, a VRIO verdict against `vrio_screen.py`).
+3. Give the student the file and say which sheets were pre-filled and which are blank.
+
+## Rules
+
+- Formulas only: never paste a computed result over a formula.
+- In graded work, the inputs, choices and every Impact Summary are the student's. The workbook ranks
+  and scores; it never decides, and Claude never fills it with invented case facts.
+- GLO-BUS sheets hold the team's own figures; they are not a source of numbers to enter in the game.

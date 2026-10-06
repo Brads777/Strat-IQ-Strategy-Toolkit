@@ -55,12 +55,12 @@ Step by step, with links:
 
 1. Download **`stratos-part2-3-skills.zip`** from the
    **[latest release](https://github.com/Brads777/stratos-external-analysis/releases/latest)** and unzip
-   it once. Inside are 27 zips, one per skill. Leave those zipped.
+   it once. Inside are 28 zips, one per skill. Leave those zipped.
 2. In **Settings → Capabilities → Skills**, **delete** your current copies of
    `stratos-case-exhibits`, `stratos-strategic-mapping` and `stratos-globus-coach` (and
    `stratos-orchestrator-final` and the other Part 2 skills, if you installed v1.7.0).
-3. Upload all 27 zips.
-4. Switch **off** `stratos-orchestrator` (the Part 1 orchestrator). You should have **37 StratOS skills
+3. Upload all 28 zips.
+4. Switch **off** `stratos-orchestrator` (the Part 1 orchestrator). You should have **38 StratOS skills
    on**.
 5. Replace `industries.json` in your Project knowledge with the new version (it adds `cameras` and
    `drones`), and make sure your saved `strategy-ledger` file is there too.

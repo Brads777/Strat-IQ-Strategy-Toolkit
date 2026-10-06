@@ -226,6 +226,10 @@ Values below are synthetic.
     "initiatives": [ { "id": "I1", "initiative": "…", "traces_to": "GB:supply", "rice": 0, "status": "now" } ],
     "operating_model": {}, "stakeholders": {},
     "roadmap": { "first_100_days": [], "milestones": [], "gates": [] },
+    "scorecard": { "objectives": [ { "id": "F1", "perspective": "financial", "objective": "…", "traces_to": "…" } ],
+                   "links": [ { "from": "C1", "to": "F1" } ],
+                   "measures": [ { "objective": "F1", "measure": "…", "type": "Lagging", "better": "Higher",
+                                   "target": 0, "actual": null, "owner": "…", "initiative": "I2", "traces_to": "…" } ] },
     "kpis": [ { "kpi": "…", "traces_to": "K2", "leading": "…", "target": "…", "owner": "…", "trigger": "…" } ],
     "actuals": [], "pitch": {}
   },

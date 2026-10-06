@@ -75,7 +75,8 @@ Mode D runs it in four moves, with a checkpoint after each step:
 | Plan | 25 | Stakeholder Map | `stratos-stakeholder-map` | Power-interest grid, coalition math, plans for sceptics |
 | Plan | — | Negotiation Prep | `stratos-negotiation-prep` | Only when a deal must be struck |
 | Plan | 26 | Execution Roadmap | `stratos-execution-roadmap` | First 100 days, milestones, stage gates (S) |
-| Track | 27 | Value Realization | `stratos-value-realization` | KPIs now; plan vs actual later |
+| Track | 27 | Value Realization | `stratos-value-realization` | Balanced Scorecard and Strategy Map now (U); plan vs actual later |
+| Track | — | StratOS Workbook | `stratos-workbook` | The whole analysis as live Excel worksheets, pre-filled from the ledger |
 | Track | — | Memo Coach | `stratos-memo-coach` | Checks a case memo draft; never writes it |
 | Track | — | Executive and VC Pitch | `stratos-pitch` | Board or VC pitch from the ledger, readiness scorecard |
 
@@ -225,7 +226,8 @@ them, `stratos-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | What could go wrong, war-game, risk register, hostile questions | … → Expected Value → Stress Test (one module if asked) |
 | How to win customers, beachhead, channels, CAC | … → Stress Test → Go-to-Market |
 | What to do first, organisation, stakeholders, first 100 days | … → Initiative Prioritizer → Operating Model → Stakeholder Map → Execution Roadmap |
-| KPIs, plan vs actual | Value Realization |
+| KPIs, balanced scorecard, strategy map, plan vs actual | Value Realization |
+| An Excel workbook or worksheets of the analysis | `stratos-workbook` (from the ledger as it stands) |
 | Feedback on a memo draft | Memo Coach |
 | A board or investor pitch | the Part 3 chain the ledger lacks → Pitch |
 | Anything about GLO-BUS, the CIR or the Camera & Drone Journal | `stratos-globus-coach` |
@@ -450,7 +452,8 @@ Sections:
 16. **Stress test** — danger-zone assumptions, war-game, top risks.
 17. **Go-to-market and plan** — beachhead and CAC, ranked initiatives, operating model, stakeholders,
     first 100 days and gates.
-18. **KPIs** — the scorecard and its triggers.
+18. **Balanced Scorecard and Strategy Map** — objectives in four perspectives, the cause-and-effect
+    map, measures and triggers.
 
 19. **References** — the numbered source list.
 20. **Appendices** — full stage tables, methodology, and the scoring method used (`api` or
@@ -469,7 +472,7 @@ internal analysis its slides (the VRIO table and the SWOT with TOWS options) wit
 
 ### 3. Hand-off
 
-Give the user the report, the deck, and the ledger file, and say where to save the ledger (Project
+Give the user the report, the deck, and the ledger file (and offer the `stratos-workbook` Excel file), and say where to save the ledger (Project
 knowledge in Claude.ai) so the next chat can resume or swap the base company. On a base-company swap,
 offer to regenerate Parts II and III of the report and the deck.
 

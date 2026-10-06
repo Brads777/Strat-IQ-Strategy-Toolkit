@@ -9,7 +9,7 @@ Part 3 ships **together with Part 2** in release v3.0.0 (`stratos-part2-3-skills
 instructions: [`../part2/README.md`](../part2/README.md#install) and
 **[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**.
 
-## The fifteen skills
+## The sixteen skills
 
 | Move | Display name | Skill ID | Exhibit | Script |
 |---|---|---|---|---|
@@ -25,9 +25,10 @@ instructions: [`../part2/README.md`](../part2/README.md#install) and
 | Plan | Stakeholder Map | [`stratos-stakeholder-map`](skills/stratos-stakeholder-map/SKILL.md) | — | — |
 | Plan | Negotiation Prep | [`stratos-negotiation-prep`](skills/stratos-negotiation-prep/SKILL.md) | — | — |
 | Plan | Execution Roadmap | [`stratos-execution-roadmap`](skills/stratos-execution-roadmap/SKILL.md) | S | — |
-| Track | Value Realization | [`stratos-value-realization`](skills/stratos-value-realization/SKILL.md) | — | `variance.py` |
+| Track | Value Realization | [`stratos-value-realization`](skills/stratos-value-realization/SKILL.md) | U | `strategy_map.py`, `variance.py` |
 | Track | Memo Coach | [`stratos-memo-coach`](skills/stratos-memo-coach/SKILL.md) | — | — |
 | Track | Executive and VC Pitch | [`stratos-pitch`](skills/stratos-pitch/SKILL.md) | — | — |
+| Track | StratOS Workbook | [`stratos-workbook`](skills/stratos-workbook/SKILL.md) | — | `build_workbook.py` |
 
 The orchestrator (`stratos-orchestrator-final`, in `part2/skills`) runs them as **mode D**:
 Choose → Test → Plan → Track, with a checkpoint after every step. Pricing, Synergy Case and Negotiation

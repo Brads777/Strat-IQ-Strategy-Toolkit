@@ -1,0 +1,11 @@
+id,perspective,objective,drives
+F1,financial,Grow operating profit to full potential,
+F2,financial,Earn the business-case return on the new platform,
+C1,customer,Win the beachhead: urban fleets replacing diesel vans,F1;F2
+C2,customer,Be the value choice below $35k,F1
+I1,internal,Secure a second qualified cell supplier,C1;C2
+I2,internal,Close the variable-cost gap to the peer median,C2
+I3,internal,Build a fleet-sales motion,C1
+L1,learning,In-house battery-management software team,I2
+L2,learning,Supplier-quality engineering capability,I1
+L3,learning,Fleet account managers trained on total cost of ownership,I3
