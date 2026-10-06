@@ -20,13 +20,14 @@ One upload, `stratos-part2-3-skills.zip`, installs both parts on top of Part 1.
 | **Growth Barriers** | [`stratos-growth-barriers`](skills/stratos-growth-barriers/SKILL.md) | K-2 — the one binding constraint on growth |
 | **SWOT Analysis** | [`stratos-swot`](skills/stratos-swot/SKILL.md) | K — four traced lists crossed into SO, WO, ST and WT options |
 
-Three Part 1 skills are updated and replace their Part 1 copies:
+One new GLO-BUS skill, and three Part 1 skills updated and replace their Part 1 copies:
 
 | Skill | Change |
 |---|---|
 | [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Exhibits C-O plus the optional J-1, K-1, K-2 and P-T |
 | [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Blue-ocean candidates move from `UNVALIDATED` to `supported` or `gap` once VRIO has run |
-| [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Three modes: learn the real camera and drone industries · **CIR gap analysis** with strategic group maps ([`globus_groups.py`](skills/stratos-globus-coach/scripts/globus_groups.py)) · year coaching with guardrails. Student fill-in template: [`cir-gap-prompt.md`](skills/stratos-globus-coach/references/cir-gap-prompt.md) |
+| [`stratos-globus-capture`](skills/stratos-globus-capture/SKILL.md) | **New.** Captures a team's GLO-BUS year read-only in the team's own Chrome (Claude in Chrome), after the team signs in: decision screens, projections, company reports and the class-wide reports. Never handles passwords or changes a decision. Upload route for teams without the extension. Feeds the coach's full-year review |
+| [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Three modes: learn the real camera and drone industries · **CIR gap analysis** with strategic group maps ([`globus_groups.py`](skills/stratos-globus-coach/scripts/globus_groups.py)) · year coaching with guardrails · **full-year review** from a capture file. Student fill-in template: [`cir-gap-prompt.md`](skills/stratos-globus-coach/references/cir-gap-prompt.md) |
 
 ## GLO-BUS: cameras and drones
 
@@ -54,12 +55,12 @@ Step by step, with links:
 
 1. Download **`stratos-part2-3-skills.zip`** from the
    **[latest release](https://github.com/Brads777/stratos-external-analysis/releases/latest)** and unzip
-   it once. Inside are 26 zips, one per skill. Leave those zipped.
+   it once. Inside are 27 zips, one per skill. Leave those zipped.
 2. In **Settings → Capabilities → Skills**, **delete** your current copies of
    `stratos-case-exhibits`, `stratos-strategic-mapping` and `stratos-globus-coach` (and
    `stratos-orchestrator-final` and the other Part 2 skills, if you installed v1.7.0).
-3. Upload all 26 zips.
-4. Switch **off** `stratos-orchestrator` (the Part 1 orchestrator). You should have **36 StratOS skills
+3. Upload all 27 zips.
+4. Switch **off** `stratos-orchestrator` (the Part 1 orchestrator). You should have **37 StratOS skills
    on**.
 5. Replace `industries.json` in your Project knowledge with the new version (it adds `cameras` and
    `drones`), and make sure your saved `strategy-ledger` file is there too.

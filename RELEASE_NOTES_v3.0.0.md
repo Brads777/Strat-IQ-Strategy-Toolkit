@@ -1,7 +1,7 @@
 # StratOS v3.0.0 — Parts 2 + 3 together, and GLO-BUS cameras and drones
 
-**One upload:** `stratos-part2-3-skills.zip` (26 skill zips) installs Part 2 and Part 3 on top of Part 1.
-With the Part 1 orchestrator switched off, 36 StratOS skills are on.
+**One upload:** `stratos-part2-3-skills.zip` (27 skill zips) installs Part 2 and Part 3 on top of Part 1.
+With the Part 1 orchestrator switched off, 37 StratOS skills are on.
 
 ## Part 2 — the company
 - New: **Unit Economics** (J-1, `unit_economics.py`), **Full Potential** (K-1, `full_potential.py`),
@@ -18,13 +18,17 @@ Stakeholder Map, Negotiation Prep, Execution Roadmap (S). Track: Value Realizati
   (DJI, Parrot, Skydio, Autel, Yuneec) as real-world analogues of the GLO-BUS product lines.
 - GLO-BUS Coach: three modes — learn the real industry, **CIR gap analysis** (`globus_groups.py`:
   strategic group maps, share leader, spend efficiency, white space), year coaching with guardrails.
-  Student fill-in template in `references/cir-gap-prompt.md`.
+  Student fill-in template in `references/cir-gap-prompt.md`. New mode 4: full-year review.
+- New **GLO-BUS Capture** skill: after the team signs in, Claude in Chrome walks GLO-BUS read-only and
+  captures the year's decision screens, projections, company reports and class-wide reports into one
+  file (`capture_check.py` flags missing screens). Never handles passwords or changes a decision.
+  Upload route for teams without the extension.
 
 ## Updated Part 1 skills (replace on upload)
 `stratos-case-exhibits` (optional J-1, K-1, K-2, P-T), `stratos-strategic-mapping`, `stratos-globus-coach`.
 
 ## Assets
-- `stratos-part2-3-skills.zip` — Parts 2 + 3 (26 skills)
+- `stratos-part2-3-skills.zip` — Parts 2 + 3 (27 skills)
 - `stratos-all-skills.zip` — Part 1 (14 skills, with the updated GLO-BUS Coach)
 - `industries.json` — version 2
 

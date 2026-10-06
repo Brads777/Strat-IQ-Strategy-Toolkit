@@ -94,10 +94,12 @@ and the report.
 | Segment Value | `stratos-segment-value` | Exhibit O — segment CLV × customers (`segment_value.py`), when data exists |
 
 **Simulation tool (mode E):** `stratos-globus-coach` (GLO-BUS Coach). Any question about GLO-BUS
-decisions, rounds, scores, the CIR or the Camera & Drone Journal goes straight to it. It has three
+decisions, rounds, scores, the CIR or the Camera & Drone Journal goes straight to it. It has four
 modes: learn the real camera or drone industry (`cameras` and `drones` in `industries.json`, run as a
-quick StratOS chain), a CIR gap analysis (strategic group maps, white space and next-year moves), and
-year-by-year coaching with guardrails. Part 2 and Part 3 skills also work on a GLO-BUS company: Unit
+quick StratOS chain), a CIR gap analysis (strategic group maps, white space and next-year moves),
+year-by-year coaching with guardrails, and a full-year review. Requests to capture, screenshot or pull
+a team's GLO-BUS screens go to `stratos-globus-capture` (read-only, after the team signs in), which
+then hands its capture file to the coach. Part 2 and Part 3 skills also work on a GLO-BUS company: Unit
 Economics, Growth Barriers, Pricing and Value Realization read the team's own reports instead of
 filings.
 

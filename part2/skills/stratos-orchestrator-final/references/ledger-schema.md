@@ -233,7 +233,9 @@ Values below are synthetic.
   "globus": {                                  // GLO-BUS Coach; kept in its own ledger file
     "company": "C", "strategy": { "cameras": "best-cost", "drones": "differentiation" },
     "cir_log": [ { "year": 6, "groups": {}, "leader": {}, "white_space": [], "moves": [] } ],
-    "decisions_log": [ { "year": 7, "moves": [], "projected": {}, "actual": {} } ]
+    "decisions_log": [ { "year": 7, "moves": [], "projected": {}, "actual": {} } ],
+    "captures": [ { "year": 6, "file": "globus-capture-C-Y6.json", "complete": true } ],
+    "reviews": [ { "year": 6, "observations": [], "verdicts": [], "moves": [] } ]
   },
 
   "stale": [],

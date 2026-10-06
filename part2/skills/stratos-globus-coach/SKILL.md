@@ -1,6 +1,6 @@
 ---
 name: stratos-globus-coach
-description: "StratOS GLO-BUS Coach. Decision support for the GLO-BUS simulation (action cameras and camera drones, four regions) in three modes: (1) benchmark the real camera and drone industries (GoPro, Garmin, DJI, Skydio and others from industries.json) to learn the economics behind the game; (2) a CIR gap analysis that turns pasted Competitive Intelligence Report and Camera & Drone Journal figures into strategic group maps (price vs P/Q), the share leader's driver, white space and moves for the next year; (3) year-by-year coaching against the five KPIs (EPS, ROE, stock price, credit rating, image rating) with guardrails. Never enters decisions. Use for 'GLO-BUS', 'CIR', 'Camera & Drone Journal', 'strategic group map for GLO-BUS', 'what should we change this year', or 'why did our score drop'."
+description: "StratOS GLO-BUS Coach. Decision support for the GLO-BUS simulation (action cameras and camera drones, four regions) in four modes: (1) benchmark the real camera and drone industries (GoPro, Garmin, DJI, Skydio and others from industries.json) to learn the economics behind the game; (2) a CIR gap analysis that turns pasted Competitive Intelligence Report and Camera & Drone Journal figures into strategic group maps (price vs P/Q), the share leader's driver, white space and moves for the next year; (3) year-by-year coaching against the five KPIs (EPS, ROE, stock price, credit rating, image rating) with guardrails; (4) a full-year review of the team's captured inputs against the class reports. Never enters decisions. Use for 'GLO-BUS', 'CIR', 'review our GLO-BUS year', 'Camera & Drone Journal', 'strategic group map for GLO-BUS', 'what should we change this year', or 'why did our score drop'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -10,15 +10,16 @@ license: Apache-2.0
 Checked against the MGT4850 GLO-BUS overview (2026-10-01). The course's GLO-BUS instructions and the
 official GLO-BUS help guides override anything here.
 
-## Three ways to use it
+## Four ways to use it
 
-When the coach opens, ask which one the team needs (the interactive choice widget if available):
+When the coach opens, ask which one the team needs (four modes) (the interactive choice widget if available):
 
 | Mode | When | What the team brings | What it produces |
 |---|---|---|---|
 | **1. Learn the real industry** | Before Year 6, or when a team does not understand why a lever matters | Nothing; uses `industries.json` (`cameras`, `drones`) | A short StratOS benchmark of the real camera or drone industry, translated into GLO-BUS levers |
 | **2. CIR gap analysis** | After every round, from Year 6 on | The CIR and Camera & Drone Journal figures, pasted or uploaded (`references/cir-gap-prompt.md` is the fill-in template) | Strategic group maps, the share leader's driver, the weakest rival, white space, and 3-5 moves for next year |
 | **3. Year coaching** | Before entering a year's decisions | The team's own results and its chosen strategy | Steps 1-3 below: anchor, diagnose, 3-5 testable moves with guardrails |
+| **4. Full-year review** | After a round, when the team has a capture file | `globus-capture-<company>-Y<year>.json` from `stratos-globus-capture` | Commentary on the team's own inputs against the class results: what worked, what didn't, why, and what to test next |
 
 Mode 2 ends by handing its moves into mode 3's guardrail check. Modes can run in any order.
 
@@ -94,6 +95,33 @@ responsibility, finance), each with its expected effect on all five KPIs. For sc
 fails a guardrail goes under "Not recommended this year".
 
 Log the maps and moves to `globus.cir_log[]` in the ledger (year, groups, leader, white space, moves).
+
+## Mode 4 — Full-year review (from a capture file)
+
+`stratos-globus-capture` collects the team's decision screens, projections and company reports, plus
+the class-wide reports, into one file. If the team has no capture file, offer to run the capture (or
+its upload route) first.
+
+1. **Check the file.** Note any `missing_required` or thin pages from the capture check, and say which
+   comments they limit.
+2. **Rebuild the picture.** From the class reports, run mode 2 Steps 1-4 (CIR table, strategic groups
+   with `globus_groups.py`, the leader and its driver, the weakest rival, white space).
+3. **Put the team's inputs next to the outcomes.** For each decision area, a row: what the team chose
+   (from its decision screens), the industry average or range (CIR, CDJ benchmarks), what happened
+   (share, cost per unit, margin, the KPI it moved), and a verdict: `worked`, `didn't work`, or
+   `unclear`, with the evidence.
+4. **Projections vs actual.** Where the capture holds the projection the team saw before submitting
+   and the actual result, compare them KPI by KPI. A large gap usually means rivals moved more than
+   the team assumed: say which rivals and which lever.
+5. **Consistency with the strategy.** Do the inputs serve the team's stated strategy, product by
+   product and region by region? Flag "stuck in the middle" combinations (e.g. premium P/Q with
+   bargain pricing and low ads).
+6. **What is going on, in plain words.** 3-5 observations a team member could repeat in a meeting,
+   each pointing to a figure.
+7. **What to test next.** 3-5 moves, run through the guardrails below, to try in next year's
+   projections. Never a full set of numbers to enter.
+
+Log the review to `globus.reviews[]` in the ledger (year, observations, verdicts, moves).
 
 ## Mode 3 — Year coaching
 

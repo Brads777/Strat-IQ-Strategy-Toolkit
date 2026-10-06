@@ -66,8 +66,8 @@ and every Impact Summary.
 decisions you need answered; it runs Choose → Test → Plan → Track with a checkpoint after each step.
 
 **E. Help with GLO-BUS** — Learn the real camera and drone industries behind the game, paste your
-Competitive Intelligence Report for strategic group maps and white space, or get coaching on next
-year's decisions. You still make and enter every decision.
+Competitive Intelligence Report for strategic group maps and white space, capture and review your
+whole year, or get coaching on next year's decisions. You still make and enter every decision.
 
 *Picking up earlier work? Upload or attach your saved `strategy-ledger` file. StratOS checks it first
 and continues from the last completed step.*
