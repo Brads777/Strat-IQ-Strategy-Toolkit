@@ -235,7 +235,7 @@ Values below are synthetic.
     "cir_log": [ { "year": 6, "groups": {}, "leader": {}, "white_space": [], "moves": [] } ],
     "decisions_log": [ { "year": 7, "moves": [], "projected": {}, "actual": {} } ],
     "captures": [ { "year": 6, "file": "globus-capture-C-Y6.json", "complete": true } ],
-    "reviews": [ { "year": 6, "observations": [], "verdicts": [], "moves": [] } ]
+    "reviews": [ { "year": 6, "apparent_strategy": { "cameras": "low-cost", "confidence": "clear" }, "observations": [], "lessons": [], "questions": [] } ]
   },
 
   "stale": [],

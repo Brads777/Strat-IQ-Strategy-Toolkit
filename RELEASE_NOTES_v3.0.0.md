@@ -18,7 +18,7 @@ Stakeholder Map, Negotiation Prep, Execution Roadmap (S). Track: Value Realizati
   (DJI, Parrot, Skydio, Autel, Yuneec) as real-world analogues of the GLO-BUS product lines.
 - GLO-BUS Coach: three modes — learn the real industry, **CIR gap analysis** (`globus_groups.py`:
   strategic group maps, share leader, spend efficiency, white space), year coaching with guardrails.
-  Student fill-in template in `references/cir-gap-prompt.md`. New mode 4: full-year review.
+  Student fill-in template in `references/cir-gap-prompt.md`. New mode 4: full-year review — names the strategy the team's inputs reveal and gives general lessons, not specific recommendations.
 - New **GLO-BUS Capture** skill: after the team signs in, Claude in Chrome walks GLO-BUS read-only and
   captures the year's decision screens, projections, company reports and class-wide reports into one
   file (`capture_check.py` flags missing screens). Never handles passwords or changes a decision.

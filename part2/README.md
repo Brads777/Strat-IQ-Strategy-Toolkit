@@ -27,7 +27,7 @@ One new GLO-BUS skill, and three Part 1 skills updated and replace their Part 1 
 | [`stratos-case-exhibits`](skills/stratos-case-exhibits/SKILL.md) | Exhibits C-O plus the optional J-1, K-1, K-2 and P-T |
 | [`stratos-strategic-mapping`](skills/stratos-strategic-mapping/SKILL.md) | Blue-ocean candidates move from `UNVALIDATED` to `supported` or `gap` once VRIO has run |
 | [`stratos-globus-capture`](skills/stratos-globus-capture/SKILL.md) | **New.** Captures a team's GLO-BUS year read-only in the team's own Chrome (Claude in Chrome), after the team signs in: decision screens, projections, company reports and the class-wide reports. Never handles passwords or changes a decision. Upload route for teams without the extension. Feeds the coach's full-year review |
-| [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Three modes: learn the real camera and drone industries · **CIR gap analysis** with strategic group maps ([`globus_groups.py`](skills/stratos-globus-coach/scripts/globus_groups.py)) · year coaching with guardrails · **full-year review** from a capture file. Student fill-in template: [`cir-gap-prompt.md`](skills/stratos-globus-coach/references/cir-gap-prompt.md) |
+| [`stratos-globus-coach`](skills/stratos-globus-coach/SKILL.md) | Three modes: learn the real camera and drone industries · **CIR gap analysis** with strategic group maps ([`globus_groups.py`](skills/stratos-globus-coach/scripts/globus_groups.py)) · year coaching with guardrails · **full-year review** from a capture file (the apparent strategy and general lessons, not recommendations). Student fill-in template: [`cir-gap-prompt.md`](skills/stratos-globus-coach/references/cir-gap-prompt.md) |
 
 ## GLO-BUS: cameras and drones
 

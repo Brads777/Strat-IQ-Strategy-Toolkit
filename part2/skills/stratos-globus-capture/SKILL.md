@@ -1,6 +1,6 @@
 ---
 name: stratos-globus-capture
-description: "StratOS GLO-BUS Capture. After a team signs in to GLO-BUS themselves in their own Chrome, walks the site with Claude in Chrome in read-only mode and captures one year: the team's own decision screens and projections, and the class-wide reports the team can see (scoreboard, Competitive Intelligence Report, Camera & Drone Journal, performance highlights). Saves the page text and screenshots into one capture file, checks it for missing screens, and hands it to the GLO-BUS Coach for a full-year review of the team's inputs against the class results. Never handles passwords and never changes or submits a decision. Also accepts uploaded screenshots or PDFs. Use for 'capture GLO-BUS', 'screenshot our GLO-BUS year', 'pull our GLO-BUS reports', or 'review our whole GLO-BUS year'."
+description: "StratOS GLO-BUS Capture. After a team signs in to GLO-BUS themselves in their own Chrome, walks the site with Claude in Chrome in read-only mode and captures one year: the team's own decision screens and projections, and the class-wide reports the team can see (scoreboard, Competitive Intelligence Report, Camera & Drone Journal, performance highlights). Saves the page text and screenshots into one capture file, checks it for missing screens, and hands it to the GLO-BUS Coach, which names the strategy the inputs reveal and gives general lessons (feedback, not recommendations). Never handles passwords and never changes or submits a decision. Also accepts uploaded screenshots or PDFs. Use for 'capture GLO-BUS', 'screenshot our GLO-BUS year', 'pull our GLO-BUS reports', or 'review our whole GLO-BUS year'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -81,8 +81,9 @@ chats (and next year's review) can use it.
 
 ## Step 4 — Hand off to the coach
 
-Invoke `stratos-globus-coach` in **mode 4, full-year review**, with the capture file. The coach reads
-the team's decisions next to the class reports and comments on what is going on.
+Invoke `stratos-globus-coach` in **mode 4, full-year review**, with the capture file. The coach names
+the strategy the team's inputs reveal and gives general lessons from the inputs and results. It gives
+feedback, not specific recommendations.
 
 ## Upload route (no extension, or automation not allowed)
 
