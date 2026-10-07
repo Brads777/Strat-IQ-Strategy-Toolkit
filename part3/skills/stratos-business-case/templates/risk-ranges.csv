@@ -1,0 +1,7 @@
+driver,low,likely,high
+price,-10%,0%,5%
+units,-30%,0%,15%
+variable_cost,-5%,0%,10%
+fixed_cost,-10%,0%,15%
+capex,-5%,0%,25%
+rate,0.08,0.10,0.13

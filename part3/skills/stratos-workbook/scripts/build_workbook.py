@@ -156,8 +156,10 @@ def sheet_start(wb, L, title, mode):
             ("VRIO", "Yes / No / ? for each test; the verdict and the KSF reality check are calculated."),
             ("SWOT-TOWS", "Four traced lists and the TOWS options that pair them."),
             ("Decision Matrix", "Criteria weights × option scores, with a weighted total and rank; do nothing included."),
-            ("Expected Value", "Scenario probabilities × NPVs, expected NPV, worst case, maximin, value of information."),
+            ("Expected Value", "Scenario probabilities × NPVs, expected NPV, worst case, maximin, value of information, and a Bayes' rule pilot check (EVSI)."),
             ("Business Case", "Driver-based cash flows, NPV, IRR and cumulative cash."),
+            ("Risk Analysis", "Exhibit Q-3: a tornado chart (which driver moves NPV most) and a 1,000-run Monte Carlo "
+                              "simulation (median, P10-P90, chance NPV is below zero) over your low / likely / high ranges."),
             ("Balanced Scorecard", "Objectives and measures in four perspectives, leading vs lagging, status vs target, balance check."),
             ("Strategy Map", "Objectives by perspective and their cause-and-effect links; picture included when built from a ledger."),
             ("GLO-BUS CIR", "Paste the CIR figures; each company is placed in a strategic group automatically."),
@@ -507,6 +509,64 @@ def sheet_ev(wb, L, mode):
     label(ws, f"C{r+2}", "The most worth paying for a pilot that reveals the scenario first (leader's probabilities).",
           bold=False)
     ws.merge_cells(f"C{r+2}:K{r+2}")
+    # ---- Bayesian pilot update ----
+    b0 = r + 5
+    label(ws, f"A{b0}", "Is a pilot worth it? (Bayes' rule)")
+    label(ws, f"B{b0}", "How likely the pilot shows each result IF that scenario is real. Each row sums to 100%. "
+                        "Uses the first option's scenario probabilities as the prior.", bold=False)
+    ws.merge_cells(f"B{b0}:K{b0}")
+    header(ws, b0 + 1, ["Scenario", "Prior", "P(positive | scenario)", "P(negative | scenario)", "Row check",
+                        "Posterior if positive", "Posterior if negative"])
+    ws.freeze_panes = "A6"
+    pil = (g(L, "strategy_layer", "expected_value", "pilot", default={}) or {}) if mode == "ledger" else {}
+    lk = pil.get("likelihoods", {}) or {}
+    exl = {"strong": (.80, .20), "moderate": (.50, .50), "weak": (.15, .85)}
+    pr = {"strong": "B6", "moderate": "D6", "weak": "F6"}
+    for i, sc in enumerate(("strong", "moderate", "weak")):
+        rr = b0 + 2 + i
+        label(ws, f"A{rr}", sc.capitalize(), bold=False)
+        fx(ws, f"B{rr}", f"=IF({pr[sc]}=\"\",\"\",{pr[sc]})", "0%")
+        v = exl[sc] if mode == "example" else (tuple(lk.get(sc) or (None, None)) if mode == "ledger" else (None, None))
+        inp(ws, f"C{rr}", v[0], "0%")
+        inp(ws, f"D{rr}", v[1], "0%")
+        fx(ws, f"E{rr}", f'=IF(C{rr}="","",IF(ABS(C{rr}+D{rr}-1)<0.001,"OK","Must sum to 100%"))')
+        fx(ws, f"F{rr}", f'=IFERROR(B{rr}*C{rr}/SUMPRODUCT($B${b0+2}:$B${b0+4},$C${b0+2}:$C${b0+4}),"")', "0.0%")
+        fx(ws, f"G{rr}", f'=IFERROR(B{rr}*D{rr}/SUMPRODUCT($B${b0+2}:$B${b0+4},$D${b0+2}:$D${b0+4}),"")', "0.0%")
+    s1, s3 = b0 + 2, b0 + 4
+    rp = s3 + 1
+    label(ws, f"A{rp}", "P(result)")
+    fx(ws, f"F{rp}", f'=IFERROR(SUMPRODUCT(B{s1}:B{s3},C{s1}:C{s3}),"")', "0.0%", bold=True)
+    fx(ws, f"G{rp}", f'=IFERROR(SUMPRODUCT(B{s1}:B{s3},D{s1}:D{s3}),"")', "0.0%", bold=True)
+    e0 = rp + 2
+    header(ws, e0, ["Option", "Expected NPV now", "If positive", "If negative"])
+    ws.freeze_panes = "A6"
+    for i in range(n):
+        rr = e0 + 1 + i
+        src = 6 + i
+        fx(ws, f"A{rr}", f'=IF(A{src}="","",A{src})')
+        fx(ws, f"B{rr}", f'=IF(A{src}="","",I{src})', "0.00")
+        fx(ws, f"C{rr}", f'=IF(OR(A{src}="",F{s1}=""),"",C{src}*F{s1}+E{src}*F{s1+1}+G{src}*F{s3})', "0.00")
+        fx(ws, f"D{rr}", f'=IF(OR(A{src}="",G{s1}=""),"",C{src}*G{s1}+E{src}*G{s1+1}+G{src}*G{s3})', "0.00")
+    e1, e2 = e0 + 1, e0 + n
+    q = e2 + 2
+    out_rows = [
+        ("Best option if the pilot is positive", f'=IFERROR(INDEX(A{e1}:A{e2},MATCH(MAX(C{e1}:C{e2}),C{e1}:C{e2},0)),"")', None),
+        ("Best option if the pilot is negative", f'=IFERROR(INDEX(A{e1}:A{e2},MATCH(MAX(D{e1}:D{e2}),D{e1}:D{e2},0)),"")', None),
+        ("Expected NPV with the pilot ($M)", f'=IFERROR(F{rp}*MAX(C{e1}:C{e2})+G{rp}*MAX(D{e1}:D{e2}),"")', "0.00"),
+        ("Value of the pilot, EVSI ($M)", f'=IFERROR(B{q+2}-MAX(I6:I{last}),"")', "0.00"),
+        ("Pilot cost ($M)", None, "0.00"),
+        ("Net value of running the pilot ($M)", f'=IFERROR(IF(B{q+4}="","",B{q+3}-B{q+4}),"")', "0.00"),
+        ("Share of perfect information", f'=IFERROR(B{q+3}/B{r+2},"")', "0%")]
+    for i, (nm, f_, fmt) in enumerate(out_rows):
+        rr = q + i
+        label(ws, f"A{rr}", nm)
+        if f_ is None:
+            inp(ws, f"B{rr}", 0.5 if mode == "example" else pil.get("cost"), fmt)
+        else:
+            fx(ws, f"B{rr}", f_, fmt, bold=True)
+    label(ws, f"C{q}", "If both results point to the same option, the pilot cannot change the choice and is worth "
+                       "nothing for this decision.", bold=False)
+    ws.merge_cells(f"C{q}:K{q+1}")
 
 
 def sheet_bc(wb, L, mode):
@@ -571,6 +631,207 @@ def sheet_bc(wb, L, mode):
     traffic(ws, f"B{r+2}", f'B{r+2}="Yes"', "FALSE", f'B{r+2}="No"')
     label(ws, f"A{r+4}", "State the break-even in words in your exhibit (the Business Case skill computes it).",
           bold=False)
+
+
+RISK_DRIVERS = [("price", "Price per unit", -0.10, 0.0, 0.05), ("units", "Units", -0.30, 0.0, 0.15),
+                ("variable_cost", "Variable cost per unit", -0.05, 0.0, 0.10),
+                ("fixed_cost", "Fixed costs", -0.10, 0.0, 0.15), ("capex", "Capex", -0.05, 0.0, 0.25),
+                ("rate", "Discount rate (absolute)", 0.08, 0.10, 0.13)]
+MC_ROWS = 1000
+
+
+def _cf_formula(y, m):
+    """Cash-flow formula for year index y (0-5) with multiplier refs m = dict(price, units, variable_cost,
+    fixed_cost, capex) (each a cell holding 1 + change)."""
+    B = "'Business Case'!"
+    c = get_column_letter(2 + y)
+    p = get_column_letter(1 + y)
+    rev = lambda col: f"({B}{col}11*{m['units']}*{B}{col}12*{m['price']})"
+    ebit = (f"({rev(c)}-{B}{c}11*{m['units']}*{B}{c}13*{m['variable_cost']}-{B}{c}14*{m['fixed_cost']})")
+    dwc = f"{B}$B$8*({rev(c)}-{rev(p)})" if y > 0 else f"{B}$B$8*{rev(c)}"
+    f_ = f"={ebit}-MAX(0,{ebit})*{B}$B$7-{dwc}-{B}{c}15*{m['capex']}"
+    if y == 5:
+        f_ += f"+{B}$B$8*{rev(c)}"
+    return f_
+
+
+def sheet_risk(wb, L, mode):
+    from openpyxl.chart import BarChart, Reference
+    ws = wb.create_sheet("Risk Analysis")
+    head(ws, "Risk Analysis (Exhibit Q-3)", "Works on the Business Case sheet. Set a low / likely / high for each "
+         "driver: % change from plan, except the discount rate (an absolute rate). Blank = no uncertainty.",
+         [28, 11, 11, 11, 12, 12, 12, 15, 15, 15, 12, 12, 14])
+    ra = (g(L, "strategy_layer", "risk_analysis", "ranges", default={}) or {}) if mode == "ledger" else {}
+    header(ws, 5, ["Driver", "Low", "Likely", "High", "Eff. low", "Eff. likely", "Eff. high"])
+    rows = {}
+    for i, (key, name, lo, mid, hi) in enumerate(RISK_DRIVERS):
+        r = 6 + i
+        rows[key] = r
+        label(ws, f"A{r}", name, bold=False)
+        vals = (lo, mid, hi) if mode == "example" else tuple((ra.get(key) or [None] * 3)[:3]) if mode == "ledger" else (None,) * 3
+        fmt = "0.0%"
+        for col, v in zip("BCD", vals):
+            inp(ws, f"{col}{r}", v, fmt)
+        dflt = "'Business Case'!$B$6" if key == "rate" else "0"
+        # effective values: blanks fall back to the likely value, then to plan
+        fx(ws, f"F{r}", f'=IF(C{r}="",{dflt},C{r})', fmt)
+        fx(ws, f"E{r}", f'=IF(B{r}="",F{r},B{r})', fmt)
+        fx(ws, f"G{r}", f'=IF(D{r}="",F{r},D{r})', fmt)
+    ws[f"H6"] = None
+    chk = 6 + len(RISK_DRIVERS)
+    label(ws, f"A{chk}", "Range check", bold=False)
+    fx(ws, f"B{chk}", '=IF(SUMPRODUCT((E6:E11>F6:F11)+(F6:F11>G6:G11))=0,"OK","Need low <= likely <= high")')
+    ws.merge_cells(f"B{chk}:D{chk}")
+    traffic(ws, f"B{chk}", f'B{chk}="OK"', "FALSE", f'B{chk}<>"OK"')
+
+    # ---- tornado scenarios (exact NPV, each driver alone at low / high) ----
+    t0 = chk + 2
+    label(ws, f"A{t0}", "Tornado: NPV with one driver at its low or high, the others at plan")
+    header_r = t0 + 1
+    for i, h in enumerate(["Scenario", "Price ×", "Units ×", "Var. cost ×", "Fixed ×", "Capex ×", "Rate",
+                           "CF Y0", "CF Y1", "CF Y2", "CF Y3", "CF Y4", "CF Y5", "NPV"], 1):
+        c = ws.cell(row=header_r, column=i, value=h)
+        c.font, c.fill, c.alignment, c.border = H_FONT, H_FILL, CENTER, BOX
+    ws.column_dimensions["N"].width = 16
+    scen = [("Plan", None, None)] + [(f"{n} {s}", k, s) for k, n, *_ in RISK_DRIVERS for s in ("low", "high")]
+    mcols = {"price": "B", "units": "C", "variable_cost": "D", "fixed_cost": "E", "capex": "F"}
+    srow = {}
+    for i, (nm, key, side) in enumerate(scen):
+        r = header_r + 1 + i
+        srow[(key, side)] = r
+        label(ws, f"A{r}", nm, bold=False)
+        for k, col in mcols.items():
+            src = ("E" if side == "low" else "G") + str(rows[k])
+            fx(ws, f"{col}{r}", f"=1+{src}" if key == k else "=1", "0.00")
+        rate_src = ("E" if side == "low" else "G") + str(rows["rate"]) if key == "rate" else "'Business Case'!$B$6"
+        fx(ws, f"G{r}", f"={rate_src}", "0.0%")
+        m = {k: f"${col}{r}" for k, col in mcols.items()}
+        for y in range(6):
+            fx(ws, f"{get_column_letter(8 + y)}{r}", _cf_formula(y, m), "$#,##0;($#,##0);-")
+        fx(ws, f"N{r}", f'=IF(COUNT(\'Business Case\'!B11:G11)=0,"",H{r}+NPV(G{r},I{r}:M{r}))', "$#,##0;($#,##0);-",
+           bold=True)
+    plan_r = srow[(None, None)]
+    tz = header_r + 1 + len(scen) + 1
+    label(ws, f"A{tz}", "Tornado table (sorted by swing; the chart reads this)")
+    header(ws, tz + 1, ["Driver", "NPV at low", "NPV at high", "Swing", "Low − plan", "High − plan", "Crosses zero?",
+                        "Rank key"])
+    ws.freeze_panes = None
+    # unsorted helper rows
+    uz = tz + 2 + len(RISK_DRIVERS) + 1
+    label(ws, f"A{uz}", "Helper (unsorted)", bold=False)
+    for i, (key, name, *_) in enumerate(RISK_DRIVERS):
+        r = uz + 1 + i
+        label(ws, f"A{r}", name, bold=False)
+        fx(ws, f"B{r}", f"=N{srow[(key, 'low')]}", "$#,##0;($#,##0);-")
+        fx(ws, f"C{r}", f"=N{srow[(key, 'high')]}", "$#,##0;($#,##0);-")
+        fx(ws, f"D{r}", f'=IFERROR(ABS(C{r}-B{r})+ROW()/1E9,0)', "$#,##0")
+    u1, u2 = uz + 1, uz + len(RISK_DRIVERS)
+    for i in range(len(RISK_DRIVERS)):
+        r = tz + 2 + i
+        mt = f"MATCH(LARGE($D${u1}:$D${u2},{i+1}),$D${u1}:$D${u2},0)"
+        fx(ws, f"A{r}", f"=INDEX($A${u1}:$A${u2},{mt})")
+        fx(ws, f"B{r}", f"=INDEX($B${u1}:$B${u2},{mt})", "$#,##0;($#,##0);-")
+        fx(ws, f"C{r}", f"=INDEX($C${u1}:$C${u2},{mt})", "$#,##0;($#,##0);-")
+        fx(ws, f"D{r}", f'=IFERROR(ABS(C{r}-B{r}),"")', "$#,##0", bold=True)
+        fx(ws, f"E{r}", f'=IFERROR(B{r}-$N${plan_r},"")', "$#,##0;($#,##0);-")
+        fx(ws, f"F{r}", f'=IFERROR(C{r}-$N${plan_r},"")', "$#,##0;($#,##0);-")
+        fx(ws, f"G{r}", f'=IF(B{r}="","",IF(MIN(B{r},C{r})<0,IF(MAX(B{r},C{r})>0,"Yes","Below zero"),"No"))')
+        fx(ws, f"H{r}", f"={i+1}")
+    t1, t2 = tz + 2, tz + 1 + len(RISK_DRIVERS)
+    ch = BarChart()
+    ch.type, ch.grouping, ch.overlap = "bar", "clustered", 100
+    ch.title = "Tornado: change in NPV from plan"
+    ch.height, ch.width = 7.5, 15
+    for col, color in ((5, "C44536"), (6, "1D3557")):
+        ch.add_data(Reference(ws, min_col=col, min_row=t1 - 1, max_row=t2), titles_from_data=True)
+        ch.series[-1].graphicalProperties.solidFill = color
+        ch.series[-1].graphicalProperties.line.solidFill = color
+    ch.set_categories(Reference(ws, min_col=1, min_row=t1, max_row=t2))
+    ch.y_axis.numFmt = "$#,##0,,\"M\""
+    ch.x_axis.scaling.orientation = "maxMin"
+    ch.y_axis.majorGridlines = None
+    ch.x_axis.delete = ch.y_axis.delete = False
+    ch.legend.position = "b"
+    ws.add_chart(ch, f"J{tz}")
+
+    # ---- Monte Carlo ----
+    m0 = u2 + 3
+    label(ws, f"A{m0}", f"Monte Carlo simulation: {MC_ROWS:,} futures, each driver drawn from a triangular "
+                        "(low, likely, high) distribution. Press F9 to draw again; results move slightly each time.")
+    ws.merge_cells(f"A{m0}:N{m0}")
+    s0 = m0 + 1
+    stats = [("Mean NPV", "AVERAGE"), ("Median NPV", "MEDIAN"), ("P10 (1 in 10 worse than this)", "P10"),
+             ("P90 (1 in 10 better than this)", "P90"), ("Standard deviation", "STDEV"),
+             ("Probability NPV < 0", "PLOSS"), ("NPV at plan (for comparison)", "PLAN")]
+    sim_top = s0 + len(stats) + 25
+    sim_bot = sim_top + MC_ROWS - 1
+    rng_ = f"$N${sim_top}:$N${sim_bot}"
+    for i, (nm, kind) in enumerate(stats):
+        r = s0 + i
+        label(ws, f"A{r}", nm, bold=kind in ("MEDIAN", "PLOSS"))
+        f_ = {"AVERAGE": f"=AVERAGE({rng_})", "MEDIAN": f"=MEDIAN({rng_})", "P10": f"=PERCENTILE({rng_},0.1)",
+              "P90": f"=PERCENTILE({rng_},0.9)", "STDEV": f"=STDEV({rng_})",
+              "PLOSS": f"=COUNTIF({rng_},\"<0\")/COUNT({rng_})", "PLAN": f"=N{plan_r}"}[kind]
+        fx(ws, f"B{r}", f'=IFERROR({f_[1:]},"")', "0.0%" if kind == "PLOSS" else "$#,##0;($#,##0);-",
+           bold=kind in ("MEDIAN", "PLOSS"))
+    note = s0 + len(stats)
+    label(ws, f"A{note}", "Drivers are drawn independently. If two move together (e.g. a price cut that lifts "
+                          "volume), the real spread differs. For exact, repeatable figures use the Business Case "
+                          "skill's risk_analysis.py.", bold=False)
+    ws.merge_cells(f"A{note}:H{note}")
+    ws.row_dimensions[note].height = 30
+    # histogram (20 bins)
+    hz = note + 2
+    header(ws, hz, ["Bin from", "Bin to", "Count"])
+    ws.freeze_panes = None
+    for i in range(20):
+        r = hz + 1 + i
+        fx(ws, f"A{r}", f"=MIN({rng_})+(MAX({rng_})-MIN({rng_}))*{i}/20", "$#,##0,,\"M\"")
+        fx(ws, f"B{r}", f"=MIN({rng_})+(MAX({rng_})-MIN({rng_}))*{i+1}/20", "$#,##0,,\"M\"")
+        op = "<=" if i == 19 else "<"
+        fx(ws, f"C{r}", f'=COUNTIFS({rng_},">="&A{r},{rng_},"{op}"&B{r})', "0")
+    hc = BarChart()
+    hc.type = "col"
+    hc.gapWidth = 10
+    hc.title = "Distribution of simulated NPV"
+    hc.height, hc.width = 7.5, 15
+    hc.add_data(Reference(ws, min_col=3, min_row=hz, max_row=hz + 20), titles_from_data=True)
+    hc.set_categories(Reference(ws, min_col=2, min_row=hz + 1, max_row=hz + 20))
+    hc.series[0].graphicalProperties.solidFill = "1D3557"
+    hc.legend = None
+    hc.y_axis.majorGridlines = None
+    hc.x_axis.delete = hc.y_axis.delete = False
+    ws.add_chart(hc, f"E{hz}")
+    # simulation table
+    hdr = sim_top - 1
+    for i, h in enumerate(["Run", "Price ×", "Units ×", "Var. cost ×", "Fixed ×", "Capex ×", "Rate",
+                           "CF Y0", "CF Y1", "CF Y2", "CF Y3", "CF Y4", "CF Y5", "NPV"], 1):
+        c = ws.cell(row=hdr, column=i, value=h)
+        c.font, c.fill, c.alignment, c.border = H_FONT, H_FILL, CENTER, BOX
+    order = ["price", "units", "variable_cost", "fixed_cost", "capex", "rate"]
+    for j, key in enumerate(order):
+        c = ws.cell(row=hdr, column=16 + j, value=f"Random {j+1}")
+        c.font, c.fill, c.alignment, c.border = H_FONT, H_FILL, CENTER, BOX
+    small = Font(name=F, size=8, color="000000")
+    for n in range(MC_ROWS):
+        r = sim_top + n
+        ws.cell(row=r, column=1, value=n + 1).font = small
+        for j, key in enumerate(order):
+            d = rows[key]
+            a, mo, b = f"$E${d}", f"$F${d}", f"$G${d}"
+            u = f"{get_column_letter(16 + j)}{r}"
+            ws.cell(row=r, column=16 + j, value="=RAND()").font = Font(name=F, size=8, color="999999")
+            tri = (f"IF({b}={a},{mo},IF({u}<({mo}-{a})/({b}-{a}),{a}+SQRT({u}*({b}-{a})*({mo}-{a})),"
+                   f"{b}-SQRT((1-{u})*({b}-{a})*({b}-{mo}))))")
+            ws.cell(row=r, column=2 + j, value=f"={tri}" if key == "rate" else f"=1+{tri}")
+            ws.cell(row=r, column=2 + j).font = small
+            ws.cell(row=r, column=2 + j).number_format = "0.0%" if key == "rate" else "0.00"
+        m = {k: f"${get_column_letter(2 + j)}{r}" for j, k in enumerate(order[:5])}
+        for y in range(6):
+            c = ws.cell(row=r, column=8 + y, value=_cf_formula(y, m))
+            c.font, c.number_format = small, "$#,##0;($#,##0);-"
+        c = ws.cell(row=r, column=14, value=f'=IF(COUNT(\'Business Case\'!B11:G11)=0,"",H{r}+NPV(G{r},I{r}:M{r}))')
+        c.font, c.number_format = small, "$#,##0;($#,##0);-"
 
 
 PERSPECTIVES = ["Financial", "Customer", "Internal process", "Learning and growth"]
@@ -1089,6 +1350,7 @@ def main():
         sheet_matrix(wb, L, mode)
         sheet_ev(wb, L, mode)
         sheet_bc(wb, L, mode)
+        sheet_risk(wb, L, mode)
         sheet_bsc(wb, L, mode)
         sheet_map(wb, L, mode, tmp)
         sheet_cir(wb, L, mode, caps)

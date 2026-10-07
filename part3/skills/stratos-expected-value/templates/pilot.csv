@@ -1,0 +1,4 @@
+scenario,positive,negative
+strong,80%,20%
+moderate,50%,50%
+weak,15%,85%

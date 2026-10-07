@@ -1,6 +1,6 @@
 ---
 name: stratos-expected-value
-description: "StratOS Expected Value (optional case-memo Exhibit Q-2), following the course handout 'Choosing Among Strategic Alternatives'. For each option plus do nothing: strong, moderate and weak outcomes, probabilities summing to 100%, the NPV of each, expected NPV, and then the checks the average hides: worst case and maximin, the probability at which the ranking flips, and the value of perfect information (EVPI) that prices a pilot. Run by expected_value.py. Use for 'expected value', 'decision tree', 'which is the better bet', 'how risky is this choice', 'EVPI', or 'Exhibit Q-2'."
+description: "StratOS Expected Value (optional case-memo Exhibit Q-2), following the course handout 'Choosing Among Strategic Alternatives'. For each option plus do nothing: strong, moderate and weak outcomes, probabilities summing to 100%, the NPV of each, expected NPV, and then the checks the average hides: worst case and maximin, the probability at which the ranking flips, and the value of perfect information (EVPI) that prices a pilot. Run by expected_value.py. Adds a Bayesian pilot update (bayes_update.py): posterior probabilities after a pilot signal and EVSI, the value of an imperfect test. Use for 'expected value', 'decision tree', 'which is the better bet', 'EVPI', 'is a pilot worth it', 'Bayes', 'update my probabilities', or 'Exhibit Q-2'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -37,6 +37,26 @@ Fill `templates/expected-value.csv` and run `scripts/expected_value.py`.
 Say each in a sentence. Handout example: *"A wins on average, $4.4M against $4.0M, but can lose $6M;
 B never loses. If the chance of weak demand rises from 20% to 25.7%, B wins. Information is worth
 up to $1.4M: a pilot that reveals demand first is worth up to that much."*
+
+## Is a pilot worth it? (Bayesian update)
+
+EVPI prices a *perfect* test. Real pilots are imperfect, so price the one the student could run:
+
+1. In `templates/pilot.csv`, one row per scenario and one column per pilot result (e.g. positive,
+   negative): how likely the pilot shows that result **if** that scenario is real. A good pilot shows
+   "positive" often under strong demand and rarely under weak. The student sets these from a test
+   market, a comparable launch or an expert view.
+2. Run `scripts/bayes_update.py expected-value.csv pilot.csv --cost <pilot cost>`. It applies Bayes'
+   rule to give the **posterior** probabilities after each result, the best option after each result,
+   the expected value with the pilot, **EVSI** (the expected value of the sample information) and the
+   net value after the pilot's cost. With `--observed <result>` it updates on the result the student
+   actually saw.
+3. Say it in a sentence. Template example: *"A pilot that is right about 80% of the time is worth
+   $0.83M, 59% of perfect information. It matters because a negative result would switch the choice
+   from A to B. At a cost of $0.5M it is worth running."* A pilot no result of which changes the
+   choice is worth nothing for this decision, however interesting.
+
+This block goes in Exhibit Q-3 (Risk Analysis) with Business Case's tornado and simulation.
 
 ## Output
 

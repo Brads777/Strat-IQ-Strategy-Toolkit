@@ -65,10 +65,10 @@ Mode D runs it in four moves, with a checkpoint after each step:
 | Choose | 17 | Strategy Interview | `stratos-strategy-interview` | One question at a time, the student chooses their own strategy and positioning from the evidence; positioning statement and fit check |
 | Choose | 18 | Strategic Options | `stratos-strategic-options` | SCQ framing, 3+ options plus do nothing, staged bets (P) |
 | Choose | 19 | Decision Criteria and Matrix | `stratos-decision-criteria`, `stratos-decision-matrix` | Criteria, pros/cons, weighted scoring of the options |
-| Choose | 20 | Business Case | `stratos-business-case` | NPV, IRR, payback, break-even sentence (Q-1) |
+| Choose | 20 | Business Case | `stratos-business-case` | NPV, IRR, payback, break-even sentence (Q-1); tornado and Monte Carlo on request (Q-3) |
 | Choose | — | Pricing | `stratos-pricing` | Only when price is a lever |
 | Choose | — | Synergy Case | `stratos-synergy-case` | Only when an option is a deal |
-| Choose | 21 | Expected Value | `stratos-expected-value` | Expected NPV, maximin, flip point, EVPI (Q-2) |
+| Choose | 21 | Expected Value | `stratos-expected-value` | Expected NPV, maximin, flip point, EVPI (Q-2); Bayesian pilot value and, with Business Case, tornado and Monte Carlo (Q-3) |
 | Test | 22 | Stress Test | `stratos-stress-test` | Assumption audit, war-game, risk register, hostile drill (R) |
 | Plan | 23 | Go-to-Market | `stratos-gtm` | Beachhead, ICP, channels, funnel and CAC, launch gates (T) |
 | Plan | 24 | Initiative Prioritizer | `stratos-initiative-prioritizer` | Ranked, traced initiatives cut to capacity (S) |
@@ -224,6 +224,7 @@ them, `stratos-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | What the company's options are, build vs partner vs buy | Part 2 through SWOT → Strategy Interview → Strategic Options |
 | Whether an option is worth it, NPV, IRR | … → Strategic Options → Business Case |
 | Which option is the better bet under uncertainty | … → Business Case → Expected Value |
+| How risky the case is; which assumption matters most; whether a pilot is worth it | Business Case (Risk Analysis) → Expected Value (pilot) |
 | What price to charge; whether a deal's synergies cover the premium; how to negotiate it | Pricing; Synergy Case; Negotiation Prep (each needs Strategic Options and Business Case) |
 | What could go wrong, war-game, risk register, hostile questions | … → Expected Value → Stress Test (one module if asked) |
 | How to win customers, beachhead, channels, CAC | … → Stress Test → Go-to-Market |
