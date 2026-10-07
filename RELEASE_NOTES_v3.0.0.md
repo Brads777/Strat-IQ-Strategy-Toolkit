@@ -52,7 +52,7 @@ block on the Expected Value sheet.
 - `stratos-all-skills.zip` — Part 1 (14 skills, with the updated GLO-BUS Coach)
 - `industries.json` — version 2
 - `StratOS_Workbook_template.xlsx` — the workbook with example rows; `StratOS_Workbook_blank.xlsx` — empty
-- `Case_Analysis_Memo_Guide_and_Template_v3.docx` / `.pdf` — the memo template with the optional exhibit menu (including Q-3)
+- `Student_Case_Strategic_Analysis_Guide_and_template_v3.docx` / `.pdf` — your memo guide and template, edited in place, with the optional exhibit menu (including Q-3)
 - `StratOS_v3_Process_Walkthrough.pptx` — the process video deck, with nine live-demo slides
 - `demo/` (in the repo) — demo kit: sample EV ledger, GLO-BUS files, a weak memo draft, the demo workbook and the run sheet
 
