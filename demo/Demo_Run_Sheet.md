@@ -7,7 +7,7 @@ subtitle: "Nine screen-recorded demos for the StratOS v3 process video · MGT485
 
 **Set up once (about 20 minutes)**
 
-1. Upload the 29 v3 skill zips to the Claude account you will record from and switch them on (Settings → Capabilities → Skills). Switch off the Part 1 `stratos-orchestrator`. You should see 39 StratOS skills on.
+1. Upload the 30 v3 skill zips to the Claude account you will record from and switch them on (Settings → Capabilities → Skills). Switch off the Part 1 `stratos-orchestrator`. You should see 40 StratOS skills on.
 2. Create a Claude Project called **StratOS Demo: EV**. Add to its knowledge: `strategy-ledger-ev-demo.json` (this folder) and `industries.json` v2. Keep the GLO-BUS files and the memo draft out of the Project; you attach them during the demo, which looks better on screen.
 3. Keep this folder open in File Explorer so you can drag files into the chat.
 4. Open `StratOS_Workbook_demo.xlsx` once in Excel and press F9, so Excel has recalculated it before you record.
@@ -195,7 +195,7 @@ Check our Year 8 entries against the plan.
 
 # Demo 9. Workbook: change one input, watch it move
 
-**Shows:** live formulas, the Risk Analysis sheet and the Tracking charts.
+**Shows:** live formulas, the Risk Analysis sheet, Season by Year and the KPI Charts.
 
 **Type (optional; the prebuilt workbook is in this folder):**
 
@@ -208,7 +208,8 @@ Build our StratOS workbook from the ledger with our Year 6 and Year 7 GLO-BUS ca
 1. **Risk Analysis** sheet. Point at the tornado (Units on top) and *Probability NPV < 0* (about 87%).
 2. Change **Units, Low** from −20% to −10%. The Units bar shrinks and the chance of a loss falls. Press F9 to draw the simulation again; the numbers move slightly, which is what a simulation does.
 3. **Expected Value** sheet. Change the pilot cost from 25 to 60: the net value turns negative.
-4. **Tracking** tab. EPS rose from $1.85 to $2.10 but stayed under the investor expectation ($2.00, then $2.15); the credit rating improved from B+ to BB-.
+4. **Season by Year** tab. Scroll right: each year has its value and its change (▲ ▼). EPS rose from $1.85 to $2.10 but stayed under the investor expectation ($2.00, then $2.15); the credit rating improved from B+ to BB-.
+5. **KPI Charts** and **Competition by Year**: the trends in graphs, and every company's score and rank by year.
 
 **Point at:** "Every grey cell is a formula. Change one input and you find out which assumptions really matter."
 
@@ -220,7 +221,7 @@ Build our StratOS workbook from the ledger with our Year 6 and Year 7 GLO-BUS ca
 | `business-case-demo.csv`, `risk-ranges-demo.csv`, `expected-value-demo.csv`, `pilot-demo.csv` | Demo 5 (the skills build these from the ledger; the CSVs let you rerun the scripts) |
 | `memo-draft-weak.docx` (and `.md`) | Demo 7 |
 | `globus/cir-Y7.csv`, `globus/groups-Y7.png` | Demo 8, part 1 |
-| `globus/globus-capture-C-Y6.json`, `globus/globus-capture-C-Y7.json` | Demo 9 (results tabs and Tracking) |
+| `globus/globus-capture-C-Y6.json`, `globus/globus-capture-C-Y7.json` | Demo 9 (Season by Year, Competition by Year, KPI Charts) and the weekly review |
 | `globus/globus-capture-C-Y8-entered.json` | Demo 8, part 2 (contains the typo) |
 | `StratOS_Workbook_demo.xlsx` | Demos 8 and 9 |
 

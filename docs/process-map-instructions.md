@@ -6,7 +6,7 @@ Posted with the video **StratOS v3: The Complete Process** (MGT4850, Fall 2026).
 
 | File | What it is |
 |---|---|
-| `StratOS_Process_Overview.excalidraw` | The whole process on one page: Part 1, Part 2, Part 3 (Choose, Test, Plan, Track), the deliverables, the strategy ledger, and the GLO-BUS season loop |
+| `StratOS_Process_Overview.excalidraw` | The whole process on one page: the management interview, Part 1, Part 2, Part 3 (Choose, Test, Plan, Track), the deliverables, the strategy ledger, and the GLO-BUS season loop |
 | `StratOS_Process_Flow.excalidraw` | The detailed map: every skill in order, with a table showing what it does, what it passes down, and its impact on the P&L or valuation |
 | `StratOS_Process_Overview.png`, `StratOS_Process_Flow.png` | The same two diagrams as pictures, if you'd rather not open the files |
 
@@ -41,8 +41,8 @@ first.
   does it reach the P&L?
 - When you write your memo, check that every exhibit reaches revenue, cost of goods, operating expenses,
   investment, risk or durability. If one doesn't, ask why it's there.
-- For GLO-BUS, follow the season loop on the overview: Strategy Interview → Decision Planner → enter your
-  decisions yourself → capture and check → coach review → Tracking tab.
+- For GLO-BUS, follow the season loop on the overview: Management interview → Strategy Interview →
+  Decision Planner → enter your decisions yourself → capture and check → weekly report → workbook.
 
 ## Keep or share a copy
 

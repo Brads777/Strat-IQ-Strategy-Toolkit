@@ -45,6 +45,14 @@ persona said. If an exhibit needs a fact only the case can supply (a cost, a goa
 mark it `[ask in interview]` and list it at the end as a question for the student's next persona
 interview.
 
+## Exhibits A and B come from the management interview
+
+The student writes Exhibits A and B. If the ledger has a management brief
+(`stratos-management-interview`), remind the student that Exhibit B (central problem, management
+questions, required goals) and the memo's Key Issues use the same structure as Part 1 of that brief,
+and that Decision Criteria (L) should tie each criterion to a required goal (B1-B5). Show the brief;
+do not write the exhibit.
+
 ## Exhibit map
 
 | Exhibit (template) | Built by | Notes |

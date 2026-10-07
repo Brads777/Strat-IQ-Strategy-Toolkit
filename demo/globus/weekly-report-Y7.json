@@ -1,0 +1,328 @@
+{
+ "team": "C",
+ "year": 7,
+ "years": [
+  6,
+  7
+ ],
+ "kpis": [
+  {
+   "key": "eps",
+   "label": "EPS",
+   "actual": "$2.10",
+   "target": "$2.15",
+   "met": false
+  },
+  {
+   "key": "roe",
+   "label": "ROE",
+   "actual": "15.5%",
+   "target": "15.5%",
+   "met": true
+  },
+  {
+   "key": "stock",
+   "label": "Stock price",
+   "actual": "$26.10",
+   "target": "$27.00",
+   "met": false
+  },
+  {
+   "key": "credit",
+   "label": "Credit rating",
+   "actual": "BB-",
+   "target": "BB",
+   "met": false
+  },
+  {
+   "key": "image",
+   "label": "Image rating",
+   "actual": 71,
+   "target": 72,
+   "met": false
+  }
+ ],
+ "products": {
+  "camera": {
+   "label": "Cameras",
+   "apparent": "Best-cost provider",
+   "confidence": "mixed",
+   "stated": "Best-cost provider",
+   "price_gap": -0.044280442804428,
+   "pq_gap": 0.10000000000000053,
+   "cost_gap": -0.04347826086956519,
+   "price_gap_prev": -0.04347826086956519,
+   "pq_gap_prev": 0.0,
+   "cost_gap_prev": -0.021505376344086002,
+   "share": 12.975,
+   "share_prev": 12.225,
+   "op_margin": 0.125,
+   "op_margin_prev": 0.11,
+   "strongest_region": null,
+   "group": "Value leader"
+  },
+  "drone": {
+   "label": "Drones",
+   "apparent": "Best-cost provider",
+   "confidence": "mixed",
+   "stated": "Differentiation",
+   "price_gap": 0.034511784511784604,
+   "pq_gap": 0.20000000000000018,
+   "cost_gap": 0.005688282138794021,
+   "price_gap_prev": 0.03514644351464424,
+   "pq_gap_prev": 0.10000000000000053,
+   "cost_gap_prev": 0.016853932584269593,
+   "share": 12.55,
+   "share_prev": 11.975,
+   "op_margin": 0.105,
+   "op_margin_prev": 0.09,
+   "strongest_region": null,
+   "group": "Premium differentiator"
+  }
+ },
+ "contest": {
+  "score": 84,
+  "rank": 2,
+  "prev_rank": 3,
+  "leader": "D",
+  "leader_score": 86,
+  "n": 8
+ },
+ "rivals": [
+  {
+   "company": "A",
+   "product": "camera",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": 0.011284722222222321,
+   "pq_change": 0.025000000000000355,
+   "share": 12.875,
+   "share_change": -0.7250000000000014,
+   "entered_your_group": false,
+   "score": 83.0
+  },
+  {
+   "company": "B",
+   "product": "camera",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": -0.010718113612004254,
+   "pq_change": 0.02499999999999991,
+   "share": 13.025,
+   "share_change": -0.5,
+   "entered_your_group": false,
+   "score": 72.0
+  },
+  {
+   "company": "D",
+   "product": "camera",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": -0.029149797570850233,
+   "pq_change": -0.025000000000000355,
+   "share": 10.175,
+   "share_change": 0.27500000000000036,
+   "entered_your_group": false,
+   "score": 86.0
+  },
+  {
+   "company": "E",
+   "product": "camera",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": -0.0030864197530864335,
+   "pq_change": 0.04999999999999982,
+   "share": 11.95,
+   "share_change": -0.7000000000000011,
+   "entered_your_group": false,
+   "score": 63.0
+  },
+  {
+   "company": "F",
+   "product": "camera",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": 0.03561116458132818,
+   "pq_change": 0.02499999999999991,
+   "share": 12.675,
+   "share_change": 0.3500000000000014,
+   "entered_your_group": false,
+   "score": 75.0
+  },
+  {
+   "company": "G",
+   "product": "camera",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": 0.0007880220646176994,
+   "pq_change": -0.07500000000000018,
+   "share": 12.975,
+   "share_change": 0.625,
+   "entered_your_group": false,
+   "score": 80.0
+  },
+  {
+   "company": "H",
+   "product": "camera",
+   "group": "Stuck in the middle",
+   "group_prev": "Stuck in the middle",
+   "price_change": 0.005514705882353033,
+   "pq_change": -0.07500000000000018,
+   "share": 10.95,
+   "share_change": -0.07500000000000107,
+   "entered_your_group": false,
+   "score": 67.0
+  },
+  {
+   "company": "A",
+   "product": "drone",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": 0.0025625862408831246,
+   "pq_change": 0.0,
+   "share": 13.225,
+   "share_change": 0.22499999999999964,
+   "entered_your_group": false,
+   "score": 83.0
+  },
+  {
+   "company": "B",
+   "product": "drone",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": 0.00024594195769789273,
+   "pq_change": 0.07499999999999973,
+   "share": 13.15,
+   "share_change": 0.22500000000000142,
+   "entered_your_group": false,
+   "score": 72.0
+  },
+  {
+   "company": "D",
+   "product": "drone",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": -0.02709630172098132,
+   "pq_change": 0.07499999999999929,
+   "share": 10.55,
+   "share_change": 1.325000000000001,
+   "entered_your_group": false,
+   "score": 86.0
+  },
+  {
+   "company": "E",
+   "product": "drone",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": -0.0174621653084982,
+   "pq_change": 0.04999999999999982,
+   "share": 12.425,
+   "share_change": -0.8999999999999986,
+   "entered_your_group": false,
+   "score": 63.0
+  },
+  {
+   "company": "F",
+   "product": "drone",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": 0.03505696757230492,
+   "pq_change": -0.125,
+   "share": 13.075,
+   "share_change": 0.29999999999999893,
+   "entered_your_group": false,
+   "score": 75.0
+  },
+  {
+   "company": "G",
+   "product": "drone",
+   "group": "Premium differentiator",
+   "group_prev": "Premium differentiator",
+   "price_change": 0.00035984166966529507,
+   "pq_change": 0.0,
+   "share": 13.75,
+   "share_change": 0.025000000000000355,
+   "entered_your_group": false,
+   "score": 80.0
+  },
+  {
+   "company": "H",
+   "product": "drone",
+   "group": "Low-cost / economy",
+   "group_prev": "Low-cost / economy",
+   "price_change": -0.002902757619738794,
+   "pq_change": 0.02499999999999991,
+   "share": 10.45,
+   "share_change": 0.1999999999999993,
+   "entered_your_group": false,
+   "score": 67.0
+  }
+ ],
+ "watch": [
+  {
+   "title": "Drones: the position your inputs show differs from the strategy you chose",
+   "evidence": "You chose differentiation; price +3.5% vs the industry and P/Q +0.2 stars put you closer to best-cost provider.",
+   "lesson": "Teams that drift between positions usually pay for both and get credit for neither. Decide whether the drift is deliberate."
+  },
+  {
+   "title": "Management goal B1 missed: Beat investor expectations for EPS",
+   "evidence": "EPS: 2.1 against investor expectation 2.15. This goal came from your management interview.",
+   "lesson": "EPS reflects price, cost and volume together; look for which of the three moved against you."
+  },
+  {
+   "title": "Management goal B2 missed: Hold a credit rating of BB or better",
+   "evidence": "Credit rating: BB- against BB. This goal came from your management interview.",
+   "lesson": "Credit rating follows debt, interest coverage and cash; it also sets borrowing costs."
+  },
+  {
+   "title": "Management goal B3 missed: Keep the image rating at or above expectations",
+   "evidence": "Image rating: 71 against investor expectation 72. This goal came from your management interview.",
+   "lesson": "Image rating builds slowly from P/Q, models, warranty, advertising and CSR."
+  }
+ ],
+ "questions": [
+  "Is the drones position your inputs now show the one you meant to build?",
+  "Which input did you change most this year, and did the result move the way the projections said?"
+ ],
+ "brief": {
+  "central_problem": "How should Company C position cameras and drones to beat investor expectations every year while protecting its credit rating?",
+  "goals": [
+   {
+    "id": "B1",
+    "text": "Beat investor expectations for EPS",
+    "kpi": "EPS",
+    "target": "investor expectation 2.15",
+    "actual": 2.1,
+    "status": "missed"
+   },
+   {
+    "id": "B2",
+    "text": "Hold a credit rating of BB or better",
+    "kpi": "Credit rating",
+    "target": "BB",
+    "actual": "BB-",
+    "status": "missed"
+   },
+   {
+    "id": "B3",
+    "text": "Keep the image rating at or above expectations",
+    "kpi": "Image rating",
+    "target": "investor expectation 72",
+    "actual": 71,
+    "status": "missed"
+   }
+  ],
+  "takeaways": [
+   {
+    "text": "Protect the credit rating: no growth that needs new debt",
+    "from": "M5",
+    "check": "Credit rating each round"
+   },
+   {
+    "text": "Cameras compete on value, drones on quality",
+    "from": "M3",
+    "check": "Position in the weekly report"
+   }
+  ]
+ }
+}

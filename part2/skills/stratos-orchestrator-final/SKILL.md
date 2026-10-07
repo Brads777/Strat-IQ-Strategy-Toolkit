@@ -135,8 +135,15 @@ interactive widget:
 - **D. Make the strategy work** — Part 3 from the saved ledger: confirm the 1-3 decisions it must
   answer, then Choose → Test → Plan → Track, with a checkpoint after every step. Needs Part 2 at least
   through SWOT (R15); if it is missing, offer to run it first.
-- **E. Help with GLO-BUS** — hand off to `stratos-globus-coach`, which asks which of its three modes
-  the team needs (learn the real industry, CIR gap analysis, year coaching).
+- **E. Help with GLO-BUS** — start with `stratos-management-interview` if there is no brief yet, then
+  hand off to `stratos-globus-coach`, which asks which of its five modes the team needs (learn the real
+  industry, CIR gap analysis, year coaching, full-year review, weekly progress report).
+
+**Start with the management interview.** Before any mode, check the ledger for
+`company_layer.management_brief` (or `globus.management_brief`). If the team has interviewed management
+and there is no brief, offer `stratos-management-interview` first: it records the central problem,
+decisions, required goals and management's questions that the memo, the decision criteria, the Strategy
+Interview and the GLO-BUS weekly report all build on. A team can skip it, but say what it costs.
 
 The user can switch modes at any time: "walk me through the rest" turns a question into a guided run
 from wherever the ledger stands.

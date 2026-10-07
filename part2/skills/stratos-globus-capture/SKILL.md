@@ -87,18 +87,18 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
   not read rather than guessing.
 - **`cir_rows`**: one row per company, product and region from the Competitive Intelligence Report.
 - **`scoreboard_rows`**: one row per company from the class scoreboard (public to every team): overall
-  score, rank and the scored KPIs. With `cir_rows`, it feeds the Rivals tab and the weekly report's
+  score, rank and the scored KPIs. With `cir_rows`, it feeds the workbook's Competition by Year tab and the weekly report's
   contest section. Take rival figures only from these class-wide reports.
 - **`results`**: the year's outcomes, keyed as in `references/globus-results.json`: the five scored KPIs
   with investor expectations, company results, and per-product results with market share by region.
-  The StratOS Workbook turns each capture into a **Y# Results** tab and charts the years on **Tracking**.
+  The StratOS Workbook puts every capture on **Season by Year** (each year with its change) and charts it on **KPI Charts**.
 
 Run `scripts/capture_check.py globus-capture-<company>-Y<year>.json`. It compares the pages with the
 checklist and lists what is missing or thin. Offer to fetch the missing screens once; then stop.
 
 Give the student the capture file to download and suggest adding it to the Project knowledge, so later
 chats (and next year's review) can use it. Offer to rebuild the StratOS Workbook with all the capture
-files so far (`stratos-workbook --capture …`): one results tab per year plus the Tracking charts.
+files so far (`stratos-workbook --capture …`): Season by Year, Competition by Year, KPI Charts, and Findings & Questions.
 
 ## Step 4 — Hand off to the coach
 

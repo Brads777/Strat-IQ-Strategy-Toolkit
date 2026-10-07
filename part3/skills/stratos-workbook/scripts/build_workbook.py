@@ -146,41 +146,216 @@ def sheet_start(wb, L, title, mode):
            "blank": "Blank template."}[mode]
     ws["B4"] = src
     ws["B4"].font = S_FONT
-    rows = [("How to use", "Each sheet is one StratOS framework. Type only in the cream cells (blue text). Grey "
+    rows = [("How to use", "Each sheet is one StratOS step, in process order. Type only in the cream cells (blue text). Grey "
                            "cells are formulas: they score, rank and flag automatically. Every finding should name "
-                           "its evidence in the Source column, the same rule StratOS follows."),
+                           "its evidence, the same rule StratOS follows."),
             ("Colour key", "Blue on cream = input · black on grey = formula · green / amber / red = status."),
+            ("Management Interviews", "Start here. What management told you: the decisions they need made, the goals you "
+                                      "must reach, the questions they need answered, nine questions every team answers, "
+                                      "your own questions, and the takeaways you hold yourselves to."),
+            ("PART 1 · THE INDUSTRY", ""),
+            ("Industry Overview", "Setup (scope, competitors, base company) and the industry introduction: market size side by side, a CAGR calculator, segments, top-4 share and HHI, history, life-cycle stage."),
+            ("Competitive Analysis", "Each competitor's financials and moat against the peer median, margin rank, moat score, signals, and annual-report seeds for PESTEL."),
             ("PESTEL", "Macro findings with impact × certainty priority and the P&L line each one hits."),
             ("Five Forces", "Sub-factor scores roll up to each force and to an industry attractiveness score."),
+            ("Trending Factors", "Candidate drivers through the four tests; Driver or Demoted, and a 3-5 driver check."),
             ("KSF Scorecard", "Weighted KSFs, every competitor scored, totals and rank; weights must sum to 100%."),
+            ("Strategic Mapping", "Every company scored on two vectors, plotted on a map, and the white-space candidates with ERRC and a capability stamp."),
+            ("PART 2 · THE COMPANY", ""),
+            ("Value Chain", "Activities by cost share and value share; value minus cost reads as differentiating engine, in balance or value trap."),
+            ("Unit Economics", "Contribution, break-even, margin of safety, LTV, LTV/CAC, CAC payback and a sensitivity table (J-1)."),
+            ("Resources & Capabilities", "Resources, capabilities (threshold or distinctive) and core competencies."),
             ("VRIO", "Yes / No / ? for each test; the verdict and the KSF reality check are calculated."),
+            ("Full Potential", "The profit gap to benchmark, driver by driver in sequence, with a bridge chart (K-1)."),
+            ("Growth Barriers", "Six barriers marked binding, tight or slack; the binding constraint is named (K-2)."),
             ("SWOT-TOWS", "Four traced lists and the TOWS options that pair them."),
+            ("PART 3 · THE STRATEGY", ""),
+            ("Positioning", "The strategy you chose, in your words, and five fit tests including management fit."),
+            ("Strategic Options", "SCQ framing and three or more options plus do nothing, each staged with a gate (P)."),
             ("Decision Matrix", "Criteria weights × option scores, with a weighted total and rank; do nothing included."),
-            ("Expected Value", "Scenario probabilities × NPVs, expected NPV, worst case, maximin, value of information, and a Bayes' rule pilot check (EVSI)."),
-            ("Business Case", "Driver-based cash flows, NPV, IRR and cumulative cash."),
-            ("Risk Analysis", "Exhibit Q-3: a tornado chart (which driver moves NPV most) and a 1,000-run Monte Carlo "
-                              "simulation (median, P10-P90, chance NPV is below zero) over your low / likely / high ranges."),
-            ("Balanced Scorecard", "Objectives and measures in four perspectives, leading vs lagging, status vs target, balance check."),
-            ("Strategy Map", "Objectives by perspective and their cause-and-effect links; picture included when built from a ledger."),
+            ("Business Case", "Driver-based cash flows, NPV, IRR and cumulative cash (Q-1)."),
+            ("Expected Value", "Scenario probabilities × NPVs, expected NPV, worst case, maximin, value of information, and a Bayes' rule pilot check (Q-2)."),
+            ("Risk Analysis", "A tornado chart and a 1,000-run Monte Carlo simulation over your low / likely / high ranges (Q-3)."),
+            ("Pricing", "Optional: price points against expected volume; the profit-maximising price inside the acceptable range."),
+            ("Stress Test", "Assumption audit with headroom, competitor war-game, and a risk register with owners and triggers (R)."),
+            ("Go-to-Market", "Beachhead, ICP, a channel funnel worked back to CAC, CAC checked against LTV, launch phases (T)."),
+            ("Initiatives", "RICE scores and rank; every initiative traces to a finding (S)."),
+            ("Operating Model", "Decision rights (RAPID) and a stakeholder power-interest map."),
+            ("Execution Roadmap", "First 100 days as bars by week, milestones and stage gates (S)."),
+            ("Balanced Scorecard", "Objectives and measures in four perspectives, leading vs lagging, status vs target, balance check (U)."),
+            ("Strategy Map", "Objectives by perspective and their cause-and-effect links (U)."),
+            ("GLO-BUS", ""),
             ("GLO-BUS CIR", "Paste the CIR figures; each company is placed in a strategic group automatically."),
-            ("Y# Results", "One tab per GLO-BUS year: the five scored KPIs against investor expectations, company and "
-                           "product results, market share by region, the decisions entered and the CIR."),
-            ("Tracking", "Trends across the years, pulled from the Year tabs, with charts: EPS, ROE, stock price, "
-                         "image and credit rating, market share, cost per unit, revenue and profit, margins."),
-            ("Rivals", "Where you stand in the contest: every company's overall score, rank, price, P/Q and market "
-                       "share by year, from the class-wide reports only, with charts."),
-            ("GLO-BUS Planner", "Plan every decision for each year in one place, in screen order; flags changes bigger than "
-                                "your threshold and years where price and advertising are both cut. You enter the "
-                                "decisions in GLO-BUS yourself; the capture skill can then check them against this plan."),
+            ("GLO-BUS Planner", "Plan every decision for each year in screen order; flags big changes and years where price and "
+                                "advertising are both cut. You enter the decisions in GLO-BUS yourself."),
+            ("Season by Year", "All years on one tab: every decision entered (top) and every result (below), each year "
+                               "followed by its change (▲ ▼, green = better). The first columns stay put as you scroll."),
+            ("Competition by Year", "Every company's score, rank, KPIs, price, P/Q and share by year with the change, "
+                                    "from the class-wide reports only, plus your rank on each measure."),
+            ("KPI Charts", "Graphs of how you're doing: KPIs vs investor expectations, score by company, rank, share, "
+                           "cost per unit and position vs the industry, revenue, profit and margins."),
+            ("Findings & Questions", "Findings, watch items and questions to consider, year by year (filled from the "
+                                     "weekly review), with the team's response and status."),
             ("Your work stays yours", "In graded work, the inputs, choices and every Impact Summary are the student's. "
                                       "The workbook calculates; it never decides.")]
     r = 6
     for k, v in rows:
         ws.cell(row=r, column=2, value=k).font = B_FONT
+        if not v:
+            ws.cell(row=r, column=2).font = Font(name=F, size=10, bold=True, color=GOLD)
         c = ws.cell(row=r, column=3, value=v)
         c.font, c.alignment = Font(name=F, size=10), WRAP
         r += 1
     ws.cell(row=r + 1, column=2, value="© 2026 Brad Scheller · StratOS Strategy Lab · Apache-2.0").font = S_FONT
+
+
+MGMT_CORE = [
+    ("Goals", "Which scored measures matter most to management: EPS, ROE, stock price, credit rating or image rating?"),
+    ("Goals", "What would management call a successful season, and what would be a failure?"),
+    ("Strategy", "What strategy does management favour for cameras, and for drones? Why?"),
+    ("Markets", "Are there regions or segments management wants to lead in, or to avoid?"),
+    ("Risk", "How much risk will management accept: debt, issuing stock, dividends, the lowest credit rating it will tolerate?"),
+    ("Brand", "Are there minimum quality, warranty, image or CSR standards the company must keep?"),
+    ("Operations", "What are management's views on capacity, workforce and pay?"),
+    ("Rivals", "What does management expect competitors to do?"),
+    ("Decision rights", "Which decisions must the team check with management before entering them?"),
+]
+MGMT_TOUCHES = ["EPS", "ROE", "Stock price", "Credit rating", "Image rating", "Product design", "Marketing",
+                "Operations", "Compensation", "CSR", "Finance", "Whole strategy"]
+
+
+def sheet_mgmt(wb, L, mode):
+    ws = wb.create_sheet("Management Interviews")
+    head(ws, "Management Interviews", "What management told you, in their words. It sets up everything after it: the "
+         "memo's Key Issues and Exhibit B, the decision criteria, the strategy you choose, and the weekly check.",
+         [6, 16, 46, 40, 30, 40, 18, 18, 34])
+    mb = (g(L, "company_layer", "management_brief", default={}) or g(L, "globus", "management_brief", default={}) or {}) \
+        if mode == "ledger" else {}
+    ex = mode == "example"
+    r = 5
+    # ---- 1. Key issues (mirrors the memo's Key Issues section and Exhibit B) ----
+    label(ws, f"A{r}", "1. Key issues from the interview  (these become your memo's Key Issues and Exhibit B)")
+    ws.merge_cells(f"A{r}:I{r}")
+    r += 1
+    label(ws, f"A{r}", "Central problem: the decision management needs made", bold=False)
+    ws.merge_cells(f"A{r}:B{r}")
+    inp(ws, f"C{r}", mb.get("central_problem") or ("[e.g. How should Company C position cameras and drones to beat "
+                                                   "investor expectations over the season?]" if ex else None))
+    ws.merge_cells(f"C{r}:I{r}")
+    ws.row_dimensions[r].height = 32
+    r += 2
+    blocks = [("Decisions management needs us to make", "decisions", "D", ["Decision", "By when", "Notes"]),
+              ("Required goals (the decision criteria come from these)", "goals", "B",
+               ["Goal", "Measure / KPI", "Target", "By when"]),
+              ("Questions management needs answered", "questions", "Q", ["Question", "Why it matters to them", ""])]
+    for title, key, prefix, cols in blocks:
+        header(ws, r, ["#", title, ""] + [c for c in cols[1:] if c])
+        ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=3)
+        items = mb.get(key) or []
+        for i in range(5):
+            rr = r + 1 + i
+            c = ws.cell(row=rr, column=1, value=f"{prefix}{i + 1}")
+            c.font, c.alignment = B_FONT, CENTER
+            it = items[i] if i < len(items) else {}
+            if isinstance(it, str):
+                it = {"text": it}
+            vals = {"decisions": [it.get("text") or it.get("decision"), it.get("by_when"), it.get("notes")],
+                    "goals": [it.get("text") or it.get("goal"), it.get("kpi"), it.get("target"), it.get("by_when")],
+                    "questions": [it.get("text") or it.get("question"), it.get("why"), None]}[key]
+            if ex and i == 0:
+                vals = {"decisions": ["[e.g. Choose a competitive strategy for each product line]", "Year 6", ""],
+                        "goals": ["[e.g. Beat investor expectations for EPS every year]", "EPS", "[from the scoreboard]", "Every year"],
+                        "questions": ["[e.g. Can we grow share without hurting the credit rating?]", "[their reason]", None]}[key]
+            ws.merge_cells(start_row=rr, start_column=2, end_row=rr, end_column=3)
+            inp(ws, f"B{rr}", vals[0])
+            for j, v in enumerate(vals[1:]):
+                if key == "questions" and j == 1:
+                    continue
+                inp(ws, f"{get_column_letter(4 + j)}{rr}", v)
+            if key == "goals":
+                dv_list(ws, ["EPS", "ROE", "Stock price", "Credit rating", "Image rating", "Market share",
+                             "Cost per unit", "Other"], f"E{rr}")
+        r += 7
+    ws.freeze_panes = None
+    # ---- 2. Core questions ----
+    label(ws, f"A{r}", "2. Questions every team must answer")
+    ws.merge_cells(f"A{r}:I{r}")
+    r += 1
+    cols = ["#", "Area", "Question", "What management said", "Their words (quote)", "What it means for our strategy",
+            "Touches", "How sure", "Follow-up question"]
+    header(ws, r, cols)
+    ws.freeze_panes = None
+    answers = {str(a.get("id")): a for a in (mb.get("answers") or [])}
+    core0 = r + 1
+    for i, (area, q) in enumerate(MGMT_CORE):
+        rr = r + 1 + i
+        a = answers.get(f"M{i+1}", {})
+        ws.cell(row=rr, column=1, value=f"M{i+1}").font = B_FONT
+        label(ws, f"B{rr}", area, bold=False)
+        label(ws, f"C{rr}", q, bold=False)
+        vals = [a.get("said"), a.get("quote"), a.get("meaning"), a.get("touches"), a.get("confidence"), a.get("follow_up")]
+        if ex and i == 0:
+            vals = ["[e.g. EPS and the credit rating come first]", "[\"We will not take on debt that risks our rating.\"]",
+                    "[e.g. Growth must be funded mostly from earnings]", "Credit rating", "Stated", ""]
+        for j, v in enumerate(vals):
+            inp(ws, f"{get_column_letter(4 + j)}{rr}", v)
+        ws.row_dimensions[rr].height = 42
+    core1 = r + len(MGMT_CORE)
+    r = core1 + 2
+    # ---- 3. Team's own questions ----
+    label(ws, f"A{r}", "3. Our own questions  (anything else the team asked)")
+    ws.merge_cells(f"A{r}:I{r}")
+    r += 1
+    header(ws, r, cols)
+    ws.freeze_panes = None
+    own = mb.get("team_questions") or []
+    own0 = r + 1
+    for i in range(8):
+        rr = r + 1 + i
+        a = own[i] if i < len(own) else {}
+        ws.cell(row=rr, column=1, value=f"T{i+1}").font = B_FONT
+        for j, v in enumerate([a.get("area"), a.get("question"), a.get("said"), a.get("quote"), a.get("meaning"),
+                               a.get("touches"), a.get("confidence"), a.get("follow_up")]):
+            inp(ws, f"{get_column_letter(2 + j)}{rr}", v)
+        ws.row_dimensions[rr].height = 30
+    own1 = r + 8
+    for rng_ in (f"G{core0}:G{core1}", f"G{own0}:G{own1}"):
+        dv_list(ws, MGMT_TOUCHES, rng_)
+    for rng_ in (f"H{core0}:H{core1}", f"H{own0}:H{own1}"):
+        dv_list(ws, ["Stated", "Implied", "Our interpretation", "Not asked yet"], rng_)
+    r = own1 + 2
+    # ---- 4. Management brief ----
+    label(ws, f"A{r}", "4. Management brief: the takeaways we hold ourselves to")
+    ws.merge_cells(f"A{r}:I{r}")
+    r += 1
+    header(ws, r, ["#", "Takeaway", "", "From (row)", "How we'll check it each round", "", "", "", ""])
+    ws.merge_cells(start_row=r, start_column=2, end_row=r, end_column=3)
+    ws.merge_cells(start_row=r, start_column=5, end_row=r, end_column=9)
+    ws.freeze_panes = None
+    tk = mb.get("takeaways") or []
+    for i in range(5):
+        rr = r + 1 + i
+        t_ = tk[i] if i < len(tk) else {}
+        if isinstance(t_, str):
+            t_ = {"text": t_}
+        ws.cell(row=rr, column=1, value=f"K{i+1}").font = B_FONT
+        ws.merge_cells(start_row=rr, start_column=2, end_row=rr, end_column=3)
+        inp(ws, f"B{rr}", t_.get("text"))
+        inp(ws, f"D{rr}", t_.get("from"))
+        ws.merge_cells(start_row=rr, start_column=5, end_row=rr, end_column=9)
+        inp(ws, f"E{rr}", t_.get("check"))
+    r += 7
+    # ---- completeness ----
+    label(ws, f"A{r}", "Completeness")
+    ws.merge_cells(f"A{r}:B{r}")
+    fx(ws, f"C{r}", f'=COUNTA(D{core0}:D{core1})&" of {len(MGMT_CORE)} required questions answered; "&'
+                    f'COUNTA(C{own0}:C{own1})&" of the team\'s own questions recorded"')
+    fx(ws, f"D{r}", f'=IF(COUNTA(D{core0}:D{core1})={len(MGMT_CORE)},"Complete",IF(COUNTA(D{core0}:D{core1})>=6,'
+                    f'"Nearly there","Keep going"))', bold=True)
+    traffic(ws, f"D{r}", f'D{r}="Complete"', f'D{r}="Nearly there"', f'D{r}="Keep going"')
+    label(ws, f"A{r+1}", "Record what management said, not what you hoped they meant. Mark anything you are inferring "
+                         "as 'Our interpretation'. This sheet stays with your team.", bold=False)
+    ws.merge_cells(f"A{r+1}:I{r+1}")
 
 
 def sheet_pestel(wb, L, mode):
@@ -1143,123 +1318,428 @@ EXAMPLE_RESULTS = {
 }
 
 
-def sheet_year_results(wb, year, res, decisions, cir_rows, spec, fields, mode):
-    """One tab per GLO-BUS year. Returns {metric_key: cell} for the Tracking sheet."""
-    ws = wb.create_sheet(f"Y{year} Results")
-    head(ws, f"GLO-BUS Year {year} results", ("Example values (illustrative)." if mode == "example" else
-         "From the team's capture of this year's reports. Correct any value that was misread.") +
-         " Figures in the units shown; edit the cream cells.", [34, 16, 16, 16, 14])
-    cells = {}
+# ---------- GLO-BUS season sheets (all years on one tab) ----------
+UNIT_FMT = {"$": "$#,##0.00", "$000s": "#,##0", "stars": "0.0", "count": "0", "%": "0.0%", "days": "0",
+            "per screen": "0.0", "$ per worker": "$#,##0", "$ per unit": "$#,##0.00", "000s shares": "#,##0",
+            "score": "0", "text": "@"}
+CHG_FMT = {"$#,##0.00": '"▲ "$#,##0.00;"▼ "$#,##0.00;"–"', "#,##0": '"▲ "#,##0;"▼ "#,##0;"–"',
+           "0.0": '"▲ "0.0;"▼ "0.0;"–"', "0": '"▲ "0;"▼ "0;"–"', "0.0%": '"▲ "0.0%;"▼ "0.0%;"–"',
+           "$#,##0": '"▲ "$#,##0;"▼ "$#,##0;"–"', "+0.0%;-0.0%;0.0%": '"▲ "0.0%;"▼ "0.0%;"–"', "@": "@",
+           "$0.00": '"▲ "$0.00;"▼ "$0.00;"–"'}
+# (section, label, key, fmt, better) ; better: up | down | None.  key "=..." means a formula row.
+RESULT_ROWS = [
+    ("Scored KPIs", "EPS", "kpis.eps.actual", "$0.00", "up"),
+    ("Scored KPIs", "EPS: investor expectation", "kpis.eps.target", "$0.00", None),
+    ("Scored KPIs", "ROE", "kpis.roe.actual", "0.0%", "up"),
+    ("Scored KPIs", "ROE: investor expectation", "kpis.roe.target", "0.0%", None),
+    ("Scored KPIs", "Stock price", "kpis.stock.actual", "$0.00", "up"),
+    ("Scored KPIs", "Stock price: investor expectation", "kpis.stock.target", "$0.00", None),
+    ("Scored KPIs", "Credit rating", "kpis.credit.actual", "@", None),
+    ("Scored KPIs", "Credit rating: investor expectation", "kpis.credit.target", "@", None),
+    ("Scored KPIs", "Credit rating score (AAA = 21)", "=credit", "0", "up"),
+    ("Scored KPIs", "Image rating", "kpis.image.actual", "0", "up"),
+    ("Scored KPIs", "Image rating: investor expectation", "kpis.image.target", "0", None),
+    ("Company", "Overall score", "company.score", "0", "up"),
+    ("Company", "Rank in the industry", "company.rank", "0", "down"),
+    ("Company", "Net revenues ($000s)", "company.revenue", "#,##0", "up"),
+    ("Company", "Net profit ($000s)", "company.net_profit", "#,##0", "up"),
+    ("Company", "Ending cash ($000s)", "company.cash", "#,##0", "up"),
+]
+for _p, _pl in (("camera", "Cameras"), ("drone", "Drones")):
+    RESULT_ROWS += [
+        (_pl, f"{_pl}: units sold (000s)", f"product.{_p}.units", "#,##0", "up"),
+        (_pl, f"{_pl}: average price ($)", f"product.{_p}.price", "$#,##0", None),
+        (_pl, f"{_pl}: industry average price ($)", f"product.{_p}.ind_price", "$#,##0", None),
+        (_pl, f"{_pl}: price vs industry", f"=gap:{_p}.price", "+0.0%;-0.0%;0.0%", None),
+        (_pl, f"{_pl}: P/Q rating", f"product.{_p}.pq", "0.0", "up"),
+        (_pl, f"{_pl}: industry average P/Q", f"product.{_p}.ind_pq", "0.0", None),
+        (_pl, f"{_pl}: cost per unit ($)", f"product.{_p}.cost_unit", "$#,##0", "down"),
+        (_pl, f"{_pl}: industry cost per unit ($)", f"product.{_p}.ind_cost_unit", "$#,##0", None),
+        (_pl, f"{_pl}: cost per unit vs industry", f"=gap:{_p}.cost_unit", "+0.0%;-0.0%;0.0%", "down"),
+        (_pl, f"{_pl}: operating margin", f"product.{_p}.op_margin", "0.0%", "up"),
+        (_pl, f"{_pl}: share, North America (%)", f"product.{_p}.share.na", "0.0", "up"),
+        (_pl, f"{_pl}: share, Europe-Africa (%)", f"product.{_p}.share.ea", "0.0", "up"),
+        (_pl, f"{_pl}: share, Asia-Pacific (%)", f"product.{_p}.share.ap", "0.0", "up"),
+        (_pl, f"{_pl}: share, Latin America (%)", f"product.{_p}.share.la", "0.0", "up"),
+        (_pl, f"{_pl}: share, average of regions (%)", f"=avg:{_p}", "0.0", "up"),
+    ]
+
+
+def _dig(d, path):
+    for k in path.split("."):
+        if not isinstance(d, dict):
+            return None
+        d = d.get(k)
+    return d
+
+
+def _example_results_as_capture(y, res):
+    kp = {k: {"actual": v[0], "target": v[1]} for k, v in res["kpis"].items()}
+    return {"year": y, "results": {"kpis": kp, "company": res["company"], "product": res["product"]}}
+
+
+def _season_years(caps, y0, mode):
+    got = sorted({c.get("year") for c in caps if c.get("year") is not None})
+    if mode == "example" and not got:
+        got = sorted(EXAMPLE_RESULTS)
+    last = max([y0 + 4] + got)
+    return list(range(min([y0] + got), last + 1))
+
+
+def _chg(ws, cell_now, cell_prev, ref, fmt, better):
+    if fmt == "@":
+        return
+    fx(ws, ref, f'=IF(AND(ISNUMBER({cell_now}),ISNUMBER({cell_prev})),{cell_now}-{cell_prev},"")', CHG_FMT.get(fmt, fmt))
+    c = ws[ref]
+    c.font = Font(name=F, size=9, color="5F6B76")
+
+
+def _color_changes(ws, refs, better):
+    if not better or not refs:
+        return
+    rng = " ".join(refs)
+    first = refs[0]
+    good = f'AND(ISNUMBER({first}),{first}{">" if better == "up" else "<"}0)'
+    bad = f'AND(ISNUMBER({first}),{first}{"<" if better == "up" else ">"}0)'
+    ws.conditional_formatting.add(rng, FormulaRule(formula=[good], fill=GREEN))
+    ws.conditional_formatting.add(rng, FormulaRule(formula=[bad], fill=RED))
+
+
+def sheet_season(wb, L, mode, caps, fields, spec, years):
+    """Season by Year: every decision (top) and result (below), one pair of columns per year."""
+    from openpyxl.workbook.defined_name import DefinedName
+    ws = wb.create_sheet("Season by Year")
+    byyear = {c.get("year"): c for c in caps}
+    if mode == "example" and not caps:
+        byyear = {y: _example_results_as_capture(y, r) for y, r in EXAMPLE_RESULTS.items()}
+    plans = {int(k): v for k, v in (g(L, "globus", "plans", default={}) or {}).items()} if mode == "ledger" else {}
+    head(ws, "GLO-BUS season by year", "Every decision and result, one pair of columns per year: the value, then the "
+         "change from the year before (▲ up, ▼ down; green = better, red = worse). The first three columns stay put "
+         "as you scroll right. Rebuild after each round to add the new year.", [22, 40, 11] + [12, 10] * len(years))
+    vcol = {y: get_column_letter(4 + 2 * i) for i, y in enumerate(years)}
+    ccol = {y: get_column_letter(5 + 2 * i) for i, y in enumerate(years)}
+    hdr = ["Area", "Decision or result", "Unit"]
+    for y in years:
+        hdr += [f"Year {y}", "Change"]
+    header(ws, 5, hdr)
+    ws.freeze_panes = "D6"
+    r = 6
+    # credit scale for the score row
+    sc = spec["credit_scale"]
+    sx = get_column_letter(6 + 2 * len(years) + 2)
+    for i, v in enumerate(sc):
+        ws[f"{sx}{6+i}"] = v
+        ws[f"{sx}{6+i}"].font = Font(name=F, size=8, color="BBBBBB")
+    ws.column_dimensions[sx].hidden = True
+    wb.defined_names["CreditScale"] = DefinedName("CreditScale", attr_text=f"'Season by Year'!${sx}$6:${sx}${5+len(sc)}")
+    rows_of = {}
+
+    def band(text):
+        nonlocal r
+        c = ws.cell(row=r, column=1, value=text)
+        c.font, c.fill = Font(name=F, size=11, bold=True, color=NAVY), PatternFill("solid", fgColor=BAND)
+        for j in range(2, 4 + 2 * len(years)):
+            ws.cell(row=r, column=j).fill = PatternFill("solid", fgColor=BAND)
+        r += 1
+
+    band("DECISIONS ENTERED  (from your captures; planned values in grey italics where nothing was captured)")
+    for f_ in fields:
+        if f_["area"].startswith("Projected KPIs"):
+            continue
+        fmt = UNIT_FMT.get(f_["unit"], "General")
+        label(ws, f"A{r}", f_["area"], bold=False)
+        label(ws, f"B{r}", f_["label"], bold=False)
+        label(ws, f"C{r}", f_["unit"], bold=False)
+        refs = []
+        for i, y in enumerate(years):
+            v = (byyear.get(y) or {}).get("decisions", {}).get(f_["key"]) if byyear.get(y) else None
+            planned = False
+            if v is None and plans.get(y, {}).get(f_["key"]) is not None:
+                v, planned = plans[y][f_["key"]], True
+            c = inp(ws, f"{vcol[y]}{r}", v, None if fmt == "@" else fmt)
+            if planned:
+                c.font = Font(name=F, size=10, italic=True, color="8A949E")
+            if i:
+                _chg(ws, f"{vcol[y]}{r}", f"{vcol[years[i-1]]}{r}", f"{ccol[y]}{r}", fmt, None)
+                refs.append(f"{ccol[y]}{r}")
+        rows_of[f_["key"]] = r
+        r += 1
+    r += 1
+    band("RESULTS  (from your captures: the scorecard, company and product reports)")
+    for sec, lab, key, fmt, better in RESULT_ROWS:
+        label(ws, f"A{r}", sec, bold=False)
+        label(ws, f"B{r}", lab, bold=better is not None and not lab.endswith("expectation"))
+        rows_of[key] = r
+        refs = []
+        for i, y in enumerate(years):
+            cell = f"{vcol[y]}{r}"
+            if key == "=credit":
+                cr = f"{vcol[y]}{rows_of['kpis.credit.actual']}"
+                fx(ws, cell, f'=IF({cr}="","",IFERROR({len(sc)+1}-MATCH({cr},CreditScale,0),""))', fmt)
+            elif key.startswith("=gap:"):
+                p, k = key[5:].split(".", 1)
+                a, b = f"{vcol[y]}{rows_of[f'product.{p}.{k}']}", f"{vcol[y]}{rows_of[f'product.{p}.ind_{k}']}"
+                fx(ws, cell, f'=IF(AND(ISNUMBER({a}),ISNUMBER({b})),{a}/{b}-1,"")', fmt)
+            elif key.startswith("=avg:"):
+                p = key[5:]
+                rs = [rows_of[f"product.{p}.share.{x}"] for x in ("na", "ea", "ap", "la")]
+                rng = f"{vcol[y]}{rs[0]}:{vcol[y]}{rs[-1]}"
+                fx(ws, cell, f'=IF(COUNT({rng})=0,"",AVERAGE({rng}))', fmt)
+            else:
+                v = _dig((byyear.get(y) or {}).get("results") or {}, key)
+                inp(ws, cell, v, None if fmt == "@" else fmt)
+            if i:
+                _chg(ws, cell, f"{vcol[years[i-1]]}{r}", f"{ccol[y]}{r}", fmt, better)
+                if fmt != "@":
+                    refs.append(f"{ccol[y]}{r}")
+        _color_changes(ws, refs, better)
+        r += 1
+    # KPI vs expectation flags
+    for k in ("eps", "roe", "stock", "image"):
+        ra, rt = rows_of[f"kpis.{k}.actual"], rows_of[f"kpis.{k}.target"]
+        for y in years:
+            ws.conditional_formatting.add(f"{vcol[y]}{ra}", FormulaRule(
+                formula=[f'AND(ISNUMBER({vcol[y]}{ra}),ISNUMBER({vcol[y]}{rt}),{vcol[y]}{ra}>={vcol[y]}{rt})'], fill=GREEN))
+            ws.conditional_formatting.add(f"{vcol[y]}{ra}", FormulaRule(
+                formula=[f'AND(ISNUMBER({vcol[y]}{ra}),ISNUMBER({vcol[y]}{rt}),{vcol[y]}{ra}<{vcol[y]}{rt})'], fill=AMBER))
+    data_years = [y for y in years if (byyear.get(y) or {}).get("results")]
+    return {"rows": rows_of, "vcol": vcol, "years": years, "data_years": data_years}
+
+
+COMP_METRICS = [("Overall score", "score", "0", "up"), ("Rank", "rank", "0", "down"), ("EPS ($)", "eps", "$0.00", "up"),
+                ("ROE", "roe", "0.0%", "up"), ("Stock price ($)", "stock", "$0.00", "up"), ("Image rating", "image", "0", "up"),
+                ("Credit rating", "credit", "@", None),
+                ("Cameras: price ($)", "camera.price", "$#,##0", None), ("Cameras: P/Q", "camera.pq", "0.0", "up"),
+                ("Cameras: market share (%)", "camera.share", "0.0", "up"),
+                ("Drones: price ($)", "drone.price", "$#,##0", None), ("Drones: P/Q", "drone.pq", "0.0", "up"),
+                ("Drones: market share (%)", "drone.share", "0.0", "up")]
+
+
+def _example_public(years):
+    import random
+    rnd = random.Random(3)
+    pub = {}
+    for y in years[:3]:
+        pub[y] = {}
+        for i, co in enumerate("ABCDEFGH"):
+            base = [80, 72, 78, 85, 70, 75, 82, 68][i] + (y - years[0]) * rnd.randint(-3, 5)
+            pub[y][co] = {"score": base, "eps": round(1.3 + base / 100 + rnd.uniform(-.2, .2), 2),
+                          "camera.price": 240 + i * 9 + rnd.randint(-6, 6),
+                          "camera.pq": round(3.5 + i * 0.15 + rnd.uniform(-0.1, 0.1), 1),
+                          "camera.share": round(12.5 + rnd.uniform(-3, 3), 1)}
+        pub[y]["C"]["score"] = {0: 78, 1: 84, 2: 89}[y - years[0]]
+        ranked = sorted(pub[y], key=lambda k: -pub[y][k]["score"])
+        for k in pub[y]:
+            pub[y][k]["rank"] = ranked.index(k) + 1
+    return pub
+
+
+def sheet_competition(wb, caps, mode, years):
+    ws = wb.create_sheet("Competition by Year")
+    pub = _public_by_company(caps)
+    if not pub and mode == "example":
+        pub = _example_public(years)
+    team = next((str(c.get("company")) for c in (caps or []) if c.get("company")), "C" if mode == "example" else None)
+    head(ws, "Competition by year", "Every company on the measures that decide the contest, from the class-wide reports "
+         "only (scoreboard and Competitive Intelligence Report). Each year: the value, then the change (▲ ▼). Your row "
+         "is highlighted; the last row of each block is your rank on that measure.", [26] + [11, 9] * len(years))
+    vcol = {y: get_column_letter(2 + 2 * i) for i, y in enumerate(years)}
+    ccol = {y: get_column_letter(3 + 2 * i) for i, y in enumerate(years)}
+    comps = sorted({co for y in pub for co in pub[y]}) or (list("ABCDEFGH") if mode != "blank" else [])
+    if not comps:
+        comps = list("ABCDE")
+    ws.freeze_panes = "B5"
     r = 5
-    header(ws, r, ["Scored KPI", "Actual", "Investor expectation", "Gap", "Met?"])
+    blocks = {}
+    for title, key, fmt, better in COMP_METRICS:
+        if pub and not any(pub[y].get(co, {}).get(key) is not None for y in pub for co in comps):
+            continue
+        hdr = [title]
+        for y in years:
+            hdr += [f"Year {y}", "Change"]
+        header(ws, r, hdr)
+        ws.freeze_panes = "B5"
+        r0 = r + 1
+        for i, co in enumerate(comps):
+            rr = r0 + i
+            c = ws.cell(row=rr, column=1, value=f"Company {co}" + ("  (you)" if co == team else ""))
+            c.font = B_FONT if co == team else Font(name=F, size=10)
+            refs = []
+            for j, y in enumerate(years):
+                cell = inp(ws, f"{vcol[y]}{rr}", (pub.get(y) or {}).get(co, {}).get(key), None if fmt == "@" else fmt)
+                if co == team:
+                    cell.fill = PatternFill("solid", fgColor="FBE9C9")
+                if j:
+                    _chg(ws, f"{vcol[y]}{rr}", f"{vcol[years[j-1]]}{rr}", f"{ccol[y]}{rr}", fmt, better)
+                    if fmt != "@":
+                        refs.append(f"{ccol[y]}{rr}")
+            _color_changes(ws, refs, better)
+        r1 = r0 + len(comps) - 1
+        me = r0 + comps.index(team) if team in comps else None
+        rr = r1 + 1
+        if fmt != "@":
+            label(ws, f"A{rr}", "Industry average", bold=False)
+            for y in years:
+                fx(ws, f"{vcol[y]}{rr}", f'=IF(COUNT({vcol[y]}{r0}:{vcol[y]}{r1})=0,"",AVERAGE({vcol[y]}{r0}:{vcol[y]}{r1}))', fmt)
+            rr += 1
+            if me and key != "rank" and better:
+                label(ws, f"A{rr}", "Your rank on this measure")
+                refs = []
+                for j, y in enumerate(years):
+                    c_ = f"{vcol[y]}{me}"
+                    fx(ws, f"{vcol[y]}{rr}", f'=IF(ISNUMBER({c_}),RANK({c_},{vcol[y]}{r0}:{vcol[y]}{r1},{0 if better == "up" else 1}),"")',
+                       "0", bold=True)
+                    if j:
+                        _chg(ws, f"{vcol[y]}{rr}", f"{vcol[years[j-1]]}{rr}", f"{ccol[y]}{rr}", "0", "down")
+                        refs.append(f"{ccol[y]}{rr}")
+                _color_changes(ws, refs, "down")
+                rr += 1
+        blocks[key] = (r0, r1, me)
+        r = rr + 1
+    sv = [v.get("score") for y in pub for v in pub[y].values() if isinstance(v.get("score"), (int, float))]
+    return {"blocks": blocks, "vcol": vcol, "years": years, "comps": comps, "team": team,
+            "score_range": (min(sv), max(sv)) if sv else None}
+
+
+def sheet_kpi_charts(wb, season, comp):
+    """KPI Charts: a contiguous chart-data table (formulas) at the bottom, charts on top."""
+    from openpyxl.chart import LineChart, Reference
+    ws = wb.create_sheet("KPI Charts")
+    years = season.get("data_years") or season["years"][:1]
+    head(ws, "Key performance indicators", "Charts update from Season by Year and Competition by Year for the years "
+         "captured so far; rebuild the workbook after each round to add the new year. The chart data below the charts "
+         "is formulas; do not type over it.", [34] + [11] * len(years))
+    series = [  # (label, source, key)
+        ("EPS", "s", "kpis.eps.actual"), ("EPS expectation", "s", "kpis.eps.target"),
+        ("ROE", "s", "kpis.roe.actual"), ("ROE expectation", "s", "kpis.roe.target"),
+        ("Stock price", "s", "kpis.stock.actual"), ("Stock price expectation", "s", "kpis.stock.target"),
+        ("Image rating", "s", "kpis.image.actual"), ("Image rating expectation", "s", "kpis.image.target"),
+        ("Credit rating score (AAA = 21)", "s", "=credit"),
+        ("Overall score", "s", "company.score"), ("Rank", "s", "company.rank"),
+        ("Net revenues ($000s)", "s", "company.revenue"), ("Net profit ($000s)", "s", "company.net_profit"),
+        ("Cameras: share (%)", "s", "=avg:camera"), ("Drones: share (%)", "s", "=avg:drone"),
+        ("Cameras: cost per unit", "s", "product.camera.cost_unit"), ("Cameras: industry cost per unit", "s", "product.camera.ind_cost_unit"),
+        ("Drones: cost per unit", "s", "product.drone.cost_unit"), ("Drones: industry cost per unit", "s", "product.drone.ind_cost_unit"),
+        ("Cameras: price vs industry", "s", "=gap:camera.price"), ("Cameras: cost vs industry", "s", "=gap:camera.cost_unit"),
+        ("Drones: price vs industry", "s", "=gap:drone.price"), ("Drones: cost vs industry", "s", "=gap:drone.cost_unit"),
+        ("Cameras: operating margin", "s", "product.camera.op_margin"), ("Drones: operating margin", "s", "product.drone.op_margin"),
+    ]
+    for co in comp["comps"]:
+        if "score" in comp["blocks"]:
+            series.append((f"Company {co}" + (" (you)" if co == comp["team"] else ""), "c", ("score", co)))
+    fmts = {"ROE": "0.0%", "ROE expectation": "0.0%"}
+    data0 = 60
+    label(ws, f"A{data0 - 2}", "Chart data (formulas)")
+    header(ws, data0 - 1, ["Series"] + [f"Y{y}" for y in years])
     ws.freeze_panes = None
-    kp = (res or {}).get("kpis", {})
-    for k in spec["kpis"]:
-        r += 1
-        a, t = (kp.get(k["key"]) or [None, None]) if isinstance(kp.get(k["key"]), list) else \
-            ((kp.get(k["key"]) or {}).get("actual"), (kp.get(k["key"]) or {}).get("target"))
-        label(ws, f"A{r}", k["label"], bold=False)
-        inp(ws, f"B{r}", a, None if k["fmt"] == "@" else k["fmt"])
-        inp(ws, f"C{r}", t, None if k["fmt"] == "@" else k["fmt"])
-        if k["key"] == "credit":
-            fx(ws, f"D{r}", f'=IF(OR(B{r}="",C{r}=""),"",IFERROR(MATCH(C{r},CreditScale,0)-MATCH(B{r},CreditScale,0),""))', "+0;-0;0")
-            fx(ws, f"E{r}", f'=IF(D{r}="","",IF(D{r}>=0,"Yes","No"))')
-        else:
-            fx(ws, f"D{r}", f'=IF(AND(ISNUMBER(B{r}),ISNUMBER(C{r})),B{r}-C{r},"")', k["fmt"])
-            fx(ws, f"E{r}", f'=IF(D{r}="","",IF(D{r}>=0,"Yes","No"))')
-        cells[f"kpi.{k['key']}"] = f"B{r}"
-        cells[f"kpi.{k['key']}.target"] = f"C{r}"
-    traffic(ws, f"E6:E{r}", f'E6="Yes"', "FALSE", f'E6="No"')
-    ws[f"D5"].comment = Comment("Credit rating gap is in notches (positive = at or above expectation).", "StratOS")
-    r += 2
-    header(ws, r, ["Company result", "Value"])
-    co = (res or {}).get("company", {})
-    for k in spec["company"]:
-        r += 1
-        label(ws, f"A{r}", f"{k['label']} ({k['unit']})", bold=False)
-        inp(ws, f"B{r}", co.get(k["key"]), k["fmt"])
-        cells[f"co.{k['key']}"] = f"B{r}"
-    r += 2
-    header(ws, r, ["Product result", "Cameras", "Drones"])
-    pr = (res or {}).get("product", {})
-    top = r
-    for k in spec["product"]:
-        r += 1
-        label(ws, f"A{r}", f"{k['label']} ({k['unit']})", bold=False)
-        for j, p in enumerate(["camera", "drone"]):
-            col = "BC"[j]
-            inp(ws, f"{col}{r}", (pr.get(p) or {}).get(k["key"]), k["fmt"])
-            cells[f"{p}.{k['key']}"] = f"{col}{r}"
-    r += 1
-    label(ws, f"A{r}", "Price vs industry average")
-    for j, p in enumerate(["camera", "drone"]):
-        col = "BC"[j]
-        fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".price"]}),ISNUMBER({cells[p + ".ind_price"]})),'
-                            f'{cells[p + ".price"]}/{cells[p + ".ind_price"]}-1,"")', "+0.0%;-0.0%;0.0%")
-        cells[f"{p}.price_gap"] = f"{col}{r}"
-    r += 1
-    label(ws, f"A{r}", "Cost per unit vs industry average")
-    for j, p in enumerate(["camera", "drone"]):
-        col = "BC"[j]
-        fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".cost_unit"]}),ISNUMBER({cells[p + ".ind_cost_unit"]})),'
-                            f'{cells[p + ".cost_unit"]}/{cells[p + ".ind_cost_unit"]}-1,"")', "+0.0%;-0.0%;0.0%")
-        cells[f"{p}.cost_gap"] = f"{col}{r}"
-    r += 2
-    header(ws, r, ["Market share (%)", "Cameras", "Drones"])
-    s0 = r + 1
-    for rk, rl in [("na", "North America"), ("ea", "Europe-Africa"), ("ap", "Asia-Pacific"), ("la", "Latin America")]:
-        r += 1
-        label(ws, f"A{r}", rl, bold=False)
-        for j, p in enumerate(["camera", "drone"]):
-            inp(ws, f"{'BC'[j]}{r}", ((pr.get(p) or {}).get("share") or {}).get(rk), "0.0")
-    r += 1
-    label(ws, f"A{r}", "Average across regions")
-    for j, p in enumerate(["camera", "drone"]):
-        col = "BC"[j]
-        fx(ws, f"{col}{r}", f'=IF(COUNT({col}{s0}:{col}{r-1})=0,"",AVERAGE({col}{s0}:{col}{r-1}))', "0.0")
-        cells[f"{p}.share_avg"] = f"{col}{r}"
-    # decisions entered
-    if decisions:
-        r += 2
-        header(ws, r, ["Decision entered this year", "Value", "Key"])
-        labels = {f["key"]: f["label"] for f in fields}
-        for k_, v in decisions.items():
-            r += 1
-            label(ws, f"A{r}", labels.get(k_, k_), bold=False)
-            inp(ws, f"B{r}", v)
-            ws[f"C{r}"] = k_
-            ws[f"C{r}"].font = Font(name=F, size=8, color="888888")
-    if cir_rows:
-        r += 2
-        header(ws, r, ["CIR: company", "Product", "Price", "P/Q", "Share (%)"])
-        for row in cir_rows:
-            r += 1
-            for col, v in zip("ABCDE", [row.get("company"), (row.get("product") or "").title(), row.get("price"),
-                                       row.get("pq"), row.get("share")]):
-                inp(ws, f"{col}{r}", v)
-    return ws.title, cells
+    rowof = {}
+    for i, (lab, src, key) in enumerate(series):
+        rr = data0 + i
+        rowof[lab] = rr
+        label(ws, f"A{rr}", lab, bold=False)
+        for j, y in enumerate(years):
+            col = get_column_letter(2 + j)
+            if src == "s":
+                ref = f"'Season by Year'!{season['vcol'][y]}{season['rows'][key]}"
+            else:
+                r0, r1, me = comp["blocks"]["score"]
+                ref = f"'Competition by Year'!{comp['vcol'][y]}{r0 + comp['comps'].index(key[1])}"
+            fx(ws, f"{col}{rr}", f'=IF(ISNUMBER({ref}),{ref},"")',
+               fmts.get(lab, "+0.0%;-0.0%;0.0%" if "vs industry" in lab else ("0.0%" if "margin" in lab else "General")))
+    charts = [("EPS vs investor expectation", ["EPS", "EPS expectation"], "$0.00"),
+              ("ROE vs investor expectation", ["ROE", "ROE expectation"], "0%"),
+              ("Stock price vs investor expectation", ["Stock price", "Stock price expectation"], "$0"),
+              ("Image rating vs investor expectation", ["Image rating", "Image rating expectation"], "0"),
+              ("Credit rating score (AAA = 21, higher is better)", ["Credit rating score (AAA = 21)"], "0"),
+              ("Overall score by company (scoreboard)", [s[0] for s in series if s[1] == "c"], "0"),
+              ("Your rank (1 = top)", ["Rank"], "0"),
+              ("Market share (average of regions, %)", ["Cameras: share (%)", "Drones: share (%)"], "0.0"),
+              ("Cost per unit vs industry", ["Cameras: cost per unit", "Cameras: industry cost per unit",
+                                             "Drones: cost per unit", "Drones: industry cost per unit"], "$0"),
+              ("Position vs industry: price and cost", ["Cameras: price vs industry", "Cameras: cost vs industry",
+                                                         "Drones: price vs industry", "Drones: cost vs industry"], "0%"),
+              ("Net revenues and net profit ($000s)", ["Net revenues ($000s)", "Net profit ($000s)"], "#,##0"),
+              ("Operating margin by product", ["Cameras: operating margin", "Drones: operating margin"], "0%")]
+    palette = ["1D3557", "C9A55C", "2D936C", "C44536", "457B9D", "8D6A9F", "6C757D", "B5651D", "A8DADC"]
+    for n, (title, labs, nf) in enumerate(charts):
+        labs = [l for l in labs if l in rowof]
+        if not labs:
+            continue
+        ch = LineChart()
+        ch.title, ch.height, ch.width = title, 7.0, 12.5
+        ch.legend.position = "b"
+        for l in labs:
+            ch.add_data(Reference(ws, min_col=1, max_col=1 + len(years), min_row=rowof[l], max_row=rowof[l]),
+                        from_rows=True, titles_from_data=True)
+        ch.set_categories(Reference(ws, min_col=2, max_col=1 + len(years), min_row=data0 - 1, max_row=data0 - 1))
+        for k_, srs in enumerate(ch.series):
+            l = labs[k_]
+            mine = "(you)" in l
+            srs.graphicalProperties.line.solidFill = GOLD if mine else palette[k_ % len(palette)]
+            srs.graphicalProperties.line.width = 38000 if mine else 22000
+            srs.smooth = False
+            if "expectation" in l or "industry" in l and "vs" not in l or "cost vs" in l:
+                srs.graphicalProperties.line.dashStyle = "dash"
+        ch.y_axis.numFmt = nf
+        if title.startswith("Your rank"):
+            ch.y_axis.scaling.orientation = "maxMin"
+            ch.y_axis.scaling.min = 1
+        if title.startswith("Overall score") and comp.get("score_range"):
+            lo, hi = comp["score_range"]
+            ch.y_axis.scaling.min = max(0, int(lo // 5 * 5) - 5)
+            ch.y_axis.scaling.max = int(hi // 5 * 5) + 10
+        ch.y_axis.majorGridlines = None
+        ch.x_axis.delete = ch.y_axis.delete = False
+        ws.add_chart(ch, f"{'A' if n % 2 == 0 else 'H'}{5 + (n // 2) * 15}")
+    # push the data table below the charts
+    return ws
 
 
-TRACK_ROWS = [("EPS", "kpi.eps", "$0.00"), ("EPS expectation", "kpi.eps.target", "$0.00"),
-              ("ROE", "kpi.roe", "0.0%"), ("ROE expectation", "kpi.roe.target", "0.0%"),
-              ("Stock price", "kpi.stock", "$0.00"), ("Stock price expectation", "kpi.stock.target", "$0.00"),
-              ("Credit rating", "kpi.credit", "@"), ("Credit rating score (AAA = 21)", "credit_score", "0"),
-              ("Image rating", "kpi.image", "0"), ("Image rating expectation", "kpi.image.target", "0"),
-              ("Overall score", "co.score", "0"), ("Rank", "co.rank", "0"),
-              ("Net revenues ($000s)", "co.revenue", "#,##0"), ("Net profit ($000s)", "co.net_profit", "#,##0"),
-              ("Ending cash ($000s)", "co.cash", "#,##0"),
-              ("Cameras: market share (avg %)", "camera.share_avg", "0.0"), ("Drones: market share (avg %)", "drone.share_avg", "0.0"),
-              ("Cameras: cost per unit ($)", "camera.cost_unit", "$#,##0"), ("Cameras: industry cost per unit ($)", "camera.ind_cost_unit", "$#,##0"),
-              ("Drones: cost per unit ($)", "drone.cost_unit", "$#,##0"), ("Drones: industry cost per unit ($)", "drone.ind_cost_unit", "$#,##0"),
-              ("Cameras: price ($)", "camera.price", "$#,##0"), ("Drones: price ($)", "drone.price", "$#,##0"),
-              ("Cameras: P/Q", "camera.pq", "0.0"), ("Drones: P/Q", "drone.pq", "0.0"),
-              ("Cameras: operating margin", "camera.op_margin", "0.0%"), ("Drones: operating margin", "drone.op_margin", "0.0%"),
-              ("Cameras: industry price ($)", "camera.ind_price", "$#,##0"), ("Drones: industry price ($)", "drone.ind_price", "$#,##0"),
-              ("Cameras: industry P/Q", "camera.ind_pq", "0.0"), ("Drones: industry P/Q", "drone.ind_pq", "0.0"),
-              ("Cameras: price vs industry", "camera.price_gap", "+0.0%;-0.0%;0.0%"),
-              ("Cameras: cost per unit vs industry", "camera.cost_gap", "+0.0%;-0.0%;0.0%"),
-              ("Drones: price vs industry", "drone.price_gap", "+0.0%;-0.0%;0.0%"),
-              ("Drones: cost per unit vs industry", "drone.cost_gap", "+0.0%;-0.0%;0.0%")]
+FINDING_TYPES = ["Finding", "Watch item", "Question to consider", "Management goal"]
+
+
+def sheet_findings(wb, mode, reports):
+    ws = wb.create_sheet("Findings & Questions")
+    head(ws, "Findings and questions to consider", "One row per finding, watch item or question, year by year. "
+         "Rows from the weekly report are filled in; add your own. The 'Our response' column is the team's.",
+         [8, 18, 22, 48, 44, 44, 40, 14])
+    header(ws, 5, ["Year", "Type", "Area", "What we see", "Evidence", "General lesson", "Our response or decision", "Status"])
+    rows = []
+    for rep in sorted(reports, key=lambda x: x.get("year", 0)):
+        y = rep.get("year")
+        for p, d in (rep.get("products") or {}).items():
+            rows.append([y, "Finding", d.get("label"), f"Apparent position: {d.get('apparent')} ({d.get('confidence')})",
+                         f"Price {d.get('price_gap') and f'{d['price_gap']:+.1%}'} vs industry; P/Q "
+                         f"{d.get('pq_gap') and f'{d['pq_gap']:+.1f}'} stars; cost {d.get('cost_gap') and f'{d['cost_gap']:+.1%}'}",
+                         "", None, "Open"])
+        for w in rep.get("watch") or []:
+            mg = w["title"].startswith("Management goal")
+            area = (w.get("evidence") or "").split(":")[0] if mg else (w["title"].split(":")[0] if ":" in w["title"] else "")
+            rows.append([y, "Management goal" if mg else "Watch item", area, w["title"], w.get("evidence"),
+                         w.get("lesson"), None, "Open"])
+        for q in rep.get("questions") or []:
+            rows.append([y, "Question to consider", "", q, "", "", None, "Open"])
+    if not rows and mode == "example":
+        rows = [[7, "Watch item", "Drones", "The position your inputs show differs from the strategy you chose",
+                 "Chose differentiation; price +3.5% and P/Q +0.2 stars look like best-cost",
+                 "Teams that drift between positions usually pay for both and get credit for neither.", None, "Open"],
+                [7, "Question to consider", "", "Which input did you change most this year, and did the result move the way "
+                 "the projections said?", "", "", None, "Open"]]
+    n = max(40, len(rows) + 15)
+    for i in range(n):
+        rr = 6 + i
+        row = rows[i] if i < len(rows) else [None] * 8
+        for j, v in enumerate(row):
+            c = ws.cell(row=rr, column=1 + j)
+            if j in (6, 7) or i >= len(rows):
+                inp(ws, c.coordinate, v)
+            else:
+                c.value = v
+                c.font, c.alignment, c.border = Font(name=F, size=10), WRAP, BOX
+        ws.row_dimensions[rr].height = 44 if i < len(rows) else 20
+    dv_list(ws, FINDING_TYPES, f"B6:B{5 + n}")
+    dv_list(ws, ["Open", "Discussed", "Acted on", "Closed"], f"H6:H{5 + n}")
+    traffic(ws, f"H6:H{5 + n}", 'OR(H6="Acted on",H6="Closed")', 'H6="Discussed"', 'H6="Open"')
 
 
 def _public_by_company(caps):
@@ -1281,149 +1761,717 @@ def _public_by_company(caps):
     return out
 
 
-def sheet_rivals(wb, caps, mode):
-    """Rivals tab: the class-wide public reports only (scoreboard, CIR), year by year, with charts."""
-    from openpyxl.chart import LineChart, Reference
-    pub = _public_by_company(caps)
-    if not pub and mode == "example":
-        import random
-        rnd = random.Random(3)
-        pub = {}
-        for y in (6, 7, 8):
-            pub[y] = {}
-            for i, co in enumerate("ABCDEFGH"):
-                base = [80, 72, 78, 85, 70, 75, 82, 68][i] + (y - 6) * rnd.randint(-3, 5)
-                pub[y][co] = {"score": base, "camera.price": 240 + i * 9 + rnd.randint(-6, 6),
-                              "camera.pq": round(3.5 + i * 0.15 + rnd.uniform(-0.1, 0.1), 1),
-                              "camera.share": round(12.5 + rnd.uniform(-3, 3), 1)}
-            pub[y]["C"]["score"] = {6: 78, 7: 84, 8: 89}[y]
-            ranked = sorted(pub[y], key=lambda k: -pub[y][k]["score"])
-            for k in pub[y]:
-                pub[y][k]["rank"] = ranked.index(k) + 1
-    ws = wb.create_sheet("Rivals")
-    years = sorted(pub)
-    team = next((c.get("company") for c in (caps or []) if c.get("company")), "C" if mode == "example" else None)
-    head(ws, "Where you stand: the rivals", "Only what the class-wide reports show every team (scoreboard, "
-         "Competitive Intelligence Report). Nothing is taken from another team's screens. Rebuild after each round.",
-         [26] + [11] * max(3, len(years)))
-    if not years:
-        label(ws, "A5", "Add capture files with scoreboard_rows and cir_rows to fill this tab.", bold=False)
-        return
-    comps = sorted({co for y in years for co in pub[y]})
-    blocks = [("Overall score", "score", "0"), ("Rank", "rank", "0"), ("Cameras: price ($)", "camera.price", "$#,##0"),
-              ("Cameras: P/Q", "camera.pq", "0.0"), ("Cameras: market share (%)", "camera.share", "0.0"),
-              ("Drones: price ($)", "drone.price", "$#,##0"), ("Drones: P/Q", "drone.pq", "0.0"),
-              ("Drones: market share (%)", "drone.share", "0.0")]
-    r = 5
-    starts = {}
-    for title, key, fmt in blocks:
-        if not any(pub[y].get(co, {}).get(key) is not None for y in years for co in comps):
-            continue
-        header(ws, r, [title] + [f"Year {y}" for y in years])
-        starts[key] = r
-        for i, co in enumerate(comps):
-            rr = r + 1 + i
-            c = ws.cell(row=rr, column=1, value=f"Company {co}" + ("  (you)" if co == team else ""))
-            c.font = B_FONT if co == team else Font(name=F, size=10)
-            for j, y in enumerate(years):
-                inp(ws, f"{get_column_letter(2 + j)}{rr}", pub[y].get(co, {}).get(key), fmt)
-                if co == team:
-                    ws[f"{get_column_letter(2 + j)}{rr}"].fill = PatternFill("solid", fgColor="FBE9C9")
-        r += len(comps) + 2
+# ---------- process-step sheets (one per StratOS step) ----------
+def _grid(ws, r, headers, data, n, fmts=None, heights=None):
+    """Header at row r, then n input rows filled from data (list of lists). Returns (first, last) data rows."""
+    header(ws, r, headers)
     ws.freeze_panes = None
-    anchor = get_column_letter(len(years) + 3)
-    n = 0
-    for key, title in (("score", "Overall score by company"), ("camera.share", "Cameras: market share by company"),
-                       ("drone.share", "Drones: market share by company")):
-        if key not in starts:
-            continue
-        r0 = starts[key]
-        ch = LineChart()
-        ch.title, ch.height, ch.width = title, 7.5, 15
-        ch.legend.position = "r"
-        for i in range(len(comps)):
-            ch.add_data(Reference(ws, min_col=1, max_col=1 + len(years), min_row=r0 + 1 + i, max_row=r0 + 1 + i),
-                        from_rows=True, titles_from_data=True)
-        ch.set_categories(Reference(ws, min_col=2, max_col=1 + len(years), min_row=r0, max_row=r0))
-        for i, srs in enumerate(ch.series):
-            mine = comps[i] == team
-            srs.graphicalProperties.line.solidFill = "C9A55C" if mine else ["1D3557", "6C757D", "2D936C", "C44536", "457B9D", "8D6A9F", "A8DADC", "B5651D"][i % 8]
-            srs.graphicalProperties.line.width = 42000 if mine else 15000
-            srs.smooth = False
-        ch.y_axis.majorGridlines = None
-        ch.x_axis.delete = ch.y_axis.delete = False
-        ws.add_chart(ch, f"{anchor}{5 + n * 17}")
-        n += 1
+    fmts = fmts or [None] * len(headers)
+    for i in range(n):
+        rr = r + 1 + i
+        row = data[i] if i < len(data) else [None] * len(headers)
+        for j in range(len(headers)):
+            v = row[j] if j < len(row) else None
+            inp(ws, f"{get_column_letter(1 + j)}{rr}", v, fmts[j] if j < len(fmts) else None)
+        if heights:
+            ws.row_dimensions[rr].height = heights
+    return r + 1, r + n
 
 
-def sheet_tracking(wb, year_tabs, spec):
-    from openpyxl.chart import LineChart, Reference
-    from openpyxl.workbook.defined_name import DefinedName
-    ws = wb.create_sheet("Tracking")
-    years = sorted(year_tabs)
-    head(ws, "GLO-BUS trends", "Pulled by formula from the Year tabs. Rebuild the workbook after each round to add "
-         "the new year. Charts update when a Year tab changes.", [36] + [12] * max(1, len(years)))
-    # credit scale on a hidden column
-    sc = spec["credit_scale"]
-    colx = get_column_letter(3 + max(1, len(years)) + 6)
-    for i, v in enumerate(sc):
-        ws[f"{colx}{6+i}"] = v
-        ws[f"{colx}{6+i}"].font = Font(name=F, size=8, color="BBBBBB")
-    ws.column_dimensions[colx].hidden = True
-    wb.defined_names["CreditScale"] = DefinedName("CreditScale", attr_text=f"Tracking!${colx}$6:${colx}${5+len(sc)}")
-    header(ws, 5, ["Measure"] + [f"Year {y}" for y in years])
-    rowof = {}
-    for i, (lab, key, fmt) in enumerate(TRACK_ROWS):
+def _sec(ws, r, text, span="H"):
+    c = ws.cell(row=r, column=1, value=text)
+    c.font = Font(name=F, size=11, bold=True, color=NAVY)
+    return r + 1
+
+
+def _ids(xs):
+    return ", ".join(xs) if isinstance(xs, list) else (xs or "")
+
+
+def sheet_overview(wb, L, mode):
+    ws = wb.create_sheet("Industry Overview")
+    head(ws, "Setup and Industry Overview", "Part 1, steps 1-2. The scope every later step uses, and the business-plan-style "
+         "introduction to the industry. Cite a source for every figure.", [30, 18, 14, 22, 30, 14, 14, 14])
+    ex = mode == "example"
+    sc = g(L, "scope", default={}) or {}
+    ov = g(L, "industry_layer", "overview", default={}) or {}
+    r = _sec(ws, 5, "Scope (from setup)")
+    items = [("Industry", sc.get("industry") or ("[e.g. Global passenger electric vehicles]" if ex else None)),
+             ("In scope / out of scope", sc.get("boundary_note") or ("[e.g. BEV + PHEV cars; excludes trucks]" if ex else None)),
+             ("Geography", sc.get("geography") or ("Global" if ex else None)),
+             ("Horizon", sc.get("horizon") or ("2026-2030" if ex else None)),
+             ("Competitor set", _ids(sc.get("competitor_set")) or ", ".join(c.get("name", "") for c in (g(L, "competitors", default=[]) or [])) or ("[e.g. BYD, Tesla, VW Group]" if ex else None)),
+             ("Base company", g(L, "company_layer", "focal_firm", default=None) or ("[e.g. BYD]" if ex else None))]
+    for k, v in items:
+        label(ws, f"A{r}", k, bold=False)
+        inp(ws, f"B{r}", v)
+        ws.merge_cells(f"B{r}:H{r}")
+        r += 1
+    r = _sec(ws, r + 1, "Market size (estimates differ by definition: show them side by side)")
+    ms = [[m.get("value"), m.get("unit"), m.get("year"), m.get("publisher"), m.get("definition"),
+           "Yes" if m.get("matches_scope") else ("No" if m.get("matches_scope") is False else None)]
+          for m in (ov.get("market_size") or [])]
+    if ex and not ms:
+        ms = [[21, "million units", 2025, "[publisher]", "BEV + PHEV car sales", "Yes"]]
+    a, b = _grid(ws, r, ["Value", "Unit", "Year", "Publisher", "Definition", "Matches scope?"], ms, 5)
+    dv_list(ws, ["Yes", "No"], f"F{a}:F{b}")
+    r = b + 2
+    r = _sec(ws, r, "Growth: compound annual growth rate calculator")
+    for k, v, f_ in (("Start value", 10 if ex else None, "#,##0.0"), ("End value", 21 if ex else None, "#,##0.0"),
+                     ("Number of years", 5 if ex else None, "0")):
+        label(ws, f"A{r}", k, bold=False)
+        inp(ws, f"B{r}", v, f_)
+        r += 1
+    label(ws, f"A{r}", "CAGR")
+    fx(ws, f"B{r}", f'=IFERROR((B{r-2}/B{r-3})^(1/B{r-1})-1,"")', "0.0%", bold=True)
+    r += 2
+    fc = [[x.get("publisher"), x.get("cagr"), x.get("to_year"), x.get("published")] for x in ((ov.get("growth") or {}).get("forecasts") or [])]
+    a, b = _grid(ws, r, ["Forecast: publisher", "CAGR", "To year", "Published"], fc, 4, [None, "0.0%", "0", None])
+    r = b + 2
+    r = _sec(ws, r, "Segments and customers")
+    sg = [[s.get("name"), s.get("share"), s.get("growth"), s.get("buyers")] for s in (ov.get("segments") or [])]
+    a, b = _grid(ws, r, ["Segment", "Share", "Growth", "Who buys, and why"], sg, 5)
+    r = b + 2
+    r = _sec(ws, r, "Key players and concentration")
+    pl = [[p.get("name"), p.get("share")] for p in ((ov.get("players") or {}).get("leaders") or [])]
+    if ex and not pl:
+        pl = [["[Leader 1]", 0.22], ["[Leader 2]", 0.12], ["[Leader 3]", 0.07], ["[Leader 4]", 0.05]]
+    a, b = _grid(ws, r, ["Company", "Market share"], pl, 8, [None, "0.0%"])
+    label(ws, f"D{a}", "Top-4 share")
+    fx(ws, f"E{a}", f'=IF(COUNT(B{a}:B{b})<4,"",LARGE(B{a}:B{b},1)+LARGE(B{a}:B{b},2)+LARGE(B{a}:B{b},3)+LARGE(B{a}:B{b},4))',
+       "0.0%", bold=True)
+    label(ws, f"D{a+1}", "HHI (shares listed)")
+    fx(ws, f"E{a+1}", f'=IF(COUNT(B{a}:B{b})=0,"",SUMPRODUCT(B{a}:B{b}*100,B{a}:B{b}*100))', "#,##0", bold=True)
+    label(ws, f"D{a+2}", "Below 1,500 unconcentrated; above 2,500 highly concentrated.", bold=False)
+    r = b + 2
+    r = _sec(ws, r, "Recent history: the events that explain today's structure")
+    tl = [[t.get("year"), t.get("event"), t.get("why_it_mattered")] for t in (ov.get("timeline") or [])]
+    a, b = _grid(ws, r, ["Year", "Event", "Why it mattered"], tl, 8, ["0", None, None])
+    for rr in range(a, b + 1):
+        ws.merge_cells(f"C{rr}:H{rr}")
+    r = b + 2
+    r = _sec(ws, r, "Life-cycle stage")
+    lc = ov.get("lifecycle") or {}
+    label(ws, f"A{r}", "Stage", bold=False)
+    inp(ws, f"B{r}", lc.get("stage") or ("growth" if ex else None))
+    dv_list(ws, ["emerging", "growth", "shakeout", "mature", "declining"], f"B{r}")
+    label(ws, f"C{r}", "What it implies", bold=False)
+    inp(ws, f"D{r}", lc.get("implication"))
+    ws.merge_cells(f"D{r}:H{r}")
+
+
+def sheet_competitive(wb, L, mode):
+    ws = wb.create_sheet("Competitive Analysis")
+    head(ws, "Competitive Analysis", "Part 1, step 3. Each competitor's financials, moat and signals, benchmarked against the "
+         "peer median. Same fiscal year for all; note the currency.", [20, 10, 9, 13, 11, 11, 11, 12, 12, 12, 12, 30])
+    comps = g(L, "competitors", default=[]) or []
+    rows = []
+    for c in comps[:10]:
+        f_ = c.get("financials") or {}
+        m = c.get("moat") or {}
+        num_ = lambda v: v if isinstance(v, (int, float)) else None
+        rows.append([c.get("name"), f_.get("fiscal_year"), f_.get("currency"), num_(f_.get("revenue")),
+                     num_(f_.get("gross_margin")), num_(f_.get("operating_margin")), num_(f_.get("rnd_pct")),
+                     m.get("network"), m.get("switching"), m.get("scale"), m.get("intangibles"), c.get("apparent_strategy")])
+    if mode == "example" and not rows:
+        rows = [["[Firm A]", "FY2025", "USD", 120000, 0.18, 0.05, 0.07, "weak", "moderate", "strong", "moderate", "[cost leader at scale]"],
+                ["[Firm B]", "FY2025", "USD", 40000, 0.24, 0.08, 0.10, "moderate", "moderate", "weak", "strong", "[premium tech brand]"]]
+    r = _sec(ws, 5, "Financial benchmark and moat")
+    hd = ["Company", "Fiscal year", "Currency", "Revenue (m)", "Gross margin", "Op. margin", "R&D % rev.",
+          "Moat: network", "Moat: switching", "Moat: scale", "Moat: intangibles", "Apparent strategy"]
+    a, b = _grid(ws, r, hd, rows, 10, [None, None, None, "#,##0", "0.0%", "0.0%", "0.0%"] + [None] * 5)
+    dv_list(ws, ["weak", "moderate", "strong"], f"H{a}:K{b}")
+    label(ws, f"A{b+1}", "Peer median")
+    for col in "DEFG":
+        fx(ws, f"{col}{b+1}", f'=IF(COUNT({col}{a}:{col}{b})=0,"",MEDIAN({col}{a}:{col}{b}))', ws[f"{col}{a}"].number_format, bold=True)
+    r2 = b + 4
+    header(ws, r2, ["Company", "Op. margin vs median", "Margin rank", "Moat score (0-8)"])
+    ws.freeze_panes = None
+    for i in range(10):
+        rr, src = r2 + 1 + i, a + i
+        fx(ws, f"A{rr}", f'=IF(A{src}="","",A{src})')
+        fx(ws, f"B{rr}", f'=IF(OR(F{src}="",$F${b+1}=""),"",F{src}-$F${b+1})', "+0.0%;-0.0%;0.0%")
+        fx(ws, f"C{rr}", f'=IF(F{src}="","",RANK(F{src},$F${a}:$F${b}))', "0")
+        sc = "+".join(f'IF({c}{src}="strong",2,IF({c}{src}="moderate",1,0))' for c in "HIJK")
+        fx(ws, f"D{rr}", f'=IF(A{src}="","",{sc})', "0")
+    traffic(ws, f"B{r2+1}:B{r2+10}", f"AND(ISNUMBER(B{r2+1}),B{r2+1}>0.01)", f"AND(ISNUMBER(B{r2+1}),ABS(B{r2+1})<=0.01)",
+            f"AND(ISNUMBER(B{r2+1}),B{r2+1}<-0.01)")
+    r = r2 + 12
+    r = _sec(ws, r, "Signals: what competitors are doing (hiring, patents, launches, capex, pricing)")
+    sig = [[c.get("name"), s.get("kind"), s.get("observation"), s.get("inference")] for c in comps for s in (c.get("signals") or [])]
+    header(ws, r, ["Company", "Kind", "Observation", "", "", "", "", "What it suggests", "", "", "", ""])
+    ws.merge_cells(f"C{r}:G{r}")
+    ws.merge_cells(f"H{r}:L{r}")
+    ws.freeze_panes = None
+    a, b = r + 1, r + 10
+    for i in range(10):
+        rr = a + i
+        d = sig[i] if i < len(sig) else [None] * 4
+        inp(ws, f"A{rr}", d[0]); inp(ws, f"B{rr}", d[1]); inp(ws, f"C{rr}", d[2]); inp(ws, f"H{rr}", d[3])
+        ws.merge_cells(f"C{rr}:G{rr}")
+        ws.merge_cells(f"H{rr}:L{rr}")
+    dv_list(ws, ["hiring", "patents", "launch", "capex", "pricing", "partnership", "exit", "other"], f"B{a}:B{b}")
+    r = b + 2
+    r = _sec(ws, r, "Annual-report seeds for PESTEL (risk factors and management discussion)")
+    seeds = [[s.get("dimension"), s.get("kind"), s.get("text"), s.get("pl_line"), len(s.get("firms") or [])]
+             for s in (g(L, "ci", "pestel_seeds", default=[]) or [])]
+    a, b = _grid(ws, r, ["PESTEL", "Kind", "Text", "P&L line", "Firms citing it"], seeds, 8, [None, None, None, None, "0"])
+    dv_list(ws, ["P", "E", "S", "T", "Env", "L"], f"A{a}:A{b}")
+    dv_list(ws, ["risk_factor", "mdna_trend"], f"B{a}:B{b}")
+
+
+def sheet_drivers(wb, L, mode):
+    ws = wb.create_sheet("Trending Factors")
+    head(ws, "Trending Influence Factors", "Part 1, step 6. Candidates from PESTEL and Competitive Analysis; a driver must pass "
+         "all four tests. Keep 3-5.", [8, 28, 14, 34, 16, 16, 10, 10, 10, 10, 13, 16])
+    dr = g(L, "industry_layer", "drivers", default=[]) or []
+    rows = [[d.get("id"), d.get("name"), _ids(d.get("from_pestel")), d.get("transmission"), d.get("pl_line"),
+             _ids(d.get("forces_moved")), "Yes", "Yes", "Yes", "Yes", None, d.get("profit_pool")] for d in dr]
+    if mode == "example" and not rows:
+        rows = [["D1", "[Battery cost curve]", "P1", "[cheaper cells → lower input cost]", "cogs.inputs", "suppliers", "Yes", "Yes", "Yes", "Yes", None, "redistributing"],
+                ["D2", "[Fuel-price spike]", "P7", "[one-off demand pull]", "revenue.volume", "substitutes", "No", "Yes", "Yes", "No", None, "expanding"]]
+    hd = ["ID", "Candidate driver", "From (PESTEL / CI ids)", "Mechanism → P&L", "P&L line", "Forces moved",
+          "Moves a force ≥1 pt?", "Moves P&L for most firms?", "Acts within horizon?", "Two source types?", "Verdict", "Profit pool"]
+    a, b = _grid(ws, 5, hd, rows, 12, heights=30)
+    dv_list(ws, ["Yes", "No"], f"G{a}:J{b}")
+    dv_list(ws, ["expanding", "compressing", "redistributing"], f"L{a}:L{b}")
+    for rr in range(a, b + 1):
+        fx(ws, f"K{rr}", f'=IF(B{rr}="","",IF(COUNTIF(G{rr}:J{rr},"Yes")=4,"Driver","Demoted"))', bold=True)
+    traffic(ws, f"K{a}:K{b}", f'K{a}="Driver"', "FALSE", f'K{a}="Demoted"')
+    label(ws, f"A{b+2}", "Drivers kept")
+    fx(ws, f"C{b+2}", f'=COUNTIF(K{a}:K{b},"Driver")&" of "&COUNTA(B{a}:B{b})&" candidates"', bold=True)
+    fx(ws, f"D{b+2}", f'=IF(COUNTA(B{a}:B{b})=0,"",IF(AND(COUNTIF(K{a}:K{b},"Driver")>=3,COUNTIF(K{a}:K{b},"Driver")<=5),"OK: 3-5 drivers","Aim for 3-5 drivers"))')
+
+
+def sheet_mapping(wb, L, mode):
+    from openpyxl.chart import ScatterChart, Reference, Series
+    ws = wb.create_sheet("Strategic Mapping")
+    head(ws, "Strategic Mapping", "Part 1, step 8. Score each company on two vectors (0-10), see the map, then list the "
+         "white space and stamp each candidate after VRIO.", [22, 12, 12, 14, 30, 26, 26, 26, 26, 14, 16])
+    s6 = g(L, "company_layer", "s6_disruption", default={}) or g(L, "company_layer", "s5_conventional", default={}) or {}
+    axes = s6.get("axes") or []
+    comps = g(L, "competitors", default=[]) or []
+    ax_names = [f"v{a}" for a in axes] if axes else []
+    label(ws, "A5", "Horizontal axis (vector)")
+    inp(ws, "B5", ax_names[0] if ax_names else ("[e.g. Ecosystem integration]" if mode == "example" else None))
+    ws.merge_cells("B5:E5")
+    label(ws, "A6", "Vertical axis (vector)")
+    inp(ws, "B6", ax_names[1] if len(ax_names) > 1 else ("[e.g. Resale value]" if mode == "example" else None))
+    ws.merge_cells("B6:E6")
+    rows = []
+    for c in comps[:10]:
+        p = c.get("positions") or {}
+        x = p.get(ax_names[0]) if ax_names else None
+        y = p.get(ax_names[1]) if len(ax_names) > 1 else None
+        sc = lambda v: v * 10 if isinstance(v, (int, float)) and v <= 1 else v
+        rows.append([c.get("name"), sc(x), sc(y), None])
+    if mode == "example" and not rows:
+        rows = [["[Firm A]", 3, 4, 5], ["[Firm B]", 8, 6, 2], ["[Firm C]", 5, 3, 3]]
+    a, b = _grid(ws, 8, ["Company", "X score (0-10)", "Y score (0-10)", "Size (share or revenue)"], rows, 10, [None, "0.0", "0.0", "0.0"])
+    ch = ScatterChart()
+    ch.title, ch.height, ch.width = "Strategic map", 9, 14
+    ch.scatterStyle = "marker"
+    ch.x_axis.title, ch.y_axis.title = "X vector", "Y vector"
+    ch.x_axis.scaling.min = ch.y_axis.scaling.min = 0
+    ch.x_axis.scaling.max = ch.y_axis.scaling.max = 10
+    for i in range(10):
+        rr = a + i
+        s = Series(Reference(ws, min_col=3, min_row=rr), Reference(ws, min_col=2, min_row=rr), title_from_data=False)
+        from openpyxl.chart.series import SeriesLabel
+        from openpyxl.chart.data_source import StrRef
+        s.tx = SeriesLabel(strRef=StrRef(f"'Strategic Mapping'!$A${rr}"))
+        s.marker.symbol, s.marker.size = "circle", 11
+        s.marker.graphicalProperties.solidFill = ["1D3557", "C9A55C", "2D936C", "C44536", "457B9D", "8D6A9F", "6C757D", "B5651D", "A8DADC", "264653"][i]
+        s.marker.graphicalProperties.line.noFill = True
+        s.graphicalProperties.line.noFill = True
+        ch.series.append(s)
+    ch.x_axis.delete = ch.y_axis.delete = False
+    ch.legend.position = "r"
+    ws.add_chart(ch, "F5")
+    r = b + 12
+    r = _sec(ws, r, "White space and blue-ocean candidates")
+    cand = [[c.get("rank"), (c.get("at") or [None, None])[0], (c.get("at") or [None, None])[1], c.get("demand"), c.get("thesis"),
+             _ids((c.get("errc") or {}).get("eliminate")), _ids((c.get("errc") or {}).get("reduce")),
+             _ids((c.get("errc") or {}).get("raise")), _ids((c.get("errc") or {}).get("create")), c.get("capability")]
+            for c in (g(L, "company_layer", "candidates", default=[]) or [])]
+    if mode == "example" and not cand:
+        cand = [[1, 8.5, 2, "unpriced", "[the empty corner and who it serves]", "[…]", "[…]", "[…]", "[…]", "UNVALIDATED"]]
+    a, b = _grid(ws, r, ["Rank", "X", "Y", "Demand", "Thesis", "Eliminate", "Reduce", "Raise", "Create", "Capability (after VRIO)"],
+                 cand, 5, ["0", "0.0", "0.0"] + [None] * 7, heights=36)
+    dv_list(ws, ["UNVALIDATED", "supported", "gap"], f"J{a}:J{b}")
+    dv_list(ws, ["unpriced", "evidence of demand", "tested"], f"D{a}:D{b}")
+    traffic(ws, f"J{a}:J{b}", f'J{a}="supported"', f'J{a}="UNVALIDATED"', f'J{a}="gap"')
+
+
+def sheet_value_chain(wb, L, mode):
+    ws = wb.create_sheet("Value Chain")
+    head(ws, "Value Chain", "Part 2, step 9. Each activity's share of cost and of the value customers pay for. Value minus "
+         "cost shows where the firm earns its margin.", [8, 30, 18, 14, 14, 12, 12, 12, 24, 16])
+    vc = g(L, "company_layer", "internal", "value_chain", default=[]) or []
+    rows = [[v.get("id"), v.get("activity"), v.get("porter_category"), v.get("stage"), v.get("sourcing"),
+             v.get("cost_share"), v.get("value_share")] for v in vc]
+    if mode == "example" and not rows:
+        rows = [["A1", "[Battery cells and packs]", "Operations", "product", "in-house", 0.35, 0.25],
+                ["A2", "[Software and connected services]", "Technology", "custom", "in-house", 0.08, 0.20]]
+    hd = ["ID", "Activity", "Porter category", "Stage", "Sourcing", "Cost share", "Value share", "Value − cost", "Reading", "Delivers KSF"]
+    a, b = _grid(ws, 5, hd, [r_ + [None, None, _ids(v.get("delivers_ksf")) if i < len(vc) and (v := vc[i]) else None]
+                              for i, r_ in enumerate(rows)], 12, [None, None, None, None, None, "0%", "0%", "+0%;-0%;0%"])
+    dv_list(ws, ["Inbound logistics", "Operations", "Outbound logistics", "Marketing and sales", "Service",
+                 "Procurement", "Technology", "HR", "Firm infrastructure"], f"C{a}:C{b}")
+    dv_list(ws, ["commodity", "product", "custom", "genesis"], f"D{a}:D{b}")
+    dv_list(ws, ["in-house", "outsourced", "mixed"], f"E{a}:E{b}")
+    for rr in range(a, b + 1):
+        fx(ws, f"H{rr}", f'=IF(OR(F{rr}="",G{rr}=""),"",G{rr}-F{rr})', "+0%;-0%;0%")
+        fx(ws, f"I{rr}", f'=IF(B{rr}="","",IF(H{rr}="","No figures",IF(H{rr}>0.05,"Differentiating engine",'
+                         f'IF(H{rr}<-0.05,"Value trap","In balance"))))')
+    traffic(ws, f"I{a}:I{b}", f'I{a}="Differentiating engine"', f'I{a}="In balance"', f'I{a}="Value trap"')
+    label(ws, f"A{b+1}", "Totals")
+    fx(ws, f"F{b+1}", f"=SUM(F{a}:F{b})", "0%", bold=True)
+    fx(ws, f"G{b+1}", f"=SUM(G{a}:G{b})", "0%", bold=True)
+    fx(ws, f"H{b+1}", f'=IF(AND(ABS(F{b+1}-1)<0.02,ABS(G{b+1}-1)<0.02),"Both sum to 100%","Cost and value shares should each sum to 100%")')
+
+
+def sheet_unit_econ(wb, L, mode):
+    ws = wb.create_sheet("Unit Economics")
+    head(ws, "Unit Economics (Exhibit J-1)", "Part 2, step 10. Does one more unit make money, and what does a customer cost? "
+         "Matches unit_economics.py.", [34, 16, 16, 34, 16])
+    ue = g(L, "company_layer", "internal", "unit_economics", default={}) or {}
+    lines = {l.get("line", "").lower(): l.get("value") for l in (ue.get("lines") or [])}
+    ex = mode == "example"
+    ins = [("Unit", ue.get("unit") or ("one vehicle" if ex else None), None),
+           ("Price per unit", lines.get("asp") or lines.get("price") or (32000 if ex else None), "$#,##0"),
+           ("Variable cost per unit", lines.get("variable_cost") or (20000 if ex else None), "$#,##0"),
+           ("Fixed costs per period", lines.get("fixed_costs") or (180000000 if ex else None), "$#,##0"),
+           ("Volume per period", lines.get("volume") or (32400 if ex else None), "#,##0"),
+           ("Customer acquisition cost (CAC)", lines.get("cac") or (1500 if ex else None), "$#,##0"),
+           ("Units per customer per year", lines.get("units_per_customer_year") or (0.2 if ex else None), "0.00"),
+           ("Retention (share kept each year)", lines.get("retention") or (0.6 if ex else None), "0%"),
+           ("Discount rate", lines.get("discount_rate") or (0.10 if ex else None), "0.0%"),
+           ("Service margin per customer per year", lines.get("service_margin_year") or (300 if ex else None), "$#,##0")]
+    label(ws, "A5", "Inputs")
+    for i, (k, v, f_) in enumerate(ins):
+        label(ws, f"A{6+i}", k, bold=False)
+        inp(ws, f"B{6+i}", v, f_)
+    P, V, Fx, Q, CAC, U, RET, DR, SM = "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15"
+    label(ws, "D5", "Results")
+    res = [("Contribution per unit", f'=IF(OR({P}="",{V}=""),"",{P}-{V})', "$#,##0"),
+           ("Contribution margin", f'=IFERROR(E6/{P},"")', "0.0%"),
+           ("Break-even volume", f'=IFERROR(IF(E6>0,{Fx}/E6,"never"),"")', "#,##0"),
+           ("Margin of safety", f'=IFERROR(({Q}-E8)/{Q},"")', "0.0%"),
+           ("Operating profit", f'=IFERROR(E6*{Q}-{Fx},"")', "$#,##0"),
+           ("Annual contribution per customer", f'=IFERROR(E6*{U}+N({SM}),"")', "$#,##0"),
+           ("Customer lifetime (years, max 10)", f'=IFERROR(IF({RET}>=1,10,MIN(10,1/(1-{RET}))),"")', "0.0"),
+           ("Lifetime value (LTV)", "LTV", "$#,##0"),
+           ("LTV / CAC", f'=IFERROR(E13/{CAC},"")', "0.0"),
+           ("CAC payback (months)", f'=IFERROR({CAC}/(E11/12),"")', "0.0")]
+    # helper years for LTV
+    for yv in range(10):
+        ws[f"H{6+yv}"] = yv
+        ws[f"H{6+yv}"].font = Font(name=F, size=8, color="BBBBBB")
+        fx(ws, f"I{6+yv}", f'=IFERROR(IF($E$12-H{6+yv}<=0,0,$E$11*MIN(1,$E$12-H{6+yv})/(1+{DR})^H{6+yv}),0)', "#,##0")
+        ws[f"I{6+yv}"].font = Font(name=F, size=8, color="BBBBBB")
+    ws.column_dimensions["H"].hidden = True
+    ws.column_dimensions["I"].hidden = True
+    for i, (k, f_, nf) in enumerate(res):
+        label(ws, f"D{6+i}", k, bold=k in ("Contribution per unit", "Break-even volume", "LTV / CAC"))
+        fx(ws, f"E{6+i}", '=IF(E11="","",SUM(I6:I15))' if f_ == "LTV" else f_, nf, bold=k in ("Break-even volume", "LTV / CAC"))
+    traffic(ws, "E14", "AND(ISNUMBER(E14),E14>=3)", "AND(ISNUMBER(E14),E14>=1)", "AND(ISNUMBER(E14),E14<1)")
+    r = 18
+    label(ws, f"A{r}", "Sensitivity: operating profit when one input moves")
+    header(ws, r + 1, ["Input", "−10%", "Plan", "+10%"])
+    ws.freeze_panes = None
+    for i, (k, expr) in enumerate([("Price", "(({P}*(1+x))-{V})*{Q}-{Fx}"), ("Variable cost", "({P}-{V}*(1+x))*{Q}-{Fx}"),
+                                    ("Volume", "({P}-{V})*{Q}*(1+x)-{Fx}"), ("Fixed costs", "({P}-{V})*{Q}-{Fx}*(1+x)")]):
+        rr = r + 2 + i
+        label(ws, f"A{rr}", k, bold=False)
+        for col, x in zip("BCD", ("-0.1", "0", "0.1")):
+            fx(ws, f"{col}{rr}", "=IFERROR(" + expr.format(P=P, V=V, Q=Q, Fx=Fx).replace("x", x) + ',"")', "$#,##0;($#,##0)")
+
+
+def sheet_rc(wb, L, mode):
+    ws = wb.create_sheet("Resources & Capabilities")
+    head(ws, "Resources and Capabilities", "Part 2, step 11. What the firm owns, what it does well, and which capabilities "
+         "might be core competencies (VRIO tests them next).", [8, 32, 16, 30, 16, 16, 14])
+    I_ = g(L, "company_layer", "internal", default={}) or {}
+    ex = mode == "example"
+    res = [[x.get("id"), x.get("name"), x.get("type"), x.get("measure")] for x in (I_.get("resources") or [])]
+    if ex and not res:
+        res = [["R1", "[In-house cell plants]", "tangible", "[GWh of capacity]"], ["R2", "[Brand in home market]", "intangible", "[NPS / share]"]]
+    r = _sec(ws, 5, "Resources")
+    a, b = _grid(ws, r, ["ID", "Resource", "Type", "Measure or evidence"], res, 8)
+    dv_list(ws, ["tangible", "intangible", "human", "organisational"], f"C{a}:C{b}")
+    cap = [[x.get("id"), x.get("name"), _ids(x.get("combines")), x.get("performance"), _ids(x.get("from_activity")), x.get("class")]
+           for x in (I_.get("capabilities") or [])]
+    if ex and not cap:
+        cap = [["C1", "[Vertical battery integration]", "R1", "[cost per kWh below peers]", "A1", "distinctive"]]
+    r = _sec(ws, b + 2, "Capabilities")
+    a2, b2 = _grid(ws, r, ["ID", "Capability", "Combines (resources)", "Performance evidence", "From activity", "Class"], cap, 8)
+    dv_list(ws, ["threshold", "distinctive"], f"F{a2}:F{b2}")
+    cc = [[x.get("capability"), x.get("customer_benefit"), x.get("hard_to_imitate"), x.get("extendable"), x.get("status")]
+          for x in (I_.get("core_competencies") or [])]
+    r = _sec(ws, b2 + 2, "Core competencies (Prahalad and Hamel: customer benefit, hard to imitate, extendable)")
+    a3, b3 = _grid(ws, r, ["Capability", "Customer benefit (KSF)", "Hard to imitate because", "Extends to", "Status"], cc, 5)
+    dv_list(ws, ["candidate", "confirmed", "removed"], f"E{a3}:E{b3}")
+    label(ws, f"A{b3+2}", "Counts")
+    fx(ws, f"B{b3+2}", f'=COUNTA(B{a}:B{b})&" resources · "&COUNTA(B{a2}:B{b2})&" capabilities ("&COUNTIF(F{a2}:F{b2},"distinctive")&" distinctive) · "&COUNTIF(E{a3}:E{b3},"confirmed")&" confirmed core competencies"')
+    ws.merge_cells(f"B{b3+2}:G{b3+2}")
+
+
+def sheet_full_potential(wb, L, mode):
+    from openpyxl.chart import BarChart, Reference
+    ws = wb.create_sheet("Full Potential")
+    head(ws, "Full Potential (Exhibit K-1)", "Part 2, step 14. The profit gap to a benchmark, driver by driver, applied in "
+         "sequence so overlaps count once. A ceiling, not a forecast. Matches full_potential.py.",
+         [22, 14, 14, 26, 18, 16, 16])
+    fp = {d.get("driver"): d for d in ((g(L, "company_layer", "internal", "full_potential", default={}) or {}).get("drivers") or [])}
+    ex = {"price": (30000, 32000), "mix_premium": (0, 800), "volume": (300000, 360000), "variable_cost": (24000, 22500),
+          "fixed_cost": (1.8e9, 1.7e9)} if mode == "example" else {}
+    order = [("price", "Price per unit"), ("mix_premium", "Mix premium per unit"), ("volume", "Volume"),
+             ("variable_cost", "Variable cost per unit"), ("fixed_cost", "Fixed costs")]
+    header(ws, 5, ["Driver", "Today", "Benchmark", "Benchmark source", "Controllability", "Value after step", "Gap captured"])
+    ws.freeze_panes = None
+    for i, (k, lab) in enumerate(order):
         r = 6 + i
-        rowof[key] = r
-        label(ws, f"A{r}", lab, bold=not lab.endswith("expectation") and "industry" not in lab)
-        for j, y in enumerate(years):
-            col = get_column_letter(2 + j)
-            tab, cells = year_tabs[y]
-            if key == "credit_score":
-                cr = f"{col}{rowof['kpi.credit']}"
-                fx(ws, f"{col}{r}", f'=IF({cr}="","",IFERROR({len(sc)+1}-MATCH({cr},CreditScale,0),""))', fmt)
-            else:
-                ref = f"'{tab}'!{cells[key]}"
-                fx(ws, f"{col}{r}", f'=IF({ref}="","",{ref})', None if fmt == "@" else fmt)
-    last_col = get_column_letter(1 + len(years))
-    charts = [("EPS vs investor expectation", ["kpi.eps", "kpi.eps.target"], "$"),
-              ("ROE vs investor expectation", ["kpi.roe", "kpi.roe.target"], "%"),
-              ("Stock price vs expectation", ["kpi.stock", "kpi.stock.target"], "$"),
-              ("Image rating and credit score", ["kpi.image", "kpi.image.target", "credit_score"], ""),
-              ("Market share (average of regions, %)", ["camera.share_avg", "drone.share_avg"], ""),
-              ("Cost per unit vs industry", ["camera.cost_unit", "camera.ind_cost_unit", "drone.cost_unit", "drone.ind_cost_unit"], "$"),
-              ("Net revenues and net profit ($000s)", ["co.revenue", "co.net_profit"], ""),
-              ("Operating margin by product", ["camera.op_margin", "drone.op_margin"], "%"),
-              ("Cameras: P/Q vs industry", ["camera.pq", "camera.ind_pq"], ""),
-              ("Position vs industry: price premium and cost gap", ["camera.price_gap", "camera.cost_gap",
-                                                                     "drone.price_gap", "drone.cost_gap"], "%")]
-    anchor_row = 6 + len(TRACK_ROWS) + 2
-    for n, (title, keys, unit) in enumerate(charts):
-        ch = LineChart()
-        ch.title = title
-        ch.height, ch.width = 7.2, 13.5
-        ch.legend.position = "b"
-        for key in keys:
-            r = rowof[key]
-            data = Reference(ws, min_col=1, max_col=1 + len(years), min_row=r, max_row=r)
-            ch.add_data(data, from_rows=True, titles_from_data=True)
-        ch.set_categories(Reference(ws, min_col=2, max_col=1 + len(years), min_row=5, max_row=5))
-        palette = ["1D3557", "C9A55C", "2D936C", "C44536"]
-        for k_, srs in enumerate(ch.series):
-            srs.graphicalProperties.line.solidFill = palette[k_ % 4]
-            srs.graphicalProperties.line.width = 28000
-            srs.smooth = False
-            if "target" in keys[k_] or "ind_" in keys[k_] or "cost_gap" in keys[k_]:
-                srs.graphicalProperties.line.dashStyle = "dash"
-        if unit == "%":
-            ch.y_axis.numFmt = "0%"
-        ch.y_axis.majorGridlines = None
-        ch.x_axis.delete = False
-        ch.y_axis.delete = False
-        col = "A" if n % 2 == 0 else get_column_letter(2 + max(5, len(years)) + 1)
-        ws.add_chart(ch, f"{col}{anchor_row + (n // 2) * 16}")
-    ws.freeze_panes = "B6"
+        d = fp.get(k, {})
+        label(ws, f"A{r}", lab, bold=False)
+        inp(ws, f"B{r}", d.get("today", (ex.get(k) or (None, None))[0]), "#,##0")
+        inp(ws, f"C{r}", d.get("benchmark", (ex.get(k) or (None, None))[1]), "#,##0")
+        inp(ws, f"D{r}", d.get("benchmark_source") or ("peer median" if ex else None))
+        inp(ws, f"E{r}", d.get("controllability") or ("controllable" if ex else None))
+        lower = k in ("variable_cost", "fixed_cost")
+        fx(ws, f"F{r}", f'=IF(B{r}="","",IF(C{r}="",B{r},{"MIN" if lower else "MAX"}(B{r},C{r})))', "#,##0")
+    dv_list(ws, ["controllable", "capability-bound", "structural"], "E6:E10")
+    prof = lambda p, m, v, c, f: f"(({p}+N({m})-{c})*{v}-{f})"
+    T = ["B6", "B7", "B8", "B9", "B10"]
+    A = ["F6", "F7", "F8", "F9", "F10"]
+    states = []
+    for i in range(6):
+        cur = [A[j] if j < i else T[j] for j in range(5)]
+        states.append(prof(*cur))
+    for i in range(5):
+        fx(ws, f"G{6+i}", f'=IFERROR({states[i+1]}-{states[i]},"")', "#,##0;(#,##0)", bold=True)
+    label(ws, "A12", "Operating profit today")
+    fx(ws, "B12", f'=IFERROR({states[0]},"")', "#,##0;(#,##0)", bold=True)
+    label(ws, "A13", "Full-potential operating profit")
+    fx(ws, "B13", f'=IFERROR({states[5]},"")', "#,##0;(#,##0)", bold=True)
+    label(ws, "A14", "Uplift")
+    fx(ws, "B14", '=IFERROR(B13-B12,"")', "#,##0;(#,##0)", bold=True)
+    fx(ws, "C14", '=IFERROR(B14/ABS(B12),"")', "0%")
+    label(ws, "A15", "Largest gap")
+    fx(ws, "B15", '=IFERROR(INDEX(A6:A10,MATCH(MAX(G6:G10),G6:G10,0)),"")', bold=True)
+    ch = BarChart()
+    ch.type, ch.title, ch.height, ch.width = "col", "Profit gap captured by driver", 7, 13
+    ch.add_data(Reference(ws, min_col=7, min_row=5, max_row=10), titles_from_data=True)
+    ch.set_categories(Reference(ws, min_col=1, min_row=6, max_row=10))
+    ch.legend = None
+    ch.series[0].graphicalProperties.solidFill = NAVY
+    ch.y_axis.majorGridlines = None
+    ch.x_axis.delete = ch.y_axis.delete = False
+    ws.add_chart(ch, "A18")
+
+
+def sheet_growth_barriers(wb, L, mode):
+    ws = wb.create_sheet("Growth Barriers")
+    head(ws, "Growth Barriers (Exhibit K-2)", "Part 2, step 15. Which constraint binds growth now? Exactly one should be "
+         "binding; lifting it is what unlocks the next stage.", [26, 14, 44, 40])
+    gb = g(L, "company_layer", "internal", "growth_barriers", default={}) or {}
+    given = {b_.get("barrier"): b_ for b_ in (gb.get("barriers") or [])}
+    kinds = [("demand", "Demand: enough customers want it"), ("supply", "Supply / capacity"), ("capability", "Capability / talent"),
+             ("capital", "Capital / funding"), ("access", "Distribution / market access"), ("regulation", "Regulation / licences")]
+    header(ws, 5, ["Barrier", "Status", "Evidence", "What lifting it unlocks"])
+    ws.freeze_panes = None
+    for i, (k, lab) in enumerate(kinds):
+        r = 6 + i
+        d = given.get(k, {})
+        label(ws, f"A{r}", lab, bold=False)
+        st = d.get("status") or (k == gb.get("binding") and "binding") or None
+        if mode == "example" and not st:
+            st = {"access": "binding", "capital": "tight"}.get(k, "slack")
+        inp(ws, f"B{r}", st)
+        inp(ws, f"C{r}", d.get("evidence") if isinstance(d.get("evidence"), str) else None)
+        inp(ws, f"D{r}", gb.get("unlocked") if k == gb.get("binding") else None)
+        ws.row_dimensions[r].height = 30
+    dv_list(ws, ["binding", "tight", "slack"], "B6:B11")
+    traffic(ws, "B6:B11", 'B6="slack"', 'B6="tight"', 'B6="binding"')
+    label(ws, "A13", "Binding constraint")
+    fx(ws, "B13", '=IF(COUNTIF(B6:B11,"binding")=1,INDEX(A6:A11,MATCH("binding",B6:B11,0)),IF(COUNTIF(B6:B11,"binding")=0,"None marked","More than one: choose the one that binds first"))', bold=True)
+    ws.merge_cells("B13:D13")
+
+
+def sheet_positioning(wb, L, mode):
+    ws = wb.create_sheet("Positioning")
+    head(ws, "Positioning (Strategy Interview)", "Part 3, step 17. The strategy you chose, in your words, and the four fit "
+         "tests. The workbook records; it never chooses.", [26, 60, 18, 40])
+    p = g(L, "strategy_layer", "positioning", default={}) or {}
+    ex = mode == "example"
+    rows = [("Generic strategy", p.get("strategy") or ("[your choice]" if ex else None)),
+            ("Target customers", p.get("target")), ("Source of advantage", p.get("advantage")),
+            ("Why now", p.get("why_now")), ("What we will not do", p.get("not_doing")),
+            ("Positioning statement (your words)", p.get("statement"))]
+    for i, (k, v) in enumerate(rows):
+        r = 5 + i
+        label(ws, f"A{r}", k, bold=False)
+        inp(ws, f"B{r}", v)
+        ws.merge_cells(f"B{r}:D{r}")
+        ws.row_dimensions[r].height = 30 if i < 5 else 48
+    dv_list(ws, ["Low-cost provider", "Broad differentiation", "Best-cost provider", "Focused low-cost",
+                 "Focused differentiation", "[your choice]"], "B5")
+    header(ws, 12, ["Fit test", "Question", "Verdict", "Evidence"])
+    ws.freeze_panes = None
+    fit = p.get("fit") or {}
+    tests = [("market", "Market fit", "Is there demand where you are aiming (maps, segments, trends)?"),
+             ("competitive", "Competitive fit", "Can you hold the position against the rivals near it?"),
+             ("capability", "Capability fit", "Do VRIO and the capability stamps support it?"),
+             ("economic", "Economic fit", "Do unit economics and the business case work?"),
+             ("management", "Management fit", "Does it fit the goals and limits from your management interview?")]
+    for i, (k, lab, q) in enumerate(tests):
+        r = 13 + i
+        label(ws, f"A{r}", lab, bold=False)
+        label(ws, f"B{r}", q, bold=False)
+        inp(ws, f"C{r}", fit.get(k))
+        inp(ws, f"D{r}", None)
+    dv_list(ws, ["supported", "open question", "conflicts"], "C13:C17")
+    traffic(ws, "C13:C17", 'C13="supported"', 'C13="open question"', 'C13="conflicts"')
+    label(ws, "A19", "Fit summary")
+    fx(ws, "B19", '=COUNTIF(C13:C17,"supported")&" supported · "&COUNTIF(C13:C17,"open question")&" open · "&COUNTIF(C13:C17,"conflicts")&" conflicts"', bold=True)
+
+
+def sheet_options(wb, L, mode):
+    ws = wb.create_sheet("Strategic Options")
+    head(ws, "Strategic Options (Exhibit P)", "Part 3, step 18. Frame the decision, then three or more distinct options plus "
+         "do nothing, each with a staged first step and a gate.", [8, 30, 14, 18, 36, 36, 12])
+    o = g(L, "strategy_layer", "options", default={}) or {}
+    scq = o.get("scq") or {}
+    ex = mode == "example"
+    for i, (k, lab) in enumerate((("situation", "Situation"), ("complication", "Complication"), ("question", "Question"))):
+        label(ws, f"A{5+i}", lab, bold=False)
+        inp(ws, f"B{5+i}", scq.get(k))
+        ws.merge_cells(f"B{5+i}:G{5+i}")
+    rows = [[x.get("id"), x.get("name"), x.get("route"), _ids(x.get("exploits")), x.get("staged_step"), x.get("gate"),
+             "Yes" if x.get("suggested") else "No"] for x in (o.get("options") or [])]
+    if ex and not rows:
+        rows = [["O-A", "[Build an EU plant]", "build", "ST1", "[pilot line first]", "[orders > X by Q4]", "No"],
+                ["O-0", "Do nothing", "do nothing", "", "", "", "No"]]
+    a, b = _grid(ws, 9, ["ID", "Option", "Route", "Exploits (TOWS ids)", "Staged first step", "Gate to the next stage", "Suggested?"], rows, 8, heights=30)
+    dv_list(ws, ["build", "buy", "partner", "license", "focus", "exit", "do nothing"], f"C{a}:C{b}")
+    dv_list(ws, ["Yes", "No"], f"G{a}:G{b}")
+    label(ws, f"A{b+2}", "Checks")
+    fx(ws, f"B{b+2}", f'=IF(COUNTIF(C{a}:C{b},"do nothing")=0,"Add do nothing as the baseline",IF(COUNTA(B{a}:B{b})-1<3,"Add options: aim for three or more plus do nothing","OK"))', bold=True)
+    ws.merge_cells(f"B{b+2}:G{b+2}")
+
+
+def sheet_pricing(wb, L, mode):
+    ws = wb.create_sheet("Pricing")
+    head(ws, "Pricing (optional)", "Part 3. Only when price is a lever. Test price points against the volume you expect at "
+         "each; the sheet finds the profit-maximising point inside the acceptable range.", [18, 16, 16, 16, 18, 14])
+    ex = mode == "example"
+    label(ws, "A5", "Variable cost per unit", bold=False)
+    inp(ws, "B5", 20000 if ex else None, "$#,##0")
+    label(ws, "A6", "Fixed costs", bold=False)
+    inp(ws, "B6", 180000000 if ex else None, "$#,##0")
+    label(ws, "A7", "Acceptable range: low", bold=False)
+    inp(ws, "B7", 28000 if ex else None, "$#,##0")
+    label(ws, "A8", "Acceptable range: high", bold=False)
+    inp(ws, "B8", 36000 if ex else None, "$#,##0")
+    data = [[28000, 42000], [30000, 39000], [32000, 36000], [34000, 31000], [36000, 26000]] if ex else []
+    header(ws, 10, ["Price point", "Expected volume", "Revenue", "Contribution", "Operating profit", "In range?"])
+    ws.freeze_panes = None
+    for i in range(8):
+        r = 11 + i
+        d = data[i] if i < len(data) else [None, None]
+        inp(ws, f"A{r}", d[0], "$#,##0")
+        inp(ws, f"B{r}", d[1], "#,##0")
+        fx(ws, f"C{r}", f'=IF(OR(A{r}="",B{r}=""),"",A{r}*B{r})', "$#,##0")
+        fx(ws, f"D{r}", f'=IF(C{r}="","",(A{r}-$B$5)*B{r})', "$#,##0")
+        fx(ws, f"E{r}", f'=IF(D{r}="","",D{r}-$B$6)', "$#,##0;($#,##0)")
+        fx(ws, f"F{r}", f'=IF(A{r}="","",IF(AND(A{r}>=$B$7,A{r}<=$B$8),"Yes","No"))')
+    label(ws, "A20", "Best price in range")
+    fx(ws, "B20", '=IFERROR(INDEX(A11:A18,MATCH(_xlfn.MAXIFS(E11:E18,F11:F18,"Yes"),E11:E18,0)),"")', "$#,##0", bold=True)
+    label(ws, "C20", "Profit there", bold=False)
+    fx(ws, "D20", '=IFERROR(_xlfn.MAXIFS(E11:E18,F11:F18,"Yes"),"")', "$#,##0;($#,##0)", bold=True)
+
+
+def sheet_stress(wb, L, mode):
+    ws = wb.create_sheet("Stress Test")
+    head(ws, "Stress Test (Exhibit R)", "Part 3, step 22. Attack the leading option before anyone plans: the assumptions it "
+         "rests on, how rivals respond, and a risk register with owners and triggers.", [30, 16, 16, 12, 12, 10, 12, 18, 30, 30])
+    st = g(L, "strategy_layer", "stress_test", default={}) or {}
+    ex = mode == "example"
+    asm = [[x.get("assumption"), x.get("value"), x.get("break_even"), x.get("evidence"), x.get("danger")] for x in (st.get("assumptions") or []) if isinstance(x, dict)]
+    if ex and not asm:
+        asm = [["[Units in year 3]", 97200, 92000, "[source]", None]]
+    r = _sec(ws, 5, "Assumption audit")
+    header(ws, r, ["Assumption", "Value used", "Break-even value", "Evidence", "Headroom", "Danger zone?"])
+    ws.freeze_panes = None
+    for i in range(8):
+        rr = r + 1 + i
+        d = asm[i] if i < len(asm) else [None] * 5
+        inp(ws, f"A{rr}", d[0]); inp(ws, f"B{rr}", d[1], "#,##0.##"); inp(ws, f"C{rr}", d[2], "#,##0.##"); inp(ws, f"D{rr}", d[3])
+        fx(ws, f"E{rr}", f'=IF(OR(B{rr}="",C{rr}="",B{rr}=0),"",ABS(B{rr}-C{rr})/ABS(B{rr}))', "0%")
+        fx(ws, f"F{rr}", f'=IF(E{rr}="","",IF(E{rr}<0.1,"Yes","No"))', bold=True)
+    traffic(ws, f"F{r+1}:F{r+8}", f'F{r+1}="No"', "FALSE", f'F{r+1}="Yes"')
+    r = r + 10
+    r = _sec(ws, r, "Competitor war-game")
+    wg = [[x.get("rival"), x.get("response"), x.get("effect"), x.get("counter")] for x in (st.get("war_game") or []) if isinstance(x, dict)]
+    a, b = _grid(ws, r, ["Rival", "Most likely response", "Effect on us", "Our counter"], wg, 5, heights=30)
+    r = b + 2
+    r = _sec(ws, r, "Risk register")
+    rk = [[x.get("risk"), x.get("likelihood"), x.get("impact"), None, None, x.get("owner"), x.get("mitigation"), x.get("trigger")]
+          for x in (st.get("risks") or []) if isinstance(x, dict)]
+    if ex and not rk:
+        rk = [["[Price war in the target segment]", 4, 4, None, None, "[CMO]", "[hold price; add value]", "[rival cuts > 5%]"]]
+    header(ws, r, ["Risk", "Likelihood (1-5)", "Impact (1-5)", "Score", "Rating", "Owner", "Mitigation", "Early-warning trigger"])
+    ws.freeze_panes = None
+    for i in range(10):
+        rr = r + 1 + i
+        d = rk[i] if i < len(rk) else [None] * 8
+        inp(ws, f"A{rr}", d[0]); inp(ws, f"B{rr}", d[1], "0"); inp(ws, f"C{rr}", d[2], "0")
+        fx(ws, f"D{rr}", f'=IF(OR(B{rr}="",C{rr}=""),"",B{rr}*C{rr})', "0")
+        fx(ws, f"E{rr}", f'=IF(D{rr}="","",IF(D{rr}>=15,"High",IF(D{rr}>=8,"Medium","Low")))', bold=True)
+        for col, v in zip("FGH", d[5:]):
+            inp(ws, f"{col}{rr}", v)
+    dv_whole(ws, 1, 5, f"B{r+1}:C{r+10}")
+    traffic(ws, f"E{r+1}:E{r+10}", f'E{r+1}="Low"', f'E{r+1}="Medium"', f'E{r+1}="High"')
+    label(ws, f"A{r+12}", "High risks without an owner")
+    fx(ws, f"B{r+12}", f'=COUNTIFS(E{r+1}:E{r+10},"High",F{r+1}:F{r+10},"")', "0", bold=True)
+
+
+def sheet_gtm(wb, L, mode):
+    ws = wb.create_sheet("Go-to-Market")
+    head(ws, "Go-to-Market (Exhibit T)", "Part 3, step 23. One named beachhead, the funnel worked back to spend and CAC, and "
+         "launch gates. CAC must fit the unit economics.", [24, 14, 14, 12, 12, 14, 14, 14, 16])
+    gm = g(L, "strategy_layer", "gtm", default={}) or {}
+    ex = mode == "example"
+    for i, (k, lab) in enumerate((("beachhead", "Beachhead segment"), ("icp", "Ideal customer profile"), ("value_prop", "Value proposition"))):
+        label(ws, f"A{5+i}", lab, bold=False)
+        inp(ws, f"B{5+i}", gm.get(k))
+        ws.merge_cells(f"B{5+i}:I{5+i}")
+    ch = [[c.get("channel"), c.get("spend"), c.get("reach"), c.get("lead_rate"), c.get("close_rate")] for c in (gm.get("channels") or []) if isinstance(c, dict)]
+    if ex and not ch:
+        ch = [["[Dealer partners]", 2000000, 400000, 0.02, 0.10], ["[Online direct]", 1500000, 900000, 0.01, 0.05]]
+    header(ws, 9, ["Channel", "Spend", "Reach", "Lead rate", "Close rate", "Leads", "Customers", "CAC", "CAC vs LTV"])
+    ws.freeze_panes = None
+    for i in range(8):
+        r = 10 + i
+        d = ch[i] if i < len(ch) else [None] * 5
+        inp(ws, f"A{r}", d[0]); inp(ws, f"B{r}", d[1], "$#,##0"); inp(ws, f"C{r}", d[2], "#,##0")
+        inp(ws, f"D{r}", d[3], "0.0%"); inp(ws, f"E{r}", d[4], "0.0%")
+        fx(ws, f"F{r}", f'=IF(OR(C{r}="",D{r}=""),"",C{r}*D{r})', "#,##0")
+        fx(ws, f"G{r}", f'=IF(OR(F{r}="",E{r}=""),"",F{r}*E{r})', "#,##0")
+        fx(ws, f"H{r}", f'=IFERROR(IF(G{r}>0,B{r}/G{r},""),"")', "$#,##0")
+        fx(ws, f"I{r}", f"=IFERROR(IF(H{r}=\"\",\"\",IF('Unit Economics'!$E$13=\"\",\"set LTV on Unit Economics\",IF(H{r}<='Unit Economics'!$E$13/3,\"Fits (LTV/CAC ≥ 3)\",IF(H{r}<='Unit Economics'!$E$13,\"Thin\",\"Burns value\")))),\"\")")
+    traffic(ws, "I10:I17", 'LEFT(I10,4)="Fits"', 'I10="Thin"', 'I10="Burns value"')
+    label(ws, "A18", "Blended")
+    fx(ws, "B18", "=SUM(B10:B17)", "$#,##0", bold=True)
+    fx(ws, "G18", "=SUM(G10:G17)", "#,##0", bold=True)
+    fx(ws, "H18", '=IFERROR(B18/G18,"")', "$#,##0", bold=True)
+    ph = [[p.get("phase"), p.get("when"), p.get("goal"), p.get("gate")] for p in (gm.get("phases") or []) if isinstance(p, dict)]
+    r = _sec(ws, 20, "Launch phases and gates")
+    _grid(ws, r, ["Phase", "When", "Goal", "Gate to the next phase"], ph, 4)
+
+
+def sheet_initiatives(wb, L, mode):
+    ws = wb.create_sheet("Initiatives")
+    head(ws, "Initiative Prioritizer (Exhibit S)", "Part 3, step 24. RICE score = reach × impact × confidence ÷ effort. "
+         "The binding constraint goes first; every initiative traces to a finding.", [8, 34, 16, 12, 12, 13, 12, 12, 8, 14, 12])
+    ini = g(L, "strategy_layer", "initiatives", default=[]) or []
+    rows = [[x.get("id"), x.get("initiative"), x.get("traces_to"), x.get("reach"), x.get("impact"), x.get("confidence"),
+             x.get("effort")] for x in ini]
+    if mode == "example" and not rows:
+        rows = [["I1", "[Secure dealer partners in Germany]", "GB:access", 5000, 2, 0.8, 4],
+                ["I2", "[Cut cell cost 8%]", "K1", 20000, 1, 0.5, 6]]
+    hd = ["ID", "Initiative", "Traces to", "Reach", "Impact (0.25-3)", "Confidence", "Effort (person-months)", "RICE", "Rank", "Depends on", "Status"]
+    a, b = _grid(ws, 5, hd, [r_ + [None, None, None, None] for r_ in rows], 12, [None, None, None, "#,##0", "0.00", "0%", "0.0"])
+    for rr in range(a, b + 1):
+        fx(ws, f"H{rr}", f'=IF(OR(D{rr}="",E{rr}="",F{rr}="",G{rr}="",G{rr}=0),"",D{rr}*E{rr}*F{rr}/G{rr})', "#,##0", bold=True)
+        fx(ws, f"I{rr}", f'=IF(H{rr}="","",RANK(H{rr},$H${a}:$H${b}))', "0")
+        inp(ws, f"J{rr}", None)
+        inp(ws, f"K{rr}", None)
+    dv_list(ws, ["now", "next", "later", "dropped"], f"K{a}:K{b}")
+    label(ws, f"A{b+2}", "Initiatives with nothing to trace to")
+    fx(ws, f"C{b+2}", f'=COUNTIFS(B{a}:B{b},"<>",C{a}:C{b},"")', "0", bold=True)
+
+
+def sheet_operating(wb, L, mode):
+    from openpyxl.chart import ScatterChart, Reference, Series
+    ws = wb.create_sheet("Operating Model")
+    head(ws, "Operating Model and Stakeholders", "Part 3, steps 25-26. Who decides what (RAPID), and who must say yes: power "
+         "and interest place each stakeholder in a quadrant.", [26, 16, 16, 16, 16, 16, 12, 12, 12, 20, 30])
+    om = g(L, "strategy_layer", "operating_model", default={}) or {}
+    rap = [[x.get("decision"), x.get("recommend"), x.get("agree"), x.get("perform"), x.get("input"), x.get("decide")]
+           for x in (om.get("decision_rights") or []) if isinstance(x, dict)]
+    if mode == "example" and not rap:
+        rap = [["[Enter Germany]", "[Strategy lead]", "[CFO]", "[EU GM]", "[Sales, Legal]", "[CEO]"]]
+    r = _sec(ws, 5, "Decision rights (RAPID)")
+    a, b = _grid(ws, r, ["Decision", "Recommend", "Agree", "Perform", "Input", "Decide"], rap, 6)
+    sh = g(L, "strategy_layer", "stakeholders", default={}) or {}
+    st = [[x.get("name"), None, None, None, None, None, x.get("power"), x.get("interest"), x.get("stance"), None, x.get("action")]
+          for x in (sh.get("list") or sh.get("stakeholders") or []) if isinstance(x, dict)]
+    if mode == "example" and not st:
+        st = [["[EU regulators]", None, None, None, None, None, 5, 3, -1, None, "[early dialogue]"],
+              ["[Dealer groups]", None, None, None, None, None, 3, 5, 1, None, "[co-design terms]"]]
+    r = _sec(ws, b + 2, "Stakeholder map")
+    header(ws, r, ["Stakeholder", "", "", "", "", "", "Power (1-5)", "Interest (1-5)", "Stance (−2..+2)", "Quadrant", "Action"])
+    ws.merge_cells(f"A{r}:F{r}")
+    ws.freeze_panes = None
+    s0 = r + 1
+    for i in range(10):
+        rr = s0 + i
+        d = st[i] if i < len(st) else [None] * 11
+        inp(ws, f"A{rr}", d[0])
+        ws.merge_cells(f"A{rr}:F{rr}")
+        inp(ws, f"G{rr}", d[6], "0"); inp(ws, f"H{rr}", d[7], "0"); inp(ws, f"I{rr}", d[8], "+0;-0;0")
+        fx(ws, f"J{rr}", f'=IF(OR(G{rr}="",H{rr}=""),"",IF(G{rr}>=3,IF(H{rr}>=3,"Manage closely","Keep satisfied"),IF(H{rr}>=3,"Keep informed","Monitor")))', bold=True)
+        inp(ws, f"K{rr}", d[10])
+    dv_whole(ws, 1, 5, f"G{s0}:H{s0+9}")
+    dv_whole(ws, -2, 2, f"I{s0}:I{s0+9}")
+    ch = ScatterChart()
+    ch.title, ch.height, ch.width = "Power and interest", 8, 12
+    ch.scatterStyle = "marker"
+    ch.x_axis.title, ch.y_axis.title = "Interest", "Power"
+    ch.x_axis.scaling.min = ch.y_axis.scaling.min = 0
+    ch.x_axis.scaling.max = ch.y_axis.scaling.max = 5.5
+    s = Series(Reference(ws, min_col=7, min_row=s0, max_row=s0 + 9), Reference(ws, min_col=8, min_row=s0, max_row=s0 + 9),
+               title="Stakeholders")
+    s.marker.symbol, s.marker.size = "circle", 10
+    s.marker.graphicalProperties.solidFill = NAVY
+    s.marker.graphicalProperties.line.noFill = True
+    s.graphicalProperties.line.noFill = True
+    ch.series.append(s)
+    ch.legend = None
+    ch.x_axis.delete = ch.y_axis.delete = False
+    ws.add_chart(ch, f"A{s0 + 12}")
+
+
+def sheet_roadmap(wb, L, mode):
+    ws = wb.create_sheet("Execution Roadmap")
+    head(ws, "Execution Roadmap (Exhibit S)", "Part 3, step 27. The first 100 days by workstream (the bars fill in from the "
+         "start and end weeks), milestones and stage gates.", [30, 16, 8, 8] + [3.2] * 15 + [4])
+    rm = g(L, "strategy_layer", "roadmap", default={}) or {}
+    ws_ = [[x.get("action") or x.get("workstream"), x.get("owner"), x.get("start_week"), x.get("end_week")]
+           for x in (rm.get("first_100_days") or []) if isinstance(x, dict)]
+    if mode == "example" and not ws_:
+        ws_ = [["[Sign two dealer groups]", "[EU GM]", 1, 8], ["[Pilot line ready]", "[COO]", 4, 14]]
+    header(ws, 5, ["Workstream / action", "Owner", "Start wk", "End wk"] + [str(w) for w in range(1, 16)])
+    ws.freeze_panes = None
+    for i in range(12):
+        r = 6 + i
+        d = ws_[i] if i < len(ws_) else [None] * 4
+        inp(ws, f"A{r}", d[0]); inp(ws, f"B{r}", d[1]); inp(ws, f"C{r}", d[2], "0"); inp(ws, f"D{r}", d[3], "0")
+        for w in range(1, 16):
+            col = get_column_letter(4 + w)
+            ws[f"{col}{r}"].border = BOX
+        rng = f"E{r}:S{r}"
+        ws.conditional_formatting.add(rng, FormulaRule(
+            formula=[f'AND(ISNUMBER($C{r}),ISNUMBER($D{r}),E$5*1>=$C{r},E$5*1<=$D{r})'],
+            fill=PatternFill("solid", fgColor=GOLD)))
+    dv_whole(ws, 1, 15, "C6:D17")
+    ms = [[x.get("milestone"), x.get("date"), x.get("kpi"), x.get("target")] for x in (rm.get("milestones") or []) if isinstance(x, dict)]
+    r = _sec(ws, 20, "Milestones")
+    a, b = _grid(ws, r, ["Milestone", "Date", "KPI", "Target"], ms, 6)
+    gt = [[x.get("gate"), x.get("criteria"), x.get("evidence"), x.get("decision_date")] for x in (rm.get("gates") or []) if isinstance(x, dict)]
+    r = _sec(ws, b + 2, "Stage gates (go / no-go)")
+    _grid(ws, r, ["Gate", "Criteria to pass", "Evidence we will use", "Decision date"], gt, 4)
 
 
 def main():
@@ -1432,10 +2480,12 @@ def main():
     out = a[a.index("--out") + 1] if "--out" in a else "StratOS_Workbook.xlsx"
     mode = "ledger" if ledger else ("blank" if "--blank" in a else "example")
     L = json.load(open(ledger, encoding="utf-8")) if ledger else {}
-    caps = []
+    caps, reports = [], []
     for i, x in enumerate(a):
         if x == "--capture":
             caps.append(json.load(open(a[i + 1], encoding="utf-8")))
+        if x == "--report":
+            reports.append(json.load(open(a[i + 1], encoding="utf-8")))
     y0 = int(a[a.index("--first-year") + 1]) if "--first-year" in a else 6
     years = list(range(y0, y0 + 10))
     title = a[a.index("--title") + 1] if "--title" in a else (
@@ -1449,15 +2499,36 @@ def main():
     wb = Workbook()
     with tempfile.TemporaryDirectory() as tmp:
         sheet_start(wb, L, title, mode)
+        sheet_mgmt(wb, L, mode)
+        # Part 1
+        sheet_overview(wb, L, mode)
+        sheet_competitive(wb, L, mode)
         sheet_pestel(wb, L, mode)
         sheet_forces(wb, L, mode)
+        sheet_drivers(wb, L, mode)
         sheet_ksf(wb, L, mode)
+        sheet_mapping(wb, L, mode)
+        # Part 2
+        sheet_value_chain(wb, L, mode)
+        sheet_unit_econ(wb, L, mode)
+        sheet_rc(wb, L, mode)
         sheet_vrio(wb, L, mode)
+        sheet_full_potential(wb, L, mode)
+        sheet_growth_barriers(wb, L, mode)
         sheet_swot(wb, L, mode)
+        # Part 3
+        sheet_positioning(wb, L, mode)
+        sheet_options(wb, L, mode)
         sheet_matrix(wb, L, mode)
-        sheet_ev(wb, L, mode)
         sheet_bc(wb, L, mode)
+        sheet_ev(wb, L, mode)
         sheet_risk(wb, L, mode)
+        sheet_pricing(wb, L, mode)
+        sheet_stress(wb, L, mode)
+        sheet_gtm(wb, L, mode)
+        sheet_initiatives(wb, L, mode)
+        sheet_operating(wb, L, mode)
+        sheet_roadmap(wb, L, mode)
         sheet_bsc(wb, L, mode)
         sheet_map(wb, L, mode, tmp)
         sheet_cir(wb, L, mode, caps)
@@ -1465,22 +2536,19 @@ def main():
         rspec = _results_spec()
         fspec = expand_fields(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                                                           "references", "globus-fields.json"), encoding="utf-8")))
-        year_tabs = {}
-        if caps:
-            for c in sorted(caps, key=lambda c: c.get("year", 0)):
-                if c.get("results") or c.get("decisions"):
-                    year_tabs[c.get("year")] = sheet_year_results(wb, c.get("year"), c.get("results"), c.get("decisions"),
-                                                                  c.get("cir_rows"), rspec, fspec, mode)
-        elif mode == "example":
-            for y, res in EXAMPLE_RESULTS.items():
-                year_tabs[y] = sheet_year_results(wb, y, res, None, None, rspec, fspec, mode)
-        else:
-            year_tabs[years[0]] = sheet_year_results(wb, years[0], None, None, None, rspec, fspec, mode)
-        sheet_tracking(wb, year_tabs, rspec)
-        sheet_rivals(wb, caps, mode)
+        syears = _season_years(caps, y0, mode)
+        season = sheet_season(wb, L, mode, caps, fspec, rspec, syears)
+        comp = sheet_competition(wb, caps, mode, syears)
+        sheet_kpi_charts(wb, season, comp)
+        sheet_findings(wb, mode, reports)
+        part = {"Start": "C9A55C", "Management Interviews": "C9A55C"}
+        p1 = ["Industry Overview", "Competitive Analysis", "PESTEL", "Five Forces", "Trending Factors", "KSF Scorecard", "Strategic Mapping"]
+        p2 = ["Value Chain", "Unit Economics", "Resources & Capabilities", "VRIO", "Full Potential", "Growth Barriers", "SWOT-TOWS"]
         for ws in wb.worksheets:
-            ws.sheet_properties.tabColor = GOLD if (ws.title.startswith("GLO-BUS") or ws.title in ("Start", "Tracking", "Rivals")
-                                                    or ws.title.endswith(" Results")) else NAVY
+            t = ws.title
+            ws.sheet_properties.tabColor = part.get(t) or ("457B9D" if t in p1 else "2D936C" if t in p2 else
+                                                         "C44536" if (t.startswith("GLO-BUS") or t in ("Season by Year", "Competition by Year", "KPI Charts", "Findings & Questions"))
+                                                         else NAVY)
         wb.save(out)
     print(json.dumps({"out": out, "mode": mode, "sheets": [ws.title for ws in wb.worksheets]}))
 

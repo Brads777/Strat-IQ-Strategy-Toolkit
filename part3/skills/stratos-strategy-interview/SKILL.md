@@ -11,7 +11,8 @@ license: Apache-2.0
 team choosing or revisiting its strategy. **Reads:** `company_layer.s5_conventional`, `s6_disruption`,
 `candidates[]` (with their capability stamps), `industry_layer.drivers[]`, `forces[]`, `ksf[]`,
 `competitors[].ksf_scores`, `company_layer.internal` (VRIO, growth barriers, TOWS, unit economics),
-and for GLO-BUS the latest capture or CIR analysis. **Writes:** `strategy_layer.positioning`.
+and for GLO-BUS the latest capture or CIR analysis, and `company_layer.management_brief` (what
+management said) when there is one. **Writes:** `strategy_layer.positioning`.
 **Feeds:** Strategic Options (the options must include the chosen position), GLO-BUS Coach (the
 strategy anchor), the Decision Planner, Pitch.
 
@@ -22,6 +23,10 @@ to pick, never ranks the options for them, and never writes their positioning st
 "just tell us", say that the choice is theirs to defend, then ask the next question.
 
 ## Before the interview
+
+0. If there is a management brief (`stratos-management-interview`), keep its goals (B1-B5) and takeaways
+   in view. The team may depart from what management wants, but it must say so and explain why: ask
+   "Management said [M3/M5 answer]. Does your choice fit that, and if not, how will you justify it?"
 
 1. Check the ledger has, at minimum, the strategic maps and the KSF scorecard. Trending influence
    factors, VRIO and growth barriers make the interview much better; say which are missing and offer

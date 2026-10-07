@@ -155,10 +155,19 @@ observations, lessons, questions).
 
 ## Mode 5 — Weekly progress report (after every round)
 
-Run `scripts/weekly_report.py globus-capture-<co>-Y6.json … globus-capture-<co>-Y<n>.json` with every
-capture file so far. It writes `weekly-report-Y<n>.html` (graphs embedded; print to PDF),
-`weekly-report-Y<n>.docx` and `weekly-report-Y<n>.json` (the facts). Give the team the files, then add a
-short narrative in the Mode 4 voice from the JSON:
+Run `scripts/weekly_report.py globus-capture-<co>-Y6.json … globus-capture-<co>-Y<n>.json --ledger
+<team ledger>` with every capture file so far. It writes the weekly review in the StratOS executive
+format:
+
+- `weekly-report-Y<n>-memo.docx`: a memo in exhibit style (sections W1-W7 with tables and charts, an
+  Impact Summary for the team to write after each section, sources);
+- `weekly-report-Y<n>-deck.pptx`: a nine-slide deck with action titles, a one-slide summary, charts,
+  source lines and speaker notes (each ending with a likely question and answer);
+- `weekly-report-Y<n>.html` (one page, print to PDF) and `weekly-report-Y<n>.json` (the facts).
+
+Give the team the memo and the deck, then add a short narrative in the Mode 4 voice from the JSON. Run
+it every week from the first round, once the team has chosen its position: the early reviews are where a
+drift shows while there is still time to pivot. The sections:
 
 1. **Scorecard.** Rank, score, the leader, and the five KPIs against investor expectations.
 2. **The position you've taken**, by product: the apparent strategy from price, P/Q and cost per unit vs
@@ -171,8 +180,9 @@ short narrative in the Mode 4 voice from the JSON:
 5. **What to look out for next round**: the watch items, each with its evidence and a general lesson.
 6. **Questions for the team** (2-3).
 
-Feedback, not recommendations: no decision values, no list of moves. The workbook's **Tracking** and
-**Rivals** tabs hold the same series for the team to explore. Log each report to `globus.reports[]`.
+Feedback, not recommendations: no decision values, no list of moves. Rebuild the workbook with `--report weekly-report-Y<n>.json`
+so the **Findings & Questions** tab collects every week's watch items and questions; **Season by Year**,
+**Competition by Year** and **KPI Charts** hold the same series for the team to explore. Log each report to `globus.reports[]`.
 
 ## Mode 3 — Year coaching
 
