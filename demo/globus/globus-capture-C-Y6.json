@@ -1,0 +1,106 @@
+{
+ "company": "C",
+ "year": 6,
+ "demo": true,
+ "_note": "DEMO DATA. Illustrative figures for screen-recorded demonstrations of StratOS v3. Not verified research: do not cite in graded work. ",
+ "pages": [],
+ "decisions": {
+  "strategy.camera": "Best-cost",
+  "mkt.camera.na.price": 264,
+  "mkt.camera.na.ads": 7500,
+  "mkt.camera.ea.price": 270,
+  "mkt.camera.ea.ads": 6000,
+  "comp.base": 21000
+ },
+ "cir_rows": [
+  {
+   "company": "A",
+   "product": "camera",
+   "price": 279,
+   "pq": 4.2,
+   "share": 14,
+   "models": 5
+  },
+  {
+   "company": "C",
+   "product": "camera",
+   "price": 264,
+   "pq": 4.0,
+   "share": 12,
+   "models": 5
+  },
+  {
+   "company": "A",
+   "product": "drone",
+   "price": 1199,
+   "pq": 4.0,
+   "share": 13,
+   "models": 4
+  }
+ ],
+ "results": {
+  "kpis": {
+   "eps": {
+    "actual": 1.85,
+    "target": 2.0
+   },
+   "roe": {
+    "actual": 0.142,
+    "target": 0.15
+   },
+   "stock": {
+    "actual": 22.4,
+    "target": 25.0
+   },
+   "credit": {
+    "actual": "B+",
+    "target": "BB"
+   },
+   "image": {
+    "actual": 68,
+    "target": 70
+   }
+  },
+  "company": {
+   "score": 78,
+   "rank": 3,
+   "revenue": 412000,
+   "net_profit": 18500,
+   "cash": 14200
+  },
+  "product": {
+   "camera": {
+    "units": 1450,
+    "price": 264,
+    "pq": 4.0,
+    "cost_unit": 182,
+    "op_margin": 0.11,
+    "ind_price": 276,
+    "ind_pq": 4.0,
+    "ind_cost_unit": 186,
+    "share": {
+     "na": 12.0,
+     "ea": 11.5,
+     "ap": 12.4,
+     "la": 13.0
+    }
+   },
+   "drone": {
+    "units": 120,
+    "price": 1237,
+    "pq": 4.2,
+    "cost_unit": 905,
+    "op_margin": 0.09,
+    "ind_price": 1195,
+    "ind_pq": 4.1,
+    "ind_cost_unit": 890,
+    "share": {
+     "na": 12.0,
+     "ea": 12.6,
+     "ap": 11.1,
+     "la": 12.2
+    }
+   }
+  }
+ }
+}

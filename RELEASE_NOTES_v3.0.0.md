@@ -8,7 +8,7 @@ With the Part 1 orchestrator switched off, 39 StratOS skills are on.
   **Growth Barriers** (K-2).
 - Orchestrator-final: description now under Claude.ai's 1,024-character limit; modes A-E; checks R13-R19.
 
-## Part 3 — making the strategy work (17 new skills, 10 scripts)
+## Part 3 — making the strategy work (17 new skills, 12 scripts)
 Choose: **Strategy Interview** (new: a one-question-at-a-time interview in which the student chooses
 their own strategy and positioning from the maps, trending influence factors, KSFs and VRIO; it never
 picks), Strategic Options (P), Business Case (Q-1), Pricing, Synergy Case, Expected Value (Q-2).
@@ -16,6 +16,13 @@ Test: Stress Test (R). Plan: Go-to-Market (T), Initiative Prioritizer (S), Opera
 Stakeholder Map, Negotiation Prep, Execution Roadmap (S). Track: Value Realization with a
 Balanced Scorecard and Strategy Map (U, `strategy_map.py`), Memo Coach, Pitch, and the **StratOS Workbook**:
 a branded Excel file of live worksheets for every framework, pre-filled from the ledger (`build_workbook.py`).
+
+**Statistical decision making (Exhibit Q-3, Risk Analysis).** Business Case adds `risk_analysis.py`: a
+tornado over the student's low / likely / high ranges and a 10,000-run Monte Carlo simulation (median,
+P10-P90, chance NPV is below zero). Expected Value adds `bayes_update.py`: posterior probabilities after a
+pilot result, the best option after each result, and EVSI, the value of an imperfect pilot net of its cost.
+The workbook gains a Risk Analysis sheet (tornado chart, 1,000-run simulation, histogram) and a Bayes pilot
+block on the Expected Value sheet.
 
 ## GLO-BUS
 - `industries.json` v2 adds `cameras` (GoPro, Garmin, DJI Osmo, Insta360, Akaso) and `drones`
@@ -45,5 +52,8 @@ a branded Excel file of live worksheets for every framework, pre-filled from the
 - `stratos-all-skills.zip` — Part 1 (14 skills, with the updated GLO-BUS Coach)
 - `industries.json` — version 2
 - `StratOS_Workbook_template.xlsx` — the workbook with example rows; `StratOS_Workbook_blank.xlsx` — empty
+- `Case_Analysis_Memo_Guide_and_Template_v3.docx` / `.pdf` — the memo template with the optional exhibit menu (including Q-3)
+- `StratOS_v3_Process_Walkthrough.pptx` — the process video deck, with nine live-demo slides
+- `demo/` (in the repo) — demo kit: sample EV ledger, GLO-BUS files, a weak memo draft, the demo workbook and the run sheet
 
 Guide: https://brads777.github.io/stratos-external-analysis/part2-3-guide.html

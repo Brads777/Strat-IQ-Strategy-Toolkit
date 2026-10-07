@@ -1,0 +1,210 @@
+{
+ "company": "C",
+ "year": 7,
+ "demo": true,
+ "_note": "DEMO DATA. Illustrative figures for screen-recorded demonstrations of StratOS v3. Not verified research: do not cite in graded work. ",
+ "pages": [],
+ "decisions": {
+  "strategy.camera": "Best-cost",
+  "mkt.camera.na.price": 239,
+  "mkt.camera.na.ads": 6500,
+  "mkt.camera.ea.price": 272,
+  "mkt.camera.ea.ads": 6100,
+  "comp.base": 21500
+ },
+ "cir_rows": [
+  {
+   "company": "A",
+   "product": "camera",
+   "price": 291,
+   "pq": 4.4,
+   "share": 12.9,
+   "models": 5
+  },
+  {
+   "company": "A",
+   "product": "drone",
+   "price": 1272,
+   "pq": 4.5,
+   "share": 13.2,
+   "models": 4
+  },
+  {
+   "company": "B",
+   "product": "camera",
+   "price": 231,
+   "pq": 3.4,
+   "share": 13.0,
+   "models": 5
+  },
+  {
+   "company": "B",
+   "product": "drone",
+   "price": 1017,
+   "pq": 3.5,
+   "share": 13.2,
+   "models": 6
+  },
+  {
+   "company": "C",
+   "product": "camera",
+   "price": 257,
+   "pq": 4.0,
+   "share": 15.3,
+   "models": 5
+  },
+  {
+   "company": "C",
+   "product": "drone",
+   "price": 1289,
+   "pq": 4.6,
+   "share": 13.3,
+   "models": 5
+  },
+  {
+   "company": "D",
+   "product": "camera",
+   "price": 300,
+   "pq": 4.2,
+   "share": 10.2,
+   "models": 4
+  },
+  {
+   "company": "D",
+   "product": "drone",
+   "price": 1328,
+   "pq": 4.4,
+   "share": 10.6,
+   "models": 5
+  },
+  {
+   "company": "E",
+   "product": "camera",
+   "price": 242,
+   "pq": 3.5,
+   "share": 11.9,
+   "models": 6
+  },
+  {
+   "company": "E",
+   "product": "drone",
+   "price": 1055,
+   "pq": 3.6,
+   "share": 12.4,
+   "models": 5
+  },
+  {
+   "company": "F",
+   "product": "camera",
+   "price": 269,
+   "pq": 3.9,
+   "share": 12.7,
+   "models": 4
+  },
+  {
+   "company": "F",
+   "product": "drone",
+   "price": 1181,
+   "pq": 3.9,
+   "share": 13.1,
+   "models": 5
+  },
+  {
+   "company": "G",
+   "product": "camera",
+   "price": 318,
+   "pq": 4.7,
+   "share": 13.0,
+   "models": 5
+  },
+  {
+   "company": "G",
+   "product": "drone",
+   "price": 1390,
+   "pq": 4.8,
+   "share": 13.8,
+   "models": 5
+  },
+  {
+   "company": "H",
+   "product": "camera",
+   "price": 274,
+   "pq": 3.8,
+   "share": 10.9,
+   "models": 5
+  },
+  {
+   "company": "H",
+   "product": "drone",
+   "price": 1202,
+   "pq": 3.9,
+   "share": 10.4,
+   "models": 6
+  }
+ ],
+ "results": {
+  "kpis": {
+   "eps": {
+    "actual": 2.1,
+    "target": 2.15
+   },
+   "roe": {
+    "actual": 0.155,
+    "target": 0.155
+   },
+   "stock": {
+    "actual": 26.1,
+    "target": 27.0
+   },
+   "credit": {
+    "actual": "BB-",
+    "target": "BB"
+   },
+   "image": {
+    "actual": 71,
+    "target": 72
+   }
+  },
+  "company": {
+   "score": 84,
+   "rank": 2,
+   "revenue": 455000,
+   "net_profit": 21900,
+   "cash": 19800
+  },
+  "product": {
+   "camera": {
+    "units": 1610,
+    "price": 259,
+    "pq": 4.2,
+    "cost_unit": 176,
+    "op_margin": 0.125,
+    "ind_price": 271,
+    "ind_pq": 4.1,
+    "ind_cost_unit": 184,
+    "share": {
+     "na": 13.1,
+     "ea": 12.2,
+     "ap": 13.0,
+     "la": 13.6
+    }
+   },
+   "drone": {
+    "units": 131,
+    "price": 1229,
+    "pq": 4.4,
+    "cost_unit": 884,
+    "op_margin": 0.105,
+    "ind_price": 1188,
+    "ind_pq": 4.2,
+    "ind_cost_unit": 879,
+    "share": {
+     "na": 12.8,
+     "ea": 13.0,
+     "ap": 11.9,
+     "la": 12.5
+    }
+   }
+  }
+ }
+}

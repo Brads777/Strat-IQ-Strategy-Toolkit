@@ -1,0 +1,864 @@
+{
+ "scope_id": "global-ev-demo-2026",
+ "asof": "2026-10-01",
+ "demo": true,
+ "_note": "DEMO DATA. Illustrative figures for screen-recorded demonstrations of StratOS v3. Not verified research: do not cite in graded work.",
+ "scope": {
+  "industry": "Global electric vehicles (passenger BEV and PHEV)",
+  "horizon": "2026-2030",
+  "geography": "Global, with the EU as the decision market"
+ },
+ "evidence": [
+  {
+   "id": "E001",
+   "source": "BYD annual report 2025 (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E002",
+   "source": "EU countervailing duties on Chinese BEVs (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E003",
+   "source": "Battery cell price survey 2026 (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E004",
+   "source": "Tesla 10-K 2025 risk factors (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E005",
+   "source": "Volkswagen Group annual report 2025 (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E006",
+   "source": "Xiaomi EV launch disclosures (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E007",
+   "source": "EU charging infrastructure report (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E008",
+   "source": "Consumer software-feature survey (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E009",
+   "source": "Stellantis half-year report 2026 (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  },
+  {
+   "id": "E010",
+   "source": "BYD vertical integration disclosures (demo label)",
+   "date": "2026-09",
+   "note": "demo source label; verify before use"
+  }
+ ],
+ "industry_layer": {
+  "overview": {
+   "market_units_2026_m": 21,
+   "growth_cagr": 0.14,
+   "note": "demo figures"
+  },
+  "pestel": [
+   {
+    "id": "P1",
+    "dimension": "E",
+    "finding": "Battery cell prices keep falling",
+    "impact": "high",
+    "certainty": "medium",
+    "pl_line": "cogs.inputs",
+    "direction": "+",
+    "evidence": [
+     "E003"
+    ]
+   },
+   {
+    "id": "P2",
+    "dimension": "P",
+    "finding": "EU tariffs on China-built BEVs",
+    "impact": "high",
+    "certainty": "high",
+    "pl_line": "tax_and_levies",
+    "direction": "-",
+    "evidence": [
+     "E002"
+    ]
+   },
+   {
+    "id": "P3",
+    "dimension": "T",
+    "finding": "Software-defined vehicles shift value to features",
+    "impact": "high",
+    "certainty": "medium",
+    "pl_line": "revenue.mix",
+    "direction": "+",
+    "evidence": [
+     "E008"
+    ]
+   },
+   {
+    "id": "P4",
+    "dimension": "S",
+    "finding": "Range and charging anxiety slow mass-market adoption",
+    "impact": "medium",
+    "certainty": "medium",
+    "pl_line": "revenue.volume",
+    "direction": "-",
+    "evidence": [
+     "E007"
+    ]
+   },
+   {
+    "id": "P5",
+    "dimension": "Env",
+    "finding": "Fleet CO2 targets push OEMs to sell more BEVs",
+    "impact": "medium",
+    "certainty": "high",
+    "pl_line": "revenue.volume",
+    "direction": "+",
+    "evidence": [
+     "E005"
+    ]
+   },
+   {
+    "id": "P6",
+    "dimension": "L",
+    "finding": "Local-content rules for EU incentives",
+    "impact": "medium",
+    "certainty": "medium",
+    "pl_line": "revenue.price",
+    "direction": "-",
+    "evidence": [
+     "E002"
+    ]
+   }
+  ],
+  "forces": [
+   {
+    "force": "rivalry",
+    "score_now": 5,
+    "score_horizon": 5
+   },
+   {
+    "force": "suppliers",
+    "score_now": 4,
+    "score_horizon": 3
+   },
+   {
+    "force": "buyers",
+    "score_now": 3,
+    "score_horizon": 4
+   },
+   {
+    "force": "entrants",
+    "score_now": 4,
+    "score_horizon": 4
+   },
+   {
+    "force": "substitutes",
+    "score_now": 2,
+    "score_horizon": 2
+   }
+  ],
+  "drivers": [
+   {
+    "id": "D1",
+    "name": "Cell cost curve",
+    "from": [
+     "P1"
+    ]
+   },
+   {
+    "id": "D2",
+    "name": "Trade barriers",
+    "from": [
+     "P2",
+     "P6"
+    ]
+   },
+   {
+    "id": "D3",
+    "name": "Software value shift",
+    "from": [
+     "P3"
+    ]
+   }
+  ],
+  "ksf": [
+   {
+    "id": "K1",
+    "name": "Battery cost and supply",
+    "weight": 0.3,
+    "from_forces": [
+     "suppliers"
+    ],
+    "from_drivers": [
+     "D1"
+    ]
+   },
+   {
+    "id": "K2",
+    "name": "Software and UX",
+    "weight": 0.25,
+    "from_forces": [
+     "rivalry"
+    ],
+    "from_drivers": [
+     "D3"
+    ]
+   },
+   {
+    "id": "K3",
+    "name": "Local production footprint",
+    "weight": 0.2,
+    "from_drivers": [
+     "D2"
+    ]
+   },
+   {
+    "id": "K4",
+    "name": "Brand trust in Europe",
+    "weight": 0.15,
+    "from_forces": [
+     "buyers"
+    ]
+   },
+   {
+    "id": "K5",
+    "name": "Charging and service network",
+    "weight": 0.1,
+    "from_drivers": [
+     "D3"
+    ]
+   }
+  ],
+  "strategic_maps": [
+   {
+    "axes": [
+     "price position",
+     "software depth"
+    ],
+    "white_space": [
+     {
+      "id": "W1",
+      "space": "Sub-EUR 25k EU compact with good software",
+      "vrio_stamp": "supported",
+      "because": "C1 battery cost (VRIO sustained) funds the price point"
+     },
+     {
+      "id": "W2",
+      "space": "Premium software subscription layer",
+      "vrio_stamp": "gap",
+      "because": "No VRIO-passing software capability; Tesla and Xiaomi lead K2"
+     }
+    ]
+   }
+  ]
+ },
+ "competitors": [
+  {
+   "name": "BYD",
+   "ksf_scores": {
+    "K1": {
+     "score": 5
+    },
+    "K2": {
+     "score": 3
+    },
+    "K3": {
+     "score": 2
+    },
+    "K4": {
+     "score": 2
+    },
+    "K5": {
+     "score": 3
+    }
+   }
+  },
+  {
+   "name": "Tesla",
+   "ksf_scores": {
+    "K1": {
+     "score": 4
+    },
+    "K2": {
+     "score": 5
+    },
+    "K3": {
+     "score": 4
+    },
+    "K4": {
+     "score": 3
+    },
+    "K5": {
+     "score": 5
+    }
+   }
+  },
+  {
+   "name": "Volkswagen Group",
+   "ksf_scores": {
+    "K1": {
+     "score": 3
+    },
+    "K2": {
+     "score": 2
+    },
+    "K3": {
+     "score": 5
+    },
+    "K4": {
+     "score": 5
+    },
+    "K5": {
+     "score": 4
+    }
+   }
+  },
+  {
+   "name": "Geely",
+   "ksf_scores": {
+    "K1": {
+     "score": 4
+    },
+    "K2": {
+     "score": 3
+    },
+    "K3": {
+     "score": 3
+    },
+    "K4": {
+     "score": 3
+    },
+    "K5": {
+     "score": 3
+    }
+   }
+  },
+  {
+   "name": "Xiaomi",
+   "ksf_scores": {
+    "K1": {
+     "score": 3
+    },
+    "K2": {
+     "score": 5
+    },
+    "K3": {
+     "score": 1
+    },
+    "K4": {
+     "score": 2
+    },
+    "K5": {
+     "score": 2
+    }
+   }
+  },
+  {
+   "name": "Stellantis",
+   "ksf_scores": {
+    "K1": {
+     "score": 2
+    },
+    "K2": {
+     "score": 2
+    },
+    "K3": {
+     "score": 5
+    },
+    "K4": {
+     "score": 4
+    },
+    "K5": {
+     "score": 3
+    }
+   }
+  }
+ ],
+ "company_layer": {
+  "focal_firm": "BYD",
+  "internal": {
+   "resources": [
+    {
+     "id": "R1",
+     "name": "In-house cell and pack plants"
+    },
+    {
+     "id": "R2",
+     "name": "Scale in China"
+    }
+   ],
+   "capabilities": [
+    {
+     "id": "C1",
+     "name": "Vertical battery integration"
+    },
+    {
+     "id": "C2",
+     "name": "Fast model cadence"
+    },
+    {
+     "id": "C3",
+     "name": "In-car software and OTA"
+    }
+   ],
+   "vrio": [
+    {
+     "item": "C1",
+     "v": "yes",
+     "r": "yes",
+     "i": "yes",
+     "o": "yes",
+     "links_ksf": [
+      "K1"
+     ],
+     "ksf_weight": 0.3,
+     "evidence": [
+      "E010"
+     ]
+    },
+    {
+     "item": "C2",
+     "v": "yes",
+     "r": "yes",
+     "i": "no",
+     "o": "yes",
+     "links_ksf": [
+      "K2"
+     ],
+     "ksf_weight": 0.25,
+     "evidence": [
+      "E001"
+     ]
+    },
+    {
+     "item": "C3",
+     "v": "yes",
+     "r": "no",
+     "i": "no",
+     "o": "?",
+     "links_ksf": [
+      "K2"
+     ],
+     "ksf_weight": 0.25,
+     "evidence": [
+      "E008"
+     ]
+    },
+    {
+     "item": "R2",
+     "v": "yes",
+     "r": "yes",
+     "i": "?",
+     "o": "yes",
+     "links_ksf": [
+      "K1"
+     ],
+     "ksf_weight": 0.3,
+     "evidence": [
+      "E001"
+     ]
+    }
+   ],
+   "swot": {
+    "strengths": [
+     {
+      "id": "S1",
+      "text": "Lowest cell cost in the industry",
+      "source": [
+       "C1"
+      ]
+     },
+     {
+      "id": "S2",
+      "text": "Fast model cadence",
+      "source": [
+       "C2"
+      ]
+     }
+    ],
+    "weaknesses": [
+     {
+      "id": "W1",
+      "text": "Low brand trust in Europe",
+      "source": [
+       "K4"
+      ]
+     },
+     {
+      "id": "W2",
+      "text": "Software lags the leaders",
+      "source": [
+       "C3"
+      ]
+     }
+    ],
+    "opportunities": [
+     {
+      "id": "O1",
+      "text": "Affordable EU compact segment is under-served",
+      "source": [
+       "W1"
+      ]
+     },
+     {
+      "id": "O2",
+      "text": "Fleet CO2 targets lift BEV demand",
+      "source": [
+       "P5"
+      ]
+     }
+    ],
+    "threats": [
+     {
+      "id": "T1",
+      "text": "EU tariffs on China-built BEVs",
+      "source": [
+       "P2"
+      ]
+     },
+     {
+      "id": "T2",
+      "text": "Local-content rules for incentives",
+      "source": [
+       "P6"
+      ]
+     }
+    ]
+   },
+   "tows": [
+    {
+     "id": "ST1",
+     "pairs": [
+      "S1",
+      "T1"
+     ],
+     "option": "Build an EU plant to avoid tariffs"
+    },
+    {
+     "id": "SO1",
+     "pairs": [
+      "S1",
+      "O1"
+     ],
+     "option": "Launch a sub-EUR 25k compact"
+    },
+    {
+     "id": "WT1",
+     "pairs": [
+      "W1",
+      "T2"
+     ],
+     "option": "Partner with a European OEM for local assembly and brand"
+    }
+   ]
+  }
+ },
+ "strategy_layer": {
+  "strategy_statement": null,
+  "options": {
+   "options": [
+    {
+     "name": "A. EU plant"
+    },
+    {
+     "name": "B. Partner"
+    },
+    {
+     "name": "0. Do nothing"
+    }
+   ]
+  },
+  "decision_matrix": {
+   "criteria": [
+    {
+     "name": "Profit by 2029",
+     "weight": 5,
+     "goal": "B1",
+     "scores": {
+      "A. EU plant": 4,
+      "B. Partner": 3,
+      "0. Do nothing": 1
+     }
+    },
+    {
+     "name": "Avoids tariffs",
+     "weight": 4,
+     "goal": "B2",
+     "scores": {
+      "A. EU plant": 5,
+      "B. Partner": 4,
+      "0. Do nothing": 1
+     }
+    },
+    {
+     "name": "Capital at risk (low = good)",
+     "weight": 3,
+     "goal": "B1",
+     "scores": {
+      "A. EU plant": 1,
+      "B. Partner": 4,
+      "0. Do nothing": 5
+     }
+    },
+    {
+     "name": "Builds EU brand trust",
+     "weight": 3,
+     "goal": "B3",
+     "scores": {
+      "A. EU plant": 3,
+      "B. Partner": 5,
+      "0. Do nothing": 1
+     }
+    }
+   ]
+  },
+  "business_case": [
+   {
+    "option": "A. EU plant",
+    "inputs": {
+     "rate": 0.1,
+     "tax": 0.21,
+     "wc_pct": 0.05,
+     "years": [
+      {
+       "units": 0,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 0,
+       "capex": 2000000000
+      },
+      {
+       "units": 32400,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 180000000,
+       "capex": 100000000
+      },
+      {
+       "units": 64800,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 180000000,
+       "capex": 100000000
+      },
+      {
+       "units": 97200,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 180000000,
+       "capex": 50000000
+      },
+      {
+       "units": 108000,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 180000000,
+       "capex": 50000000
+      },
+      {
+       "units": 108000,
+       "price": 32000,
+       "variable_cost": 20000,
+       "fixed_cost": 180000000,
+       "capex": 50000000
+      }
+     ]
+    }
+   }
+  ],
+  "expected_value": {
+   "table": [
+    {
+     "option": "A. EU plant",
+     "p_strong": 0.3,
+     "npv_strong": 620,
+     "p_moderate": 0.5,
+     "npv_moderate": -35,
+     "p_weak": 0.2,
+     "npv_weak": -540
+    },
+    {
+     "option": "B. Partner",
+     "p_strong": 0.3,
+     "npv_strong": 260,
+     "p_moderate": 0.5,
+     "npv_moderate": 40,
+     "p_weak": 0.2,
+     "npv_weak": -60
+    },
+    {
+     "option": "0. Do nothing",
+     "p_strong": 0.3,
+     "npv_strong": 0,
+     "p_moderate": 0.5,
+     "npv_moderate": 0,
+     "p_weak": 0.2,
+     "npv_weak": 0
+    }
+   ],
+   "units": "$M",
+   "pilot": {
+    "name": "12-month EU import test of the compact",
+    "cost": 25,
+    "likelihoods": {
+     "strong": [
+      0.8,
+      0.2
+     ],
+     "moderate": [
+      0.5,
+      0.5
+     ],
+     "weak": [
+      0.15,
+      0.85
+     ]
+    }
+   }
+  },
+  "risk_analysis": {
+   "ranges": {
+    "price": [
+     -0.08,
+     0.0,
+     0.04
+    ],
+    "units": [
+     -0.2,
+     0.0,
+     0.15
+    ],
+    "variable_cost": [
+     -0.05,
+     0.0,
+     0.08
+    ],
+    "fixed_cost": [
+     -0.05,
+     0.0,
+     0.1
+    ],
+    "capex": [
+     -0.05,
+     0.0,
+     0.2
+    ],
+    "rate": [
+     0.09,
+     0.1,
+     0.12
+    ]
+   }
+  },
+  "scorecard": {
+   "objectives": [
+    {
+     "id": "F1",
+     "perspective": "financial",
+     "objective": "Profitable EU growth"
+    },
+    {
+     "id": "C1",
+     "perspective": "customer",
+     "objective": "Value choice below EUR 30k"
+    },
+    {
+     "id": "I1",
+     "perspective": "internal",
+     "objective": "Local cell supply"
+    },
+    {
+     "id": "L1",
+     "perspective": "learning",
+     "objective": "EU plant workforce"
+    }
+   ],
+   "links": [
+    {
+     "from": "C1",
+     "to": "F1"
+    },
+    {
+     "from": "I1",
+     "to": "C1"
+    },
+    {
+     "from": "L1",
+     "to": "I1"
+    }
+   ],
+   "measures": [
+    {
+     "objective": "F1",
+     "measure": "EU operating margin",
+     "type": "Lagging",
+     "target": 0.08,
+     "actual": 0.06,
+     "owner": "CFO"
+    },
+    {
+     "objective": "C1",
+     "measure": "EU registrations (000s)",
+     "type": "Lagging",
+     "target": 90,
+     "actual": 74,
+     "owner": "CMO"
+    },
+    {
+     "objective": "I1",
+     "measure": "Local cell share",
+     "type": "Leading",
+     "target": 0.5,
+     "actual": 0.55,
+     "owner": "COO"
+    },
+    {
+     "objective": "L1",
+     "measure": "Trained line staff",
+     "type": "Leading",
+     "target": 1200,
+     "actual": 900,
+     "owner": "CHRO"
+    }
+   ]
+  }
+ },
+ "globus": {
+  "company": "C",
+  "strategy": {
+   "camera": "Best-cost",
+   "drone": "Focused differentiation"
+  },
+  "plans": {
+   "8": {
+    "strategy.camera": "Best-cost",
+    "strategy.drone": "Focused differentiation",
+    "mkt.camera.na.price": 239,
+    "mkt.camera.na.ads": 6800,
+    "mkt.camera.ea.price": 262,
+    "mkt.camera.ea.ads": 6200,
+    "comp.base": 22000
+   }
+  }
+ }
+}

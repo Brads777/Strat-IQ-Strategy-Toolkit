@@ -1,0 +1,10 @@
+option,scenario,probability,npv
+A. EU plant,strong,30,620
+A. EU plant,moderate,50,-35
+A. EU plant,weak,20,-540
+B. Partner,strong,30,260
+B. Partner,moderate,50,40
+B. Partner,weak,20,-60
+0. Do nothing,strong,30,0
+0. Do nothing,moderate,50,0
+0. Do nothing,weak,20,0
