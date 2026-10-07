@@ -167,6 +167,8 @@ def sheet_start(wb, L, title, mode):
                            "product results, market share by region, the decisions entered and the CIR."),
             ("Tracking", "Trends across the years, pulled from the Year tabs, with charts: EPS, ROE, stock price, "
                          "image and credit rating, market share, cost per unit, revenue and profit, margins."),
+            ("Rivals", "Where you stand in the contest: every company's overall score, rank, price, P/Q and market "
+                       "share by year, from the class-wide reports only, with charts."),
             ("GLO-BUS Planner", "Plan every decision for each year in one place, in screen order; flags changes bigger than "
                                 "your threshold and years where price and advertising are both cut. You enter the "
                                 "decisions in GLO-BUS yourself; the capture skill can then check them against this plan."),
@@ -1194,12 +1196,14 @@ def sheet_year_results(wb, year, res, decisions, cir_rows, spec, fields, mode):
         col = "BC"[j]
         fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".price"]}),ISNUMBER({cells[p + ".ind_price"]})),'
                             f'{cells[p + ".price"]}/{cells[p + ".ind_price"]}-1,"")', "+0.0%;-0.0%;0.0%")
+        cells[f"{p}.price_gap"] = f"{col}{r}"
     r += 1
     label(ws, f"A{r}", "Cost per unit vs industry average")
     for j, p in enumerate(["camera", "drone"]):
         col = "BC"[j]
         fx(ws, f"{col}{r}", f'=IF(AND(ISNUMBER({cells[p + ".cost_unit"]}),ISNUMBER({cells[p + ".ind_cost_unit"]})),'
                             f'{cells[p + ".cost_unit"]}/{cells[p + ".ind_cost_unit"]}-1,"")', "+0.0%;-0.0%;0.0%")
+        cells[f"{p}.cost_gap"] = f"{col}{r}"
     r += 2
     header(ws, r, ["Market share (%)", "Cameras", "Drones"])
     s0 = r + 1
@@ -1249,7 +1253,107 @@ TRACK_ROWS = [("EPS", "kpi.eps", "$0.00"), ("EPS expectation", "kpi.eps.target",
               ("Drones: cost per unit ($)", "drone.cost_unit", "$#,##0"), ("Drones: industry cost per unit ($)", "drone.ind_cost_unit", "$#,##0"),
               ("Cameras: price ($)", "camera.price", "$#,##0"), ("Drones: price ($)", "drone.price", "$#,##0"),
               ("Cameras: P/Q", "camera.pq", "0.0"), ("Drones: P/Q", "drone.pq", "0.0"),
-              ("Cameras: operating margin", "camera.op_margin", "0.0%"), ("Drones: operating margin", "drone.op_margin", "0.0%")]
+              ("Cameras: operating margin", "camera.op_margin", "0.0%"), ("Drones: operating margin", "drone.op_margin", "0.0%"),
+              ("Cameras: industry price ($)", "camera.ind_price", "$#,##0"), ("Drones: industry price ($)", "drone.ind_price", "$#,##0"),
+              ("Cameras: industry P/Q", "camera.ind_pq", "0.0"), ("Drones: industry P/Q", "drone.ind_pq", "0.0"),
+              ("Cameras: price vs industry", "camera.price_gap", "+0.0%;-0.0%;0.0%"),
+              ("Cameras: cost per unit vs industry", "camera.cost_gap", "+0.0%;-0.0%;0.0%"),
+              ("Drones: price vs industry", "drone.price_gap", "+0.0%;-0.0%;0.0%"),
+              ("Drones: cost per unit vs industry", "drone.cost_gap", "+0.0%;-0.0%;0.0%")]
+
+
+def _public_by_company(caps):
+    """Per year, per company: public scoreboard figures and CIR price / P/Q / share (averaged over regions)."""
+    out = {}
+    for c in sorted(caps or [], key=lambda c: c.get("year", 0)):
+        y = c.get("year")
+        d = out.setdefault(y, {})
+        for r in c.get("scoreboard_rows") or []:
+            d.setdefault(str(r.get("company")), {}).update({k: r.get(k) for k in ("score", "rank", "eps", "roe", "stock", "credit", "image")})
+        agg = {}
+        for r in c.get("cir_rows") or []:
+            agg.setdefault((str(r.get("company")), r.get("product")), []).append(r)
+        for (co, prod), rows in agg.items():
+            g_ = [x for x in rows if (x.get("region") or "Global").lower() == "global"] or rows
+            avg = lambda k: (sum(x.get(k) for x in g_ if x.get(k) is not None) / max(1, len([x for x in g_ if x.get(k) is not None]))
+                             if any(x.get(k) is not None for x in g_) else None)
+            d.setdefault(co, {}).update({f"{prod}.price": avg("price"), f"{prod}.pq": avg("pq"), f"{prod}.share": avg("share")})
+    return out
+
+
+def sheet_rivals(wb, caps, mode):
+    """Rivals tab: the class-wide public reports only (scoreboard, CIR), year by year, with charts."""
+    from openpyxl.chart import LineChart, Reference
+    pub = _public_by_company(caps)
+    if not pub and mode == "example":
+        import random
+        rnd = random.Random(3)
+        pub = {}
+        for y in (6, 7, 8):
+            pub[y] = {}
+            for i, co in enumerate("ABCDEFGH"):
+                base = [80, 72, 78, 85, 70, 75, 82, 68][i] + (y - 6) * rnd.randint(-3, 5)
+                pub[y][co] = {"score": base, "camera.price": 240 + i * 9 + rnd.randint(-6, 6),
+                              "camera.pq": round(3.5 + i * 0.15 + rnd.uniform(-0.1, 0.1), 1),
+                              "camera.share": round(12.5 + rnd.uniform(-3, 3), 1)}
+            pub[y]["C"]["score"] = {6: 78, 7: 84, 8: 89}[y]
+            ranked = sorted(pub[y], key=lambda k: -pub[y][k]["score"])
+            for k in pub[y]:
+                pub[y][k]["rank"] = ranked.index(k) + 1
+    ws = wb.create_sheet("Rivals")
+    years = sorted(pub)
+    team = next((c.get("company") for c in (caps or []) if c.get("company")), "C" if mode == "example" else None)
+    head(ws, "Where you stand: the rivals", "Only what the class-wide reports show every team (scoreboard, "
+         "Competitive Intelligence Report). Nothing is taken from another team's screens. Rebuild after each round.",
+         [26] + [11] * max(3, len(years)))
+    if not years:
+        label(ws, "A5", "Add capture files with scoreboard_rows and cir_rows to fill this tab.", bold=False)
+        return
+    comps = sorted({co for y in years for co in pub[y]})
+    blocks = [("Overall score", "score", "0"), ("Rank", "rank", "0"), ("Cameras: price ($)", "camera.price", "$#,##0"),
+              ("Cameras: P/Q", "camera.pq", "0.0"), ("Cameras: market share (%)", "camera.share", "0.0"),
+              ("Drones: price ($)", "drone.price", "$#,##0"), ("Drones: P/Q", "drone.pq", "0.0"),
+              ("Drones: market share (%)", "drone.share", "0.0")]
+    r = 5
+    starts = {}
+    for title, key, fmt in blocks:
+        if not any(pub[y].get(co, {}).get(key) is not None for y in years for co in comps):
+            continue
+        header(ws, r, [title] + [f"Year {y}" for y in years])
+        starts[key] = r
+        for i, co in enumerate(comps):
+            rr = r + 1 + i
+            c = ws.cell(row=rr, column=1, value=f"Company {co}" + ("  (you)" if co == team else ""))
+            c.font = B_FONT if co == team else Font(name=F, size=10)
+            for j, y in enumerate(years):
+                inp(ws, f"{get_column_letter(2 + j)}{rr}", pub[y].get(co, {}).get(key), fmt)
+                if co == team:
+                    ws[f"{get_column_letter(2 + j)}{rr}"].fill = PatternFill("solid", fgColor="FBE9C9")
+        r += len(comps) + 2
+    ws.freeze_panes = None
+    anchor = get_column_letter(len(years) + 3)
+    n = 0
+    for key, title in (("score", "Overall score by company"), ("camera.share", "Cameras: market share by company"),
+                       ("drone.share", "Drones: market share by company")):
+        if key not in starts:
+            continue
+        r0 = starts[key]
+        ch = LineChart()
+        ch.title, ch.height, ch.width = title, 7.5, 15
+        ch.legend.position = "r"
+        for i in range(len(comps)):
+            ch.add_data(Reference(ws, min_col=1, max_col=1 + len(years), min_row=r0 + 1 + i, max_row=r0 + 1 + i),
+                        from_rows=True, titles_from_data=True)
+        ch.set_categories(Reference(ws, min_col=2, max_col=1 + len(years), min_row=r0, max_row=r0))
+        for i, srs in enumerate(ch.series):
+            mine = comps[i] == team
+            srs.graphicalProperties.line.solidFill = "C9A55C" if mine else ["1D3557", "6C757D", "2D936C", "C44536", "457B9D", "8D6A9F", "A8DADC", "B5651D"][i % 8]
+            srs.graphicalProperties.line.width = 42000 if mine else 15000
+            srs.smooth = False
+        ch.y_axis.majorGridlines = None
+        ch.x_axis.delete = ch.y_axis.delete = False
+        ws.add_chart(ch, f"{anchor}{5 + n * 17}")
+        n += 1
 
 
 def sheet_tracking(wb, year_tabs, spec):
@@ -1290,7 +1394,10 @@ def sheet_tracking(wb, year_tabs, spec):
               ("Market share (average of regions, %)", ["camera.share_avg", "drone.share_avg"], ""),
               ("Cost per unit vs industry", ["camera.cost_unit", "camera.ind_cost_unit", "drone.cost_unit", "drone.ind_cost_unit"], "$"),
               ("Net revenues and net profit ($000s)", ["co.revenue", "co.net_profit"], ""),
-              ("Operating margin by product", ["camera.op_margin", "drone.op_margin"], "%")]
+              ("Operating margin by product", ["camera.op_margin", "drone.op_margin"], "%"),
+              ("Cameras: P/Q vs industry", ["camera.pq", "camera.ind_pq"], ""),
+              ("Position vs industry: price premium and cost gap", ["camera.price_gap", "camera.cost_gap",
+                                                                     "drone.price_gap", "drone.cost_gap"], "%")]
     anchor_row = 6 + len(TRACK_ROWS) + 2
     for n, (title, keys, unit) in enumerate(charts):
         ch = LineChart()
@@ -1307,7 +1414,7 @@ def sheet_tracking(wb, year_tabs, spec):
             srs.graphicalProperties.line.solidFill = palette[k_ % 4]
             srs.graphicalProperties.line.width = 28000
             srs.smooth = False
-            if "target" in keys[k_] or "ind_" in keys[k_]:
+            if "target" in keys[k_] or "ind_" in keys[k_] or "cost_gap" in keys[k_]:
                 srs.graphicalProperties.line.dashStyle = "dash"
         if unit == "%":
             ch.y_axis.numFmt = "0%"
@@ -1370,8 +1477,9 @@ def main():
         else:
             year_tabs[years[0]] = sheet_year_results(wb, years[0], None, None, None, rspec, fspec, mode)
         sheet_tracking(wb, year_tabs, rspec)
+        sheet_rivals(wb, caps, mode)
         for ws in wb.worksheets:
-            ws.sheet_properties.tabColor = GOLD if (ws.title.startswith("GLO-BUS") or ws.title in ("Start", "Tracking")
+            ws.sheet_properties.tabColor = GOLD if (ws.title.startswith("GLO-BUS") or ws.title in ("Start", "Tracking", "Rivals")
                                                     or ws.title.endswith(" Results")) else NAVY
         wb.save(out)
     print(json.dumps({"out": out, "mode": mode, "sheets": [ws.title for ws in wb.worksheets]}))

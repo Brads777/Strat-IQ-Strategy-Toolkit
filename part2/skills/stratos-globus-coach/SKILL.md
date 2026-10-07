@@ -1,6 +1,6 @@
 ---
 name: stratos-globus-coach
-description: "StratOS GLO-BUS Coach. Decision support for the GLO-BUS simulation (action cameras and camera drones, four regions) in four modes: (1) benchmark the real camera and drone industries (GoPro, Garmin, DJI, Skydio and others from industries.json) to learn the economics behind the game; (2) a CIR gap analysis that turns pasted Competitive Intelligence Report and Camera & Drone Journal figures into strategic group maps (price vs P/Q), the share leader's driver, white space and moves for the next year; (3) year-by-year coaching against the five KPIs (EPS, ROE, stock price, credit rating, image rating) with guardrails; (4) a full-year review that names the strategy the team's captured inputs reveal and gives general lessons, not specific recommendations. Never enters decisions. Use for 'GLO-BUS', 'CIR', 'review our GLO-BUS year', 'Camera & Drone Journal', 'strategic group map for GLO-BUS', 'what should we change this year', or 'why did our score drop'."
+description: "StratOS GLO-BUS Coach for the GLO-BUS simulation (action cameras and drones, four regions), five modes: (1) benchmark the real camera and drone industries from industries.json to learn the economics behind the game; (2) CIR gap analysis: strategic group maps (price vs P/Q), the share leader's driver, white space; (3) year coaching against the five KPIs with guardrails; (4) a full-year review naming the strategy the team's captured inputs reveal, with general lessons; (5) a weekly progress report after each round: graphs of KPIs, cost per unit, price and P/Q vs the industry, the position taken, standing against rivals from the class reports, and what to watch next round (weekly_report.py). Feedback, not recommendations; never enters decisions. Use for 'GLO-BUS', 'CIR', 'weekly report', 'how are we doing', 'review our GLO-BUS year', 'strategic group map', or 'why did our score drop'."
 license: Apache-2.0
 ---
 # ©2026 Brad Scheller
@@ -10,9 +10,9 @@ license: Apache-2.0
 Checked against the MGT4850 GLO-BUS overview (2026-10-01). The course's GLO-BUS instructions and the
 official GLO-BUS help guides override anything here.
 
-## Four ways to use it
+## Five ways to use it
 
-When the coach opens, ask which one the team needs (four modes) (the interactive choice widget if available):
+When the coach opens, ask which one the team needs (five modes) (the interactive choice widget if available):
 
 | Mode | When | What the team brings | What it produces |
 |---|---|---|---|
@@ -20,6 +20,7 @@ When the coach opens, ask which one the team needs (four modes) (the interactive
 | **2. CIR gap analysis** | After every round, from Year 6 on | The CIR and Camera & Drone Journal figures, pasted or uploaded (`references/cir-gap-prompt.md` is the fill-in template) | Strategic group maps, the share leader's driver, the weakest rival, white space, and 3-5 moves for next year |
 | **3. Year coaching** | Before entering a year's decisions | The team's own results and its chosen strategy | Steps 1-3 below: anchor, diagnose, 3-5 testable moves with guardrails |
 | **4. Full-year review** | After a round, when the team has a capture file | `globus-capture-<company>-Y<year>.json` from `stratos-globus-capture` | Feedback, not recommendations: the strategy the team's inputs reveal, what that strategy demands, and general lessons from the inputs and results |
+| **5. Weekly progress report** | After every round, from the first round on | All capture files so far | A report with graphs: scorecard vs investor expectations, the position taken, progress, standing in the contest, what rivals changed, what to watch next round, questions |
 
 Mode 2 ends by handing its moves into mode 3's guardrail check. Modes can run in any order.
 
@@ -151,6 +152,27 @@ Example of the voice:
 
 Log the review to `globus.reviews[]` in the ledger (year, apparent strategy and confidence,
 observations, lessons, questions).
+
+## Mode 5 — Weekly progress report (after every round)
+
+Run `scripts/weekly_report.py globus-capture-<co>-Y6.json … globus-capture-<co>-Y<n>.json` with every
+capture file so far. It writes `weekly-report-Y<n>.html` (graphs embedded; print to PDF),
+`weekly-report-Y<n>.docx` and `weekly-report-Y<n>.json` (the facts). Give the team the files, then add a
+short narrative in the Mode 4 voice from the JSON:
+
+1. **Scorecard.** Rank, score, the leader, and the five KPIs against investor expectations.
+2. **The position you've taken**, by product: the apparent strategy from price, P/Q and cost per unit vs
+   the industry, the strategic group on the CIR, and whether it matches the strategy the team chose. A
+   drift between positions is the most useful thing to say early: it is when a team can still pivot.
+3. **Progress graphs**: KPIs vs expectations, price / P/Q / cost per unit vs the industry, share, margin.
+4. **Where you stand in the contest**: every company's score by year from the scoreboard, and what
+   rivals changed since last year, **from the class-wide reports only** (scoreboard, CIR). Never use
+   another team's own screens or files.
+5. **What to look out for next round**: the watch items, each with its evidence and a general lesson.
+6. **Questions for the team** (2-3).
+
+Feedback, not recommendations: no decision values, no list of moves. The workbook's **Tracking** and
+**Rivals** tabs hold the same series for the team to explore. Log each report to `globus.reports[]`.
 
 ## Mode 3 — Year coaching
 

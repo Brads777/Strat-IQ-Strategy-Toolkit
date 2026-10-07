@@ -73,6 +73,7 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
                "url_path": "/…", "text": "…", "screenshot": "cir-cameras-na.png", "warnings": [] } ],
   "decisions": { "mkt.camera.na.price": 249, "mkt.camera.na.ads": 6800, "comp.base": 21500 },
   "cir_rows": [ { "company": "A", "product": "camera", "region": "Global", "price": 279, "pq": 4.2, "share": 14.0, "models": 5 } ],
+  "scoreboard_rows": [ { "company": "A", "score": 81, "rank": 2, "eps": 2.05, "roe": 0.152, "stock": 24.9, "credit": "BB", "image": 71 } ],
   "results": { "kpis": { "eps": { "actual": 1.85, "target": 2.00 }, "credit": { "actual": "B+", "target": "BB" } },
                "company": { "score": 78, "rank": 3, "revenue": 412000, "net_profit": 18500, "cash": 14200 },
                "product": { "camera": { "units": 1450, "price": 264, "pq": 4.0, "cost_unit": 182, "op_margin": 0.11,
@@ -85,6 +86,9 @@ With code execution, write the capture to `globus-capture-<company>-Y<year>.json
   Workbook's GLO-BUS Planner). Copy numbers exactly from the page text; leave out any field you could
   not read rather than guessing.
 - **`cir_rows`**: one row per company, product and region from the Competitive Intelligence Report.
+- **`scoreboard_rows`**: one row per company from the class scoreboard (public to every team): overall
+  score, rank and the scored KPIs. With `cir_rows`, it feeds the Rivals tab and the weekly report's
+  contest section. Take rival figures only from these class-wide reports.
 - **`results`**: the year's outcomes, keyed as in `references/globus-results.json`: the five scored KPIs
   with investor expectations, company results, and per-product results with market share by region.
   The StratOS Workbook turns each capture into a **Y# Results** tab and charts the years on **Tracking**.
