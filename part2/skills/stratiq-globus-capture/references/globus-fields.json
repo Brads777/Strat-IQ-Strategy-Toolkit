@@ -1,0 +1,33 @@
+{
+  "_about": "GLO-BUS decision fields used by the Strat-IQ Workbook Decision Planner and by stratiq-globus-capture's plan check. Labels follow the usual GLO-BUS decision screens; rename to match your version of the game, but keep the keys.",
+  "products": {"camera": "Cameras", "drone": "Drones"},
+  "regions": {"na": "North America", "ea": "Europe-Africa", "ap": "Asia-Pacific", "la": "Latin America"},
+  "fields": [
+    {"key": "strategy.{p}", "area": "Strategy anchor", "label": "Strategy ({P})", "unit": "text", "per": "product"},
+    {"key": "design.{p}.pq", "area": "Product design", "label": "P/Q rating target ({P})", "unit": "stars", "per": "product"},
+    {"key": "design.{p}.models", "area": "Product design", "label": "Number of models ({P})", "unit": "count", "per": "product"},
+    {"key": "design.{p}.rd", "area": "Product design", "label": "R&D / component quality spend ({P})", "unit": "$000s", "per": "product"},
+    {"key": "mkt.{p}.{r}.price", "area": "Marketing", "label": "Price ({P}, {R})", "unit": "$", "per": "product-region"},
+    {"key": "mkt.{p}.{r}.ads", "area": "Marketing", "label": "Advertising ({P}, {R})", "unit": "$000s", "per": "product-region"},
+    {"key": "mkt.{p}.{r}.promo", "area": "Marketing", "label": "Retailer support / promotions ({P}, {R})", "unit": "per screen", "per": "product-region"},
+    {"key": "mkt.{p}.{r}.warranty", "area": "Marketing", "label": "Warranty ({P}, {R})", "unit": "days", "per": "product-region"},
+    {"key": "ops.{p}.workstations", "area": "Assembly operations", "label": "Workstations ({P})", "unit": "count", "per": "product"},
+    {"key": "ops.{p}.overtime", "area": "Assembly operations", "label": "Overtime ({P})", "unit": "%", "per": "product"},
+    {"key": "ops.{p}.training", "area": "Assembly operations", "label": "Best-practice training ({P})", "unit": "$ per worker", "per": "product"},
+    {"key": "comp.base", "area": "Compensation", "label": "Base wage", "unit": "$ per worker", "per": "once"},
+    {"key": "comp.incentive", "area": "Compensation", "label": "Incentive pay", "unit": "$ per unit", "per": "once"},
+    {"key": "comp.fringe", "area": "Compensation", "label": "Fringe benefits", "unit": "$ per worker", "per": "once"},
+    {"key": "csr.budget", "area": "Corporate citizenship", "label": "CSR / citizenship spending", "unit": "$000s", "per": "once"},
+    {"key": "csr.programs", "area": "Corporate citizenship", "label": "Programs in place", "unit": "text", "per": "once"},
+    {"key": "fin.st_loan", "area": "Finance", "label": "Short-term loan", "unit": "$000s", "per": "once"},
+    {"key": "fin.lt_loan", "area": "Finance", "label": "Long-term loan", "unit": "$000s", "per": "once"},
+    {"key": "fin.stock_issue", "area": "Finance", "label": "Stock issue", "unit": "000s shares", "per": "once"},
+    {"key": "fin.buyback", "area": "Finance", "label": "Stock buyback", "unit": "000s shares", "per": "once"},
+    {"key": "fin.dividend", "area": "Finance", "label": "Dividend per share", "unit": "$", "per": "once"},
+    {"key": "kpi.eps", "area": "Projected KPIs (from the game's projections)", "label": "Projected EPS", "unit": "$", "per": "once"},
+    {"key": "kpi.roe", "area": "Projected KPIs (from the game's projections)", "label": "Projected ROE", "unit": "%", "per": "once"},
+    {"key": "kpi.stock", "area": "Projected KPIs (from the game's projections)", "label": "Projected stock price", "unit": "$", "per": "once"},
+    {"key": "kpi.credit", "area": "Projected KPIs (from the game's projections)", "label": "Projected credit rating", "unit": "text", "per": "once"},
+    {"key": "kpi.image", "area": "Projected KPIs (from the game's projections)", "label": "Projected image rating", "unit": "score", "per": "once"}
+  ]
+}

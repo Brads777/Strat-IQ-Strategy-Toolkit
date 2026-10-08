@@ -1,5 +1,5 @@
 {
-  "_about": "StratOS industry registry. Read by the StratOS orchestrator (Steps 1-2) and the GLO-BUS Coach (benchmark mode). Upload to Claude.ai Project knowledge. Users may append industries; entries with locked=true keep a fixed class competitor list. Entries with a 'globus' block are real-world analogues of a GLO-BUS product line: use them to learn the economics, never to copy numbers into the simulation.",
+  "_about": "Strat-IQ industry registry. Read by the Strat-IQ orchestrator (Steps 1-2) and the GLO-BUS Coach (benchmark mode). Upload to Claude.ai Project knowledge. Users may append industries; entries with locked=true keep a fixed class competitor list. Entries with a 'globus' block are real-world analogues of a GLO-BUS product line: use them to learn the economics, never to copy numbers into the simulation.",
   "version": 2,
   "updated": "2026-10-05",
   "industries": [

@@ -1,14 +1,14 @@
-# StratOS v3 process map: how to open and use it
+# Strat-IQ Toolkit v3 process map: how to open and use it
 
-Posted with the video **StratOS v3: The Complete Process** (MGT4850, Fall 2026).
+Posted with the video **Strat-IQ Toolkit v3: The Complete Process** (MGT4850, Fall 2026).
 
 ## The files
 
 | File | What it is |
 |---|---|
-| `StratOS_Process_Overview.excalidraw` | The whole process on one page: the management interview, Part 1, Part 2, Part 3 (Choose, Test, Plan, Track), the deliverables, the strategy ledger, and the GLO-BUS season loop |
-| `StratOS_Process_Flow.excalidraw` | The detailed map: every skill in order, with a table showing what it does, what it passes down, and its impact on the P&L or valuation |
-| `StratOS_Process_Overview.png`, `StratOS_Process_Flow.png` | The same two diagrams as pictures, if you'd rather not open the files |
+| `StratIQ_Process_Overview.excalidraw` | The whole process on one page: the management interview, Part 1, Part 2, Part 3 (Choose, Test, Plan, Track), the deliverables, the strategy ledger, and the GLO-BUS season loop |
+| `StratIQ_Process_Flow.excalidraw` | The detailed map: every skill in order, with a table showing what it does, what it passes down, and its impact on the P&L or valuation |
+| `StratIQ_Process_Overview.png`, `StratIQ_Process_Flow.png` | The same two diagrams as pictures, if you'd rather not open the files |
 
 ## Open a diagram (about one minute)
 
@@ -23,7 +23,7 @@ first.
 
 ## Read the detailed map
 
-- **The left column is the flow.** It runs top to bottom in the order StratOS runs the skills; arrows show each
+- **The left column is the flow.** It runs top to bottom in the order Strat-IQ runs the skills; arrows show each
   hand-off.
 - **Each box has a row in the table to its right**, with four columns:
   1. **Skill**: its name and skill ID (the ID is what you upload and switch on in Claude).
@@ -49,7 +49,7 @@ first.
 - **Menu → Export image** saves a PNG (or SVG) of what you see.
 - Your edits stay in your own browser and on your own computer; nothing is shared unless you share the file.
 
-The diagrams describe StratOS v3.0.0. The install guide and the skills are on the StratOS GitHub page
+The diagrams describe Strat-IQ Toolkit v3.1.0. The install guide and the skills are on the Strat-IQ GitHub page
 (github.com/Brads777/stratos-external-analysis), under Releases.
 
-© 2026 G. Bradley Scheller · StratOS Strategy Lab
+© 2026 G. Bradley Scheller · Strat-IQ Strategy Lab

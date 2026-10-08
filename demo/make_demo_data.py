@@ -1,7 +1,9 @@
-"""Build the StratOS v3 demo kit data files (illustrative data, not research)."""
+# SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
+# Copyright (c) 2026 G. Bradley Scheller · Strat-IQ Toolkit · commercial licences: BScheller@ToolsIQ.ai
+"""Build the Strat-IQ v3 demo kit data files (illustrative data, not research)."""
 import csv, json, os, random
 D = "/home/claude/repo/demo"
-NOTE = ("DEMO DATA. Illustrative figures for screen-recorded demonstrations of StratOS v3. "
+NOTE = ("DEMO DATA. Illustrative figures for screen-recorded demonstrations of Strat-IQ v3. "
         "Not verified research: do not cite in graded work.")
 
 ev = lambda i, t, d="2026-09": {"id": i, "source": t, "date": d, "note": "demo source label; verify before use"}

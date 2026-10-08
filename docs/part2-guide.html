@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StratOS: Continue from Part 1</title>
+<title>Strat-IQ: Continue from Part 1</title>
 <style>
   :root {
     --bg: #ffffff; --ink: #111827; --muted: #374151; --rule: #9ca3af;
@@ -62,16 +62,16 @@
 <body>
 <main>
 
-<h1>StratOS: continue from Part 1</h1>
+<h1>Strat-IQ: continue from Part 1</h1>
 <p class="lead">How to run the updated toolkit so it finds the external analysis you already did and
 carries on into the internal analysis, instead of starting again.</p>
 
 <div class="note warn"><strong>Updated:</strong> Parts 2 and 3 now install together. Use <a href="part2-3-guide.html">the Parts 2 + 3 guide</a> instead of this page.</div>
 
 <div class="note ok">
-  <strong>The short version.</strong> StratOS saves everything to one file, the
+  <strong>The short version.</strong> Strat-IQ saves everything to one file, the
   <code>strategy-ledger</code>. Put that file in your Project, install the new skills, and say
-  <em>"continue my analysis"</em>. StratOS reads the file, sees what is finished, and starts at the
+  <em>"continue my analysis"</em>. Strat-IQ reads the file, sees what is finished, and starts at the
   next step.
 </div>
 
@@ -93,7 +93,7 @@ carries on into the internal analysis, instead of starting again.</p>
   </tr>
 </table>
 </div>
-<p>A new orchestrator, <code>stratos-orchestrator-final</code>, replaces the old one. When it opens,
+<p>A new orchestrator, <code>stratiq-orchestrator-final</code>, replaces the old one. When it opens,
 its first job is to check whether Part 1 has been done.</p>
 
 <h2>Before you start: find your ledger file</h2>
@@ -103,7 +103,7 @@ its first job is to check whether Part 1 has been done.</p>
     Its name starts with <code>strategy-ledger-</code> and ends in <code>.json</code>, for example
     <code>strategy-ledger-global-ev-2026.json</code>. Check two places:
     <ul>
-      <li>the <strong>Project knowledge</strong> panel of your StratOS Project in
+      <li>the <strong>Project knowledge</strong> panel of your Strat-IQ Project in
           <a href="https://claude.ai/projects" target="_blank" rel="noopener">Claude Projects</a>;</li>
       <li>your computer's <strong>Downloads</strong> folder.</li>
     </ul>
@@ -116,7 +116,7 @@ its first job is to check whether Part 1 has been done.</p>
   </li>
   <li>
     <strong>If that chat is gone too, do nothing more here.</strong>
-    StratOS will find no ledger and run the whole process, Part 1 then Part 2. Nothing breaks; it
+    Strat-IQ will find no ledger and run the whole process, Part 1 then Part 2. Nothing breaks; it
     takes longer.
   </li>
 </ol>
@@ -126,8 +126,8 @@ its first job is to check whether Part 1 has been done.</p>
   <li>
     <strong>Download the Part 2 upload.</strong>
     Go to the
-    <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest" target="_blank" rel="noopener">latest StratOS release</a>
-    and, under <strong>Assets</strong>, download <code>stratos-part2-skills.zip</code>. Unzip it once.
+    <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest" target="_blank" rel="noopener">latest Strat-IQ release</a>
+    and, under <strong>Assets</strong>, download <code>stratiq-part2-skills.zip</code>. Unzip it once.
     Inside are <strong>seven</strong> smaller zip files, one per skill. Do not unzip those. The
     fourteen skills you uploaded in Part 1 stay as they are.
   </li>
@@ -137,32 +137,32 @@ its first job is to check whether Part 1 has been done.</p>
     <a href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Settings &rarr; Capabilities</a>,
     find <strong>Skills</strong>, choose <strong>Upload skill</strong>, and upload each of these:
     <ul>
-      <li><code>stratos-orchestrator-final.zip</code></li>
-      <li><code>stratos-value-chain.zip</code></li>
-      <li><code>stratos-resources-capabilities.zip</code></li>
-      <li><code>stratos-vrio.zip</code></li>
-      <li><code>stratos-swot.zip</code></li>
+      <li><code>stratiq-orchestrator-final.zip</code></li>
+      <li><code>stratiq-value-chain.zip</code></li>
+      <li><code>stratiq-resources-capabilities.zip</code></li>
+      <li><code>stratiq-vrio.zip</code></li>
+      <li><code>stratiq-swot.zip</code></li>
     </ul>
   </li>
   <li>
     <strong>Replace the two skills that were updated.</strong>
-    Upload <code>stratos-case-exhibits.zip</code> and <code>stratos-strategic-mapping.zip</code>
+    Upload <code>stratiq-case-exhibits.zip</code> and <code>stratiq-strategic-mapping.zip</code>
     again. If Claude says a skill with that name already exists, delete the old one in the Skills
     list first, then upload.
   </li>
   <li>
     <strong>Turn off the old orchestrator.</strong>
-    In the Skills list, switch off (or delete) <code>stratos-orchestrator</code>. Leave
-    <code>stratos-orchestrator-final</code> on.
+    In the Skills list, switch off (or delete) <code>stratiq-orchestrator</code>. Leave
+    <code>stratiq-orchestrator-final</code> on.
     <div class="note warn">
       <strong>Do not skip this.</strong> The new orchestrator is written to take over and will remind
       you if the old one is still on, but only you can switch a skill off. With both on, "run
-      StratOS" can still open the old one first, which does not know about Part 2.
+      Strat-IQ" can still open the old one first, which does not know about Part 2.
     </div>
   </li>
   <li>
     <strong>Check the list.</strong>
-    You should see <strong>eighteen</strong> StratOS skills switched on: the thirteen you kept from
+    You should see <strong>eighteen</strong> Strat-IQ skills switched on: the thirteen you kept from
     before, plus the five new ones.
   </li>
 </ol>
@@ -171,24 +171,24 @@ its first job is to check whether Part 1 has been done.</p>
 <ol class="steps">
   <li>
     <strong>Put the ledger in your Project.</strong>
-    Open your StratOS Project. If the <code>strategy-ledger</code> file is not already in
+    Open your Strat-IQ Project. If the <code>strategy-ledger</code> file is not already in
     <strong>Project knowledge</strong>, add it there. Keep only one ledger per industry; remove older
-    copies so StratOS does not read the wrong one.
+    copies so Strat-IQ does not read the wrong one.
   </li>
   <li>
     <strong>Start a new chat inside the Project.</strong>
     A new chat, not the old Part 1 chat. Type:
-    <span class="say">Run StratOS and continue my analysis from where I left off.</span>
+    <span class="say">Run Strat-IQ and continue my analysis from where I left off.</span>
   </li>
   <li>
-    <strong>Read what StratOS reports back.</strong>
+    <strong>Read what Strat-IQ reports back.</strong>
     Before it runs anything, it tells you what it found, for example: <em>Part 1 is complete for the
     global EV industry, base company BYD, as of 2026-09-30. Continuing with Part 2 at Value
     Chain.</em> If that is not what you expected, stop and check the troubleshooting table below.
   </li>
   <li>
     <strong>Confirm the base company.</strong>
-    StratOS asks whether to keep the same company. Part 2 studies that one company from the inside.
+    Strat-IQ asks whether to keep the same company. Part 2 studies that one company from the inside.
     If you want a different company, say so now; it redoes the company-specific steps of Part 1
     first, then continues.
   </li>
@@ -196,17 +196,17 @@ its first job is to check whether Part 1 has been done.</p>
     <strong>Give it the inside information when it asks.</strong>
     Part 2 needs facts about the company itself: what it owns, what it does well and badly, where
     its costs fall, what its customers choose on. For a case, paste your persona interview notes.
-    For a public company, StratOS uses its annual report. Anything it cannot find is marked
+    For a public company, Strat-IQ uses its annual report. Anything it cannot find is marked
     <code>[ask in interview]</code>; it does not make facts up.
   </li>
   <li>
     <strong>Work through the four steps.</strong>
-    Value Chain, Resources and Capabilities, VRIO, SWOT. After each one StratOS shows the result and
+    Value Chain, Resources and Capabilities, VRIO, SWOT. After each one Strat-IQ shows the result and
     asks <em>continue, revise or stop</em>.
   </li>
   <li>
     <strong>Save the ledger every time it is offered.</strong>
-    At each checkpoint StratOS offers the updated ledger as a download. Download it and
+    At each checkpoint Strat-IQ offers the updated ledger as a download. Download it and
     <strong>replace</strong> the copy in Project knowledge. This is what lets the next chat pick up
     from the right place.
   </li>
@@ -217,7 +217,7 @@ its first job is to check whether Part 1 has been done.</p>
   </li>
 </ol>
 
-<h2>What StratOS does with what it finds</h2>
+<h2>What Strat-IQ does with what it finds</h2>
 <div class="scroll">
 <table>
   <tr><th>It finds</th><th>It does</th></tr>
@@ -235,18 +235,18 @@ its first job is to check whether Part 1 has been done.</p>
   <li>
     <strong>Start the same way.</strong>
     Ledger in Project knowledge, new chat, then type:
-    <span class="say">Run StratOS. Build my case-memo exhibits and continue from where I left off.</span>
+    <span class="say">Run Strat-IQ. Build my case-memo exhibits and continue from where I left off.</span>
   </li>
   <li>
     <strong>Let it reuse Exhibits C to G.</strong>
-    If your ledger already holds the industry analysis, StratOS keeps those exhibits and builds
+    If your ledger already holds the industry analysis, Strat-IQ keeps those exhibits and builds
     <strong>H. Resources and capabilities</strong>, <strong>I. VRIO</strong>,
     <strong>J. Value Chain</strong> and <strong>K. SWOT</strong> from your interview notes, then L to O.
   </li>
   <li>
     <strong>Choose your own alternatives.</strong>
     Exhibit K ends with a table of strategic options. They are candidates. You decide which become
-    the alternatives in your Decision Matrix, and StratOS asks you to confirm them first.
+    the alternatives in your Decision Matrix, and Strat-IQ asks you to confirm them first.
   </li>
   <li>
     <strong>Write what is yours.</strong>
@@ -266,7 +266,7 @@ its first job is to check whether Part 1 has been done.</p>
   <tr>
     <td>It shows the old eight-step intro with no Part 2</td>
     <td>The old orchestrator opened</td>
-    <td>Switch off <code>stratos-orchestrator</code> in
+    <td>Switch off <code>stratiq-orchestrator</code> in
         <a href="https://claude.ai/settings/capabilities" target="_blank" rel="noopener">Settings &rarr; Capabilities</a>
         and start a new chat</td>
   </tr>
@@ -303,12 +303,12 @@ its first job is to check whether Part 1 has been done.</p>
   <li>
     <strong>Run it.</strong>
     Type the same request:
-    <span class="say">Run StratOS and continue my analysis from where I left off.</span>
-    StratOS reads the ledger from that folder and saves back to it after every step.
+    <span class="say">Run Strat-IQ and continue my analysis from where I left off.</span>
+    Strat-IQ reads the ledger from that folder and saves back to it after every step.
   </li>
 </ol>
 
-<footer>StratOS Toolkit &middot; MGT4850 Strategy &middot; &copy; 2026 Brad Scheller</footer>
+<footer>Strat-IQ Toolkit &middot; MGT4850 Strategy &middot; &copy; 2026 Brad Scheller</footer>
 
 </main>
 </body>

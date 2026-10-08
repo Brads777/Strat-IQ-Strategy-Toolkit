@@ -1,14 +1,18 @@
-StratOS External Analysis skills
-Copyright 2026 George Bradley (Brad) Scheller
+Strat-IQ Toolkit
+Copyright (c) 2026 George Bradley (Brad) Scheller
 
-Licensed under the Apache License, Version 2.0 (see LICENSE).
+Licensed under the PolyForm Noncommercial License 1.0.0 (software) and CC BY-NC 4.0 (content).
+See LICENSE. Commercial licences: BScheller@ToolsIQ.ai
 
-This product includes methods adapted from:
-- anthropics/financial-services-plugins (Apache-2.0)
-- DogInfantry/claude-skill-management-consultant-B1 (Apache-2.0)
-- Ericyoung-183/alpha-insights, phuryn/pm-skills, ironyjk/strategy-frameworks, yoichiojima-2/consultant (MIT)
+Versions before 3.1.0 (formerly "StratOS") were released under the Apache License 2.0.
 
-Full provenance: skills/stratos-orchestrator/references/SOURCES.md
+This product includes methods adapted from the following projects, used under their licences:
+- anthropics/financial-services-plugins (Apache License 2.0)
+- DogInfantry/claude-skill-management-consultant-B1 (Apache License 2.0)
+- Ericyoung-183/alpha-insights, phuryn/pm-skills, ironyjk/strategy-frameworks,
+  yoichiojima-2/consultant (MIT License)
 
-The StratOS proprietary scoring algorithms (W-B-A-F-D, P-E-F, SFI, SCE) are not part of this
+Full provenance: skills/stratiq-orchestrator/references/SOURCES.md
+
+The Strat-IQ proprietary scoring algorithms (W-B-A-F-D, P-E-F, SFI, SCE) are not part of this
 distribution and are not licensed under it.

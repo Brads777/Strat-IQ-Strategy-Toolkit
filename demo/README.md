@@ -1,6 +1,6 @@
-# StratOS v3 demo kit
+# Strat-IQ v3 demo kit
 
-Files for screen-recording the nine live demos in the StratOS v3 process video. Start with
+Files for screen-recording the nine live demos in the Strat-IQ v3 process video. Start with
 **Demo_Run_Sheet.docx** (or `.md` / `.pdf`): setup, the exact prompts, the results you should see, and
 what to point at.
 
@@ -10,6 +10,6 @@ labelled as such in each file. It shows what the tools do; it is not research to
 Rebuild the demo workbook:
 
 ```
-python ../part3/skills/stratos-workbook/scripts/build_workbook.py --ledger strategy-ledger-ev-demo.json \
-  --capture globus/globus-capture-C-Y6.json --capture globus/globus-capture-C-Y7.json --out StratOS_Workbook_demo.xlsx
+python ../part3/skills/stratiq-workbook/scripts/build_workbook.py --ledger strategy-ledger-ev-demo.json \
+  --capture globus/globus-capture-C-Y6.json --capture globus/globus-capture-C-Y7.json --out StratIQ_Workbook_demo.xlsx
 ```
