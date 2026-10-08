@@ -1,6 +1,6 @@
 ---
 name: stratiq-workbook
-description: "Strat-IQ Workbook. Builds a Strat-IQ-branded Excel workbook with one live worksheet for every Strat-IQ step, in process order, pre-filled from the team's ledger and GLO-BUS capture files: Management Interviews; Part 1 (industry overview, competitive analysis, PESTEL, Five Forces, trending factors, KSFs, strategic mapping); Part 2 (value chain, unit economics, resources and capabilities, VRIO, full potential, growth barriers, SWOT-TOWS); Part 3 (positioning, options, decision matrix, business case, expected value, risk analysis, pricing, stress test, go-to-market, initiatives, operating model, execution roadmap, Balanced Scorecard, strategy map); and GLO-BUS (CIR, planner, Season by Year, Competition by Year, KPI Charts, Findings & Questions). Every result is a live formula. Use for 'Strat-IQ workbook', 'Excel worksheets', 'spreadsheet version of my analysis', or 'template'."
+description: "Strat-IQ Workbook. One live Excel worksheet for every Strat-IQ step, in process order, pre-filled from the team's ledger and GLO-BUS capture files: Management Interviews; Part 1 (industry overview, competitive analysis, PESTEL, Five Forces, trending factors, KSFs, strategic mapping); Part 2 (value chain, unit economics, resources and capabilities, VRIO, full potential, growth barriers, SWOT-TOWS); Part 3 (positioning, options, decision matrix, business case, expected value, risk analysis, pricing, stress test, go-to-market, initiatives, operating model, execution roadmap, Balanced Scorecard, strategy map); and GLO-BUS (CIR, planner, Season by Year, Competition by Year, KPI Charts, Findings & Questions). Every result is a live formula. Two-way: read_workbook.py writes the cells the team changed back into the ledger, so the workbook is the team's database. Use for 'Strat-IQ workbook', 'Excel worksheets', 'spreadsheet version of my analysis', 'template', or 'read our workbook back into the ledger'."
 license: CC-BY-NC-4.0 AND PolyForm-Noncommercial-1.0.0
 ---
 # ©2026 Brad Scheller
@@ -21,6 +21,28 @@ the report and the exhibits; it never replaces the reasoning in them.
 | "A blank template" | `python scripts/build_workbook.py --blank --out StratIQ_Workbook_blank.xlsx` | Empty template |
 
 The strategy map picture needs matplotlib; without it the table and its checks still work.
+
+## Two-way: read the workbook back into the ledger
+
+The workbook is the team's database as well as its worksheets. Each blue-on-cream input cell is mapped (in
+a hidden `_ledger_map` sheet) to its field in the ledger, with the value it had when the workbook was built.
+When the team has edited the workbook, read it back:
+
+| Ask | Command |
+|---|---|
+| "What did we change in the workbook?" | `python scripts/read_workbook.py StratIQ_Workbook_<team>.xlsx --ledger <ledger> --dry-run` |
+| "Read our workbook back into the ledger" | `python scripts/read_workbook.py StratIQ_Workbook_<team>.xlsx --ledger <ledger>` (keeps `<ledger>.before-sync.json`) |
+| "Turn our filled-in blank workbook into a ledger" | `python scripts/read_workbook.py StratIQ_Workbook_blank.xlsx --out strategy-ledger-<scope>.json` |
+
+- Only changed cells are written; fields the workbook does not show (evidence ids, notes) are kept.
+- A new row adds an item; a row whose inputs are all cleared removes it. Edit rows in place; do not sort
+  or move rows (rows map to list positions).
+- A workbook built from a different ledger (another `scope_id`) is refused unless `--force`.
+- Planner edits go to `globus.plans`; responses and statuses on Findings & Questions go to
+  `globus.findings_log` and come back on the next build.
+- After a read-back, rebuild the workbook from the updated ledger before the next weekly report, so the
+  report, the memo, the deck and the workbook all start from the same numbers.
+- Show the student the change list (sheet, cell, field, was → now) before writing.
 
 ## The sheets
 
@@ -69,6 +91,7 @@ The strategy map picture needs matplotlib; without it the table and its checks s
 2. Spot-check two numbers against the ledger or the skill outputs (e.g. the Business Case NPV against
    `business_case.py`, a VRIO verdict against `vrio_screen.py`).
 3. Give the student the file and say which sheets were pre-filled and which are blank.
+4. After a read-back, run `read_workbook.py … --dry-run` on the rebuilt file: it should report 0 changes.
 
 ## Rules
 

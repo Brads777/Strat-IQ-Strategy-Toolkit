@@ -275,3 +275,15 @@ Values below are synthetic.
   fast weekly, seasonal quarterly, stable annually.
 - **Source decay is not falsification.** When a URL fails, mark the item `source_moved`, not false.
   Only contradicting evidence makes a claim `broken`.
+- **The workbook is a second front door to the ledger.** `stratiq-workbook/scripts/read_workbook.py`
+  writes back only the input cells a team changed in its Strat-IQ workbook (the hidden `_ledger_map`
+  sheet records each cell's ledger path and its value at build time). Fields it adds when teams type
+  them in the workbook: `scope.boundary_note`, `scope.competitor_set`, `company_layer.map_axes{x,y}`,
+  `competitors[].map_size`, `industry_layer.forces[].subfactors{}` and `subfactor_evidence{}`,
+  `industry_layer.drivers[].tests{moves_force, moves_pl, within_horizon, two_sources}`,
+  `company_layer.internal.growth_barriers.barriers[].unlocks`, `strategy_layer.positioning.fit_evidence{}`,
+  `strategy_layer.pricing{variable_cost, fixed_costs, range_low, range_high, points[]}`,
+  `strategy_layer.scorecard.measures[].perspective` / `objective_text`, `globus.change_threshold`,
+  `globus.findings_log[]` (`key` = year + hash of the finding, `response`, `status`; team-added rows also
+  carry `year, type, area, title, evidence, lesson`). Each read-back appends to `workbook_sync[]`
+  (`at, workbook, cells_changed, rows_added, rows_removed, by_sheet`; last 20 kept).

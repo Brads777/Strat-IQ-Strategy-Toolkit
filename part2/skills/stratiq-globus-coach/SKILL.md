@@ -180,7 +180,7 @@ drift shows while there is still time to pivot. The sections:
 5. **What to look out for next round**: the watch items, each with its evidence and a general lesson.
 6. **Questions for the team** (2-3).
 
-Feedback, not recommendations: no decision values, no list of moves. Rebuild the workbook with `--report weekly-report-Y<n>.json`
+Feedback, not recommendations: no decision values, no list of moves. If the team has edited its workbook since the last report, read it back first (`stratiq-workbook`: `read_workbook.py --ledger <ledger>`), so the week's report uses their latest plans and brief. Rebuild the workbook with `--report weekly-report-Y<n>.json`
 so the **Findings & Questions** tab collects every week's watch items and questions; **Season by Year**,
 **Competition by Year** and **KPI Charts** hold the same series for the team to explore. Log each report to `globus.reports[]`.
 

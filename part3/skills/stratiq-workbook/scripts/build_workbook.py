@@ -71,6 +71,18 @@ def header(ws, row, names):
     ws.freeze_panes = ws.cell(row=row + 1, column=1)
 
 
+BINDS = []  # [sheet, cell, ledger path, converter, value as built] -> the hidden _ledger_map sheet
+
+
+def bindc(ws, ref, path, conv=None):
+    """Record that input cell `ref` holds the ledger value at `path` ('a/b[0]/c', 'list[key=v]/x', '{A}' = this
+    row's column A, '{@D5}' = cell D5, 'x|list' = converter). read_workbook.py writes changed cells back."""
+    if "|" in path and not conv:
+        path, conv = path.split("|", 1)
+    v = ws[ref].value
+    BINDS.append([ws.title, ref, path, conv or "", json.dumps(v, default=str)])
+
+
 def inp(ws, ref, value=None, fmt=None):
     c = ws[ref]
     if value is not None:
@@ -233,6 +245,8 @@ def sheet_mgmt(wb, L, mode):
          [6, 16, 46, 40, 30, 40, 18, 18, 34])
     mb = (g(L, "company_layer", "management_brief", default={}) or g(L, "globus", "management_brief", default={}) or {}) \
         if mode == "ledger" else {}
+    MB = "globus/management_brief" if (g(L, "globus", "management_brief") and not g(L, "company_layer", "management_brief")) \
+        else "company_layer/management_brief"
     ex = mode == "example"
     r = 5
     # ---- 1. Key issues (mirrors the memo's Key Issues section and Exhibit B) ----
@@ -244,6 +258,7 @@ def sheet_mgmt(wb, L, mode):
     inp(ws, f"C{r}", mb.get("central_problem") or ("[e.g. How should Company C position cameras and drones to beat "
                                                    "investor expectations over the season?]" if ex else None))
     ws.merge_cells(f"C{r}:I{r}")
+    bindc(ws, f"C{r}", MB + "/central_problem")
     ws.row_dimensions[r].height = 32
     r += 2
     blocks = [("Decisions management needs us to make", "decisions", "D", ["Decision", "By when", "Notes"]),
@@ -274,9 +289,14 @@ def sheet_mgmt(wb, L, mode):
                 if key == "questions" and j == 1:
                     continue
                 inp(ws, f"{get_column_letter(4 + j)}{rr}", v)
+            flds = {"decisions": ["text", "by_when", "notes"], "goals": ["text", "kpi", "target", "by_when"],
+                    "questions": ["text", "why"]}[key]
+            bindc(ws, f"B{rr}", f"{MB}/{key}[{i}]/{flds[0]}")
+            for j, fld in enumerate(flds[1:]):
+                bindc(ws, f"{get_column_letter(4 + j)}{rr}", f"{MB}/{key}[{i}]/{fld}")
             if key == "goals":
                 dv_list(ws, ["EPS", "ROE", "Stock price", "Credit rating", "Image rating", "Market share",
-                             "Cost per unit", "Other"], f"E{rr}")
+                             "Cost per unit", "Other"], f"D{rr}")
         r += 7
     ws.freeze_panes = None
     # ---- 2. Core questions ----
@@ -301,6 +321,8 @@ def sheet_mgmt(wb, L, mode):
                     "[e.g. Growth must be funded mostly from earnings]", "Credit rating", "Stated", ""]
         for j, v in enumerate(vals):
             inp(ws, f"{get_column_letter(4 + j)}{rr}", v)
+        for j, fld in enumerate(["said", "quote", "meaning", "touches", "confidence", "follow_up"]):
+            bindc(ws, f"{get_column_letter(4 + j)}{rr}", f"{MB}/answers[id=M{i+1}]/{fld}")
         ws.row_dimensions[rr].height = 42
     core1 = r + len(MGMT_CORE)
     r = core1 + 2
@@ -319,6 +341,8 @@ def sheet_mgmt(wb, L, mode):
         for j, v in enumerate([a.get("area"), a.get("question"), a.get("said"), a.get("quote"), a.get("meaning"),
                                a.get("touches"), a.get("confidence"), a.get("follow_up")]):
             inp(ws, f"{get_column_letter(2 + j)}{rr}", v)
+        for j, fld in enumerate(["area", "question", "said", "quote", "meaning", "touches", "confidence", "follow_up"]):
+            bindc(ws, f"{get_column_letter(2 + j)}{rr}", f"{MB}/team_questions[{i}]/{fld}")
         ws.row_dimensions[rr].height = 30
     own1 = r + 8
     for rng_ in (f"G{core0}:G{core1}", f"G{own0}:G{own1}"):
@@ -346,6 +370,8 @@ def sheet_mgmt(wb, L, mode):
         inp(ws, f"D{rr}", t_.get("from"))
         ws.merge_cells(start_row=rr, start_column=5, end_row=rr, end_column=9)
         inp(ws, f"E{rr}", t_.get("check"))
+        for col, fld in (("B", "text"), ("D", "from"), ("E", "check")):
+            bindc(ws, f"{col}{rr}", f"{MB}/takeaways[{i}]/{fld}")
     r += 7
     # ---- completeness ----
     label(ws, f"A{r}", "Completeness")
@@ -385,6 +411,9 @@ def sheet_pestel(wb, L, mode):
         for col, v in zip("ABCDEFH", vals[:6] + [vals[6]]):
             inp(ws, f"{col}{r}", v)
         inp(ws, f"I{r}", vals[7])
+        for col, fld in zip("ABCDEFHI", ["id", "dimension|pestel", "finding", "direction", "impact", "certainty",
+                                         "pl_line", "evidence|list"]):
+            bindc(ws, f"{col}{r}", f"industry_layer/pestel[{i}]/{fld}")
         fx(ws, f"G{r}", f'=IF(AND(ISNUMBER(E{r}),ISNUMBER(F{r})),E{r}*F{r},"")', "0")
     last = 5 + n
     dv_list(ws, ["Political", "Economic", "Social", "Technological", "Environmental", "Legal"], f"B6:B{last}")
@@ -422,9 +451,12 @@ def sheet_forces(wb, L, mode):
         for s in subs:
             label(ws, f"A{r}", name, bold=False)
             label(ws, f"B{r}", s, bold=False)
-            v = 4 if (mode == "example" and key == "suppliers" and s == "Supplier concentration") else None
+            v = 4 if (mode == "example" and key == "suppliers" and s == "Supplier concentration") else g(lf, key, "subfactors", s)
             inp(ws, f"C{r}", v)
-            inp(ws, f"D{r}", "Example: top three cell makers hold most global capacity" if v else None)
+            inp(ws, f"D{r}", "Example: top three cell makers hold most global capacity" if (v and mode == "example")
+                else g(lf, key, "subfactor_evidence", s))
+            bindc(ws, f"C{r}", f"industry_layer/forces[force={key}]/subfactors/{s}")
+            bindc(ws, f"D{r}", f"industry_layer/forces[force={key}]/subfactor_evidence/{s}")
             r += 1
     sub_last = r - 1
     dv_whole(ws, 1, 5, f"C6:C{sub_last}")
@@ -445,6 +477,8 @@ def sheet_forces(wb, L, mode):
         fx(ws, f"D{r}", f'=IF(ISNUMBER(C{r}),C{r},B{r})', "0.0")
         fx(ws, f"E{r}", f'=IF(D{r}="","",IF(D{r}>=4,"Strong",IF(D{r}>=2.5,"Moderate","Weak")))')
         inp(ws, f"F{r}", g(lf, key, "score_horizon"), "0.0")
+        bindc(ws, f"C{r}", f"industry_layer/forces[force={key}]/score_now")
+        bindc(ws, f"F{r}", f"industry_layer/forces[force={key}]/score_horizon")
         r += 1
     last = r - 1
     traffic(ws, f"E{first}:E{last}", f'E{first}="Weak"', f'E{first}="Moderate"', f'E{first}="Strong"')
@@ -483,6 +517,7 @@ def sheet_ksf(wb, L, mode):
            [f"Competitor {i+1}" for i in range(nc)])
     for i in range(nc):
         inp(ws, f"{get_column_letter(5+i)}5", comps[i] if i < len(comps) else f"Competitor {i+1}")
+        bindc(ws, f"{get_column_letter(5+i)}5", f"competitors[{i}]/name")
         ws[f"{get_column_letter(5+i)}5"].font = Font(name=F, size=10, bold=True, color="0000FF")
     n = max(10, len(ksfs) + 2)
     for i in range(n):
@@ -494,6 +529,9 @@ def sheet_ksf(wb, L, mode):
         inp(ws, f"D{r}", row[3] if row else None)
         for j in range(nc):
             inp(ws, f"{get_column_letter(5+j)}{r}", row[4 + j] if len(row) > 4 + j else None)
+            bindc(ws, f"{get_column_letter(5+j)}{r}", f"competitors[{j}]/ksf_scores/{{A}}/score")
+        for col, fld in (("A", "id"), ("B", "name"), ("C", "weight")):
+            bindc(ws, f"{col}{r}", f"industry_layer/ksf[{i}]/{fld}")
     last = 5 + n
     lastc = get_column_letter(4 + nc)
     dv_whole(ws, 1, 5, f"E6:{lastc}{last}")
@@ -540,6 +578,9 @@ def sheet_vrio(wb, L, mode):
         inp(ws, f"H{r}", row[6])
         inp(ws, f"I{r}", row[7], "0%")
         inp(ws, f"K{r}", row[8])
+        for col, fld in zip("ABCDEFHIK", ["item", "type", "v|yn", "r|yn", "i|yn", "o|yn", "links_ksf|list", "ksf_weight",
+                                          "evidence|list"]):
+            bindc(ws, f"{col}{r}", f"company_layer/internal/vrio[{i}]/{fld}")
         fx(ws, f"G{r}",
            f'=IF(A{r}="","",IF(C{r}<>"Yes",IF(C{r}="No","Competitive disadvantage","Undetermined"),'
            f'IF(D{r}<>"Yes",IF(D{r}="No","Competitive parity","Undetermined beyond valuable"),'
@@ -589,6 +630,8 @@ def sheet_swot(wb, L, mode):
                         "T": ("EU tariffs on imported EVs", "PESTEL: P2")}[pre]
             inp(ws, f"{c2}{r}", v)
             inp(ws, f"{c3}{r}", s)
+            bindc(ws, f"{c2}{r}", f"company_layer/internal/swot/{key}[{i}]/text")
+            bindc(ws, f"{c3}{r}", f"company_layer/internal/swot/{key}[{i}]/source|list")
     r = 23
     for cc, h in zip("ABC", ("Cell", "TOWS strategic option", "Pairs (e.g. S1 × O1)")):
         c = ws[f"{cc}{r}"]
@@ -600,9 +643,11 @@ def sheet_swot(wb, L, mode):
     for i in range(12):
         rr = r + 1 + i
         t = tows[i] if i < len(tows) else {}
-        inp(ws, f"A{rr}", (t.get("id") or "")[:2] if t else None)
+        inp(ws, f"A{rr}", (t.get("cell") or (t.get("id") or "")[:2]) if t else None)
         inp(ws, f"B{rr}", t.get("option"))
         inp(ws, f"C{rr}", " × ".join(t.get("pairs", []) or []) if t else None)
+        for col, fld in (("A", "cell"), ("B", "option"), ("C", "pairs|pairs")):
+            bindc(ws, f"{col}{rr}", f"company_layer/internal/tows[{i}]/{fld}")
     dv_list(ws, ["SO", "WO", "ST", "WT"], f"A{r+1}:A{r+12}")
 
 
@@ -634,6 +679,9 @@ def sheet_matrix(wb, L, mode):
         inp(ws, f"C{r}", row[2] if row else None)
         for j in range(no):
             inp(ws, f"{get_column_letter(4+j)}{r}", row[3 + j] if len(row) > 3 + j else None)
+            bindc(ws, f"{get_column_letter(4+j)}{r}", f"strategy_layer/decision_matrix/criteria[{i}]/scores/{{@{get_column_letter(4+j)}5}}")
+        for col, fld in (("A", "name"), ("B", "weight"), ("C", "goal")):
+            bindc(ws, f"{col}{r}", f"strategy_layer/decision_matrix/criteria[{i}]/{fld}")
     last = 5 + n
     lastc = get_column_letter(3 + no)
     dv_whole(ws, 1, 5, f"B6:{lastc}{last}")
@@ -670,6 +718,8 @@ def sheet_ev(wb, L, mode):
         inp(ws, f"A{r}", row[0])
         for col, v, f_ in zip("BCDEFG", row[1:], ["0%", "0.0", "0%", "0.0", "0%", "0.0"]):
             inp(ws, f"{col}{r}", v, f_)
+        for col, fld in zip("ABCDEFG", ["option", "p_strong", "npv_strong", "p_moderate", "npv_moderate", "p_weak", "npv_weak"]):
+            bindc(ws, f"{col}{r}", f"strategy_layer/expected_value/table[{i}]/{fld}")
         fx(ws, f"H{r}", f'=IF(A{r}="","",IF(ABS(B{r}+D{r}+F{r}-1)<0.001,"OK","Must sum to 100%"))')
         fx(ws, f"I{r}", f'=IF(A{r}="","",B{r}*C{r}+D{r}*E{r}+F{r}*G{r})', "0.00", bold=True)
         fx(ws, f"J{r}", f'=IF(A{r}="","",MIN(C{r},E{r},G{r}))', "0.0")
@@ -708,6 +758,8 @@ def sheet_ev(wb, L, mode):
         v = exl[sc] if mode == "example" else (tuple(lk.get(sc) or (None, None)) if mode == "ledger" else (None, None))
         inp(ws, f"C{rr}", v[0], "0%")
         inp(ws, f"D{rr}", v[1], "0%")
+        bindc(ws, f"C{rr}", f"strategy_layer/expected_value/pilot/likelihoods/{sc}[0]")
+        bindc(ws, f"D{rr}", f"strategy_layer/expected_value/pilot/likelihoods/{sc}[1]")
         fx(ws, f"E{rr}", f'=IF(C{rr}="","",IF(ABS(C{rr}+D{rr}-1)<0.001,"OK","Must sum to 100%"))')
         fx(ws, f"F{rr}", f'=IFERROR(B{rr}*C{rr}/SUMPRODUCT($B${b0+2}:$B${b0+4},$C${b0+2}:$C${b0+4}),"")', "0.0%")
         fx(ws, f"G{rr}", f'=IFERROR(B{rr}*D{rr}/SUMPRODUCT($B${b0+2}:$B${b0+4},$D${b0+2}:$D${b0+4}),"")', "0.0%")
@@ -741,6 +793,7 @@ def sheet_ev(wb, L, mode):
         label(ws, f"A{rr}", nm)
         if f_ is None:
             inp(ws, f"B{rr}", 0.5 if mode == "example" else pil.get("cost"), fmt)
+            bindc(ws, f"B{rr}", "strategy_layer/expected_value/pilot/cost")
         else:
             fx(ws, f"B{rr}", f_, fmt, bold=True)
     label(ws, f"C{q}", "If both results point to the same option, the pilot cannot change the choice and is worth "
@@ -765,6 +818,7 @@ def sheet_bc(wb, L, mode):
     for i, (k, v, f_) in enumerate(assume):
         label(ws, f"A{6+i}", k, bold=False)
         inp(ws, f"B{6+i}", v, f_)
+        bindc(ws, f"B{6+i}", "strategy_layer/business_case[0]/inputs/" + ["rate", "tax", "wc_pct"][i])
     if ex:
         ws["B6"].comment = Comment("Example values from the Strat-IQ Business Case template (illustrative).", "Strat-IQ")
     header_row = 10
@@ -784,6 +838,7 @@ def sheet_bc(wb, L, mode):
         for y in range(6):
             v = vals[y] if ex else (yrs[y].get(keys[k_i]) if y < len(yrs) else None)
             inp(ws, f"{get_column_letter(2+y)}{r}", v, f_)
+            bindc(ws, f"{get_column_letter(2+y)}{r}", f"strategy_layer/business_case[0]/inputs/years[{y}]/{keys[k_i]}")
         r += 1
     calc = [("Revenue", "={c}11*{c}12"), ("Contribution", "={c}11*({c}12-{c}13)"),
             ("Operating profit (EBIT)", "={c}17-{c}14"), ("Tax", "=MAX(0,{c}18)*$B$7"),
@@ -849,8 +904,9 @@ def sheet_risk(wb, L, mode):
         label(ws, f"A{r}", name, bold=False)
         vals = (lo, mid, hi) if mode == "example" else tuple((ra.get(key) or [None] * 3)[:3]) if mode == "ledger" else (None,) * 3
         fmt = "0.0%"
-        for col, v in zip("BCD", vals):
+        for k_, (col, v) in enumerate(zip("BCD", vals)):
             inp(ws, f"{col}{r}", v, fmt)
+            bindc(ws, f"{col}{r}", f"strategy_layer/risk_analysis/ranges/{key}[{k_}]")
         dflt = "'Business Case'!$B$6" if key == "rate" else "0"
         # effective values: blanks fall back to the likely value, then to plan
         fx(ws, f"F{r}", f'=IF(C{r}="",{dflt},C{r})', fmt)
@@ -1029,10 +1085,11 @@ def sheet_bsc(wb, L, mode):
         objs = {o.get("id"): o for o in sc.get("objectives", []) or []}
         for m in sc.get("measures", []) or []:
             o = objs.get(m.get("objective"), {})
-            rows.append([o.get("perspective_label") or {"financial": "Financial", "customer": "Customer",
-                                                         "internal": "Internal process",
-                                                         "learning": "Learning and growth"}.get(o.get("perspective"), o.get("perspective")),
-                         o.get("objective") or m.get("objective"), m.get("measure"), m.get("type"),
+            pk = m.get("perspective") or o.get("perspective")
+            rows.append([o.get("perspective_label") if not m.get("perspective") and o.get("perspective_label") else
+                         {"financial": "Financial", "customer": "Customer", "internal": "Internal process",
+                          "learning": "Learning and growth"}.get(pk, pk),
+                         m.get("objective_text") or o.get("objective") or m.get("objective"), m.get("measure"), m.get("type"),
                          m.get("better", "Higher"), m.get("target"), m.get("actual"), m.get("owner"),
                          m.get("initiative"), m.get("traces_to")])
         if not rows:
@@ -1050,6 +1107,9 @@ def sheet_bsc(wb, L, mode):
         row = rows[i] if i < len(rows) else [None] * 10
         for col, v in zip("ABCDEFGJKL", row):
             inp(ws, f"{col}{r}", v, "#,##0.00" if col in "FG" else None)
+        for col, fld in zip("ABCDEFGJKL", ["perspective|persp", "objective_text", "measure", "type", "better", "target",
+                                           "actual", "owner", "initiative", "traces_to"]):
+            bindc(ws, f"{col}{r}", f"strategy_layer/scorecard/measures[{i}]/{fld}")
         fx(ws, f"H{r}", f'=IF(AND(ISNUMBER(F{r}),ISNUMBER(G{r}),F{r}<>0,G{r}<>0),IF(E{r}="Lower",F{r}/G{r},G{r}/F{r}),"")',
            "0%")
         fx(ws, f"I{r}", f'=IF(H{r}="",IF(C{r}="","","No actual yet"),IF(H{r}>=1,"On target",IF(H{r}>=0.9,"Caution","Below plan")))')
@@ -1086,7 +1146,7 @@ def sheet_map(wb, L, mode, tmpdir):
         sc = g(L, "strategy_layer", "scorecard", default={}) or {}
         links = sc.get("links", []) or []
         for o in sc.get("objectives", []) or []:
-            drives = [l.get("to") for l in links if l.get("from") == o.get("id")] or o.get("drives", []) or []
+            drives = o.get("drives") or [l.get("to") for l in links if l.get("from") == o.get("id")] or []
             objs.append([o.get("id"), o.get("perspective"), o.get("objective"), ";".join(drives)])
     elif mode == "example":
         objs = [["F1", "financial", "Grow operating profit to full potential", ""],
@@ -1103,6 +1163,8 @@ def sheet_map(wb, L, mode, tmpdir):
         inp(ws, f"B{r}", norm.get(o[1], o[1]) if o[1] else None)
         inp(ws, f"C{r}", o[2])
         inp(ws, f"D{r}", o[3] or None)
+        for col, fld in zip("ABCD", ["id", "perspective|persp", "objective", "drives|list"]):
+            bindc(ws, f"{col}{r}", f"strategy_layer/scorecard/objectives[{i}]/{fld}")
         fx(ws, f"E{r}", f'=IF(A{r}="","",IF(AND(B{r}<>"Financial",D{r}=""),"Drives nothing",'
                         f'IF(AND(B{r}<>"Learning and growth",COUNTIF($D$6:$D${5+n},"*"&A{r}&"*")=0),"Nothing drives it","OK")))')
     last = 5 + n
@@ -1206,7 +1268,8 @@ def sheet_planner(wb, L, mode, caps, years):
          [22, 24, 40, 12] + [12] * ny)
     ws["A4"] = "Change threshold for the incremental-change check:"
     ws["A4"].font = B_FONT
-    inp(ws, "D4", 0.15, "0%")
+    inp(ws, "D4", g(L, "globus", "change_threshold", default=None) or 0.15, "0%")
+    bindc(ws, "D4", "globus/change_threshold")
     ws["D4"].comment = Comment("Course guardrail: incremental changes, one direction at a time. Moves bigger "
                                "than this are flagged below.", "Strat-IQ")
     header(ws, 5, ["Key (do not edit)", "Decision area", "Decision", "Unit"] + [f"Year {y}" for y in years])
@@ -1242,6 +1305,7 @@ def sheet_planner(wb, L, mode, caps, years):
             v = (plans.get(y) or {}).get(f["key"])
             fmt = {"$": "$#,##0.00", "%": "0%", "$000s": "#,##0", "count": "0", "days": "0", "stars": "0.0"}.get(f["unit"])
             inp(ws, f"{get_column_letter(5+j)}{r}", v, fmt)
+            bindc(ws, f"{get_column_letter(5+j)}{r}", f"globus/plans/{y}/{f['key']}")
     last = r0 + len(fields) - 1
     # change block
     top = last + 3
@@ -1700,7 +1764,12 @@ def sheet_kpi_charts(wb, season, comp):
 FINDING_TYPES = ["Finding", "Watch item", "Question to consider", "Management goal"]
 
 
-def sheet_findings(wb, mode, reports):
+def _fkey(y, title):
+    import hashlib
+    return f"Y{y}-" + hashlib.sha1(str(title).encode("utf-8")).hexdigest()[:8]
+
+
+def sheet_findings(wb, mode, reports, L=None):
     ws = wb.create_sheet("Findings & Questions")
     head(ws, "Findings and questions to consider", "One row per finding, watch item or question, year by year. "
          "Rows from the weekly report are filled in; add your own. The 'Our response' column is the team's.",
@@ -1721,6 +1790,21 @@ def sheet_findings(wb, mode, reports):
                          w.get("lesson"), None, "Open"])
         for q in rep.get("questions") or []:
             rows.append([y, "Question to consider", "", q, "", "", None, "Open"])
+    log = g(L or {}, "globus", "findings_log", default=[]) or []
+    keyed = {it.get("key"): it for it in log if isinstance(it, dict) and it.get("key")}
+    paths = []
+    for row in rows:
+        k = _fkey(row[0], row[3])
+        it = keyed.get(k) or {}
+        row[6] = it.get("response", row[6])
+        row[7] = it.get("status") or row[7]
+        paths.append(f"globus/findings_log[key={k}]")
+    nrep = len(rows)
+    for idx, it in enumerate(log):
+        if isinstance(it, dict) and it.get("title"):
+            rows.append([it.get("year"), it.get("type"), it.get("area"), it.get("title"), it.get("evidence"),
+                         it.get("lesson"), it.get("response"), it.get("status")])
+            paths.append(f"globus/findings_log[{idx}]")
     if not rows and mode == "example":
         rows = [[7, "Watch item", "Drones", "The position your inputs show differs from the strategy you chose",
                  "Chose differentiation; price +3.5% and P/Q +0.2 stars look like best-cost",
@@ -1733,8 +1817,10 @@ def sheet_findings(wb, mode, reports):
         row = rows[i] if i < len(rows) else [None] * 8
         for j, v in enumerate(row):
             c = ws.cell(row=rr, column=1 + j)
-            if j in (6, 7) or i >= len(rows):
+            if j in (6, 7) or i >= nrep:
                 inp(ws, c.coordinate, v)
+                base = paths[i] if i < len(paths) else "globus/findings_log[+]"
+                bindc(ws, c.coordinate, f"{base}/" + ["year", "type", "area", "title", "evidence", "lesson", "response", "status"][j])
             else:
                 c.value = v
                 c.font, c.alignment, c.border = Font(name=F, size=10), WRAP, BOX
@@ -1764,8 +1850,9 @@ def _public_by_company(caps):
 
 
 # ---------- process-step sheets (one per Strat-IQ step) ----------
-def _grid(ws, r, headers, data, n, fmts=None, heights=None):
-    """Header at row r, then n input rows filled from data (list of lists). Returns (first, last) data rows."""
+def _grid(ws, r, headers, data, n, fmts=None, heights=None, bind=None):
+    """Header at row r, then n input rows filled from data (list of lists). Returns (first, last) data rows.
+    bind = (ledger list path, [field per column or None]) records each row as list item i for read-back."""
     header(ws, r, headers)
     ws.freeze_panes = None
     fmts = fmts or [None] * len(headers)
@@ -1777,6 +1864,10 @@ def _grid(ws, r, headers, data, n, fmts=None, heights=None):
             inp(ws, f"{get_column_letter(1 + j)}{rr}", v, fmts[j] if j < len(fmts) else None)
         if heights:
             ws.row_dimensions[rr].height = heights
+        if bind:
+            for j, fld in enumerate(bind[1]):
+                if fld:
+                    bindc(ws, f"{get_column_letter(1 + j)}{rr}", f"{bind[0]}[{i}]/{fld}")
     return r + 1, r + n
 
 
@@ -1804,9 +1895,11 @@ def sheet_overview(wb, L, mode):
              ("Horizon", sc.get("horizon") or ("2026-2030" if ex else None)),
              ("Competitor set", _ids(sc.get("competitor_set")) or ", ".join(c.get("name", "") for c in (g(L, "competitors", default=[]) or [])) or ("[e.g. BYD, Tesla, VW Group]" if ex else None)),
              ("Base company", g(L, "company_layer", "focal_firm", default=None) or ("[e.g. BYD]" if ex else None))]
-    for k, v in items:
+    for (k, v), pth in zip(items, ["scope/industry", "scope/boundary_note", "scope/geography", "scope/horizon",
+                                   "scope/competitor_set|list", "company_layer/focal_firm"]):
         label(ws, f"A{r}", k, bold=False)
         inp(ws, f"B{r}", v)
+        bindc(ws, f"B{r}", pth)
         ws.merge_cells(f"B{r}:H{r}")
         r += 1
     r = _sec(ws, r + 1, "Market size (estimates differ by definition: show them side by side)")
@@ -1815,7 +1908,8 @@ def sheet_overview(wb, L, mode):
           for m in (ov.get("market_size") or [])]
     if ex and not ms:
         ms = [[21, "million units", 2025, "[publisher]", "BEV + PHEV car sales", "Yes"]]
-    a, b = _grid(ws, r, ["Value", "Unit", "Year", "Publisher", "Definition", "Matches scope?"], ms, 5)
+    a, b = _grid(ws, r, ["Value", "Unit", "Year", "Publisher", "Definition", "Matches scope?"], ms, 5,
+                 bind=("industry_layer/overview/market_size", ["value", "unit", "year", "publisher", "definition", "matches_scope|bool"]))
     dv_list(ws, ["Yes", "No"], f"F{a}:F{b}")
     r = b + 2
     r = _sec(ws, r, "Growth: compound annual growth rate calculator")
@@ -1828,17 +1922,20 @@ def sheet_overview(wb, L, mode):
     fx(ws, f"B{r}", f'=IFERROR((B{r-2}/B{r-3})^(1/B{r-1})-1,"")', "0.0%", bold=True)
     r += 2
     fc = [[x.get("publisher"), x.get("cagr"), x.get("to_year"), x.get("published")] for x in ((ov.get("growth") or {}).get("forecasts") or [])]
-    a, b = _grid(ws, r, ["Forecast: publisher", "CAGR", "To year", "Published"], fc, 4, [None, "0.0%", "0", None])
+    a, b = _grid(ws, r, ["Forecast: publisher", "CAGR", "To year", "Published"], fc, 4, [None, "0.0%", "0", None],
+                 bind=("industry_layer/overview/growth/forecasts", ["publisher", "cagr", "to_year", "published"]))
     r = b + 2
     r = _sec(ws, r, "Segments and customers")
     sg = [[s.get("name"), s.get("share"), s.get("growth"), s.get("buyers")] for s in (ov.get("segments") or [])]
-    a, b = _grid(ws, r, ["Segment", "Share", "Growth", "Who buys, and why"], sg, 5)
+    a, b = _grid(ws, r, ["Segment", "Share", "Growth", "Who buys, and why"], sg, 5,
+                 bind=("industry_layer/overview/segments", ["name", "share", "growth", "buyers"]))
     r = b + 2
     r = _sec(ws, r, "Key players and concentration")
     pl = [[p.get("name"), p.get("share")] for p in ((ov.get("players") or {}).get("leaders") or [])]
     if ex and not pl:
         pl = [["[Leader 1]", 0.22], ["[Leader 2]", 0.12], ["[Leader 3]", 0.07], ["[Leader 4]", 0.05]]
-    a, b = _grid(ws, r, ["Company", "Market share"], pl, 8, [None, "0.0%"])
+    a, b = _grid(ws, r, ["Company", "Market share"], pl, 8, [None, "0.0%"],
+                 bind=("industry_layer/overview/players/leaders", ["name", "share"]))
     label(ws, f"D{a}", "Top-4 share")
     fx(ws, f"E{a}", f'=IF(COUNT(B{a}:B{b})<4,"",LARGE(B{a}:B{b},1)+LARGE(B{a}:B{b},2)+LARGE(B{a}:B{b},3)+LARGE(B{a}:B{b},4))',
        "0.0%", bold=True)
@@ -1848,7 +1945,8 @@ def sheet_overview(wb, L, mode):
     r = b + 2
     r = _sec(ws, r, "Recent history: the events that explain today's structure")
     tl = [[t.get("year"), t.get("event"), t.get("why_it_mattered")] for t in (ov.get("timeline") or [])]
-    a, b = _grid(ws, r, ["Year", "Event", "Why it mattered"], tl, 8, ["0", None, None])
+    a, b = _grid(ws, r, ["Year", "Event", "Why it mattered"], tl, 8, ["0", None, None],
+                 bind=("industry_layer/overview/timeline", ["year", "event", "why_it_mattered"]))
     for rr in range(a, b + 1):
         ws.merge_cells(f"C{rr}:H{rr}")
     r = b + 2
@@ -1856,9 +1954,11 @@ def sheet_overview(wb, L, mode):
     lc = ov.get("lifecycle") or {}
     label(ws, f"A{r}", "Stage", bold=False)
     inp(ws, f"B{r}", lc.get("stage") or ("growth" if ex else None))
+    bindc(ws, f"B{r}", "industry_layer/overview/lifecycle/stage")
     dv_list(ws, ["emerging", "growth", "shakeout", "mature", "declining"], f"B{r}")
     label(ws, f"C{r}", "What it implies", bold=False)
     inp(ws, f"D{r}", lc.get("implication"))
+    bindc(ws, f"D{r}", "industry_layer/overview/lifecycle/implication")
     ws.merge_cells(f"D{r}:H{r}")
 
 
@@ -1881,7 +1981,10 @@ def sheet_competitive(wb, L, mode):
     r = _sec(ws, 5, "Financial benchmark and moat")
     hd = ["Company", "Fiscal year", "Currency", "Revenue (m)", "Gross margin", "Op. margin", "R&D % rev.",
           "Moat: network", "Moat: switching", "Moat: scale", "Moat: intangibles", "Apparent strategy"]
-    a, b = _grid(ws, r, hd, rows, 10, [None, None, None, "#,##0", "0.0%", "0.0%", "0.0%"] + [None] * 5)
+    a, b = _grid(ws, r, hd, rows, 10, [None, None, None, "#,##0", "0.0%", "0.0%", "0.0%"] + [None] * 5,
+                 bind=("competitors", ["name", "financials/fiscal_year", "financials/currency", "financials/revenue",
+                                       "financials/gross_margin", "financials/operating_margin", "financials/rnd_pct",
+                                       "moat/network", "moat/switching", "moat/scale", "moat/intangibles", "apparent_strategy"]))
     dv_list(ws, ["weak", "moderate", "strong"], f"H{a}:K{b}")
     label(ws, f"A{b+1}", "Peer median")
     for col in "DEFG":
@@ -1900,7 +2003,11 @@ def sheet_competitive(wb, L, mode):
             f"AND(ISNUMBER(B{r2+1}),B{r2+1}<-0.01)")
     r = r2 + 12
     r = _sec(ws, r, "Signals: what competitors are doing (hiring, patents, launches, capex, pricing)")
-    sig = [[c.get("name"), s.get("kind"), s.get("observation"), s.get("inference")] for c in comps for s in (c.get("signals") or [])]
+    sig, sigp = [], []
+    for ci, c in enumerate(comps):
+        for si, s_ in enumerate(c.get("signals") or []):
+            sig.append([c.get("name"), s_.get("kind"), s_.get("observation"), s_.get("inference")])
+            sigp.append(f"competitors[{ci}]/signals[{si}]")
     header(ws, r, ["Company", "Kind", "Observation", "", "", "", "", "What it suggests", "", "", "", ""])
     ws.merge_cells(f"C{r}:G{r}")
     ws.merge_cells(f"H{r}:L{r}")
@@ -1910,6 +2017,9 @@ def sheet_competitive(wb, L, mode):
         rr = a + i
         d = sig[i] if i < len(sig) else [None] * 4
         inp(ws, f"A{rr}", d[0]); inp(ws, f"B{rr}", d[1]); inp(ws, f"C{rr}", d[2]); inp(ws, f"H{rr}", d[3])
+        base = sigp[i] if i < len(sigp) else "competitors[name={A}]/signals[+]"
+        for col, fld in (("B", "kind"), ("C", "observation"), ("H", "inference")):
+            bindc(ws, f"{col}{rr}", f"{base}/{fld}")
         ws.merge_cells(f"C{rr}:G{rr}")
         ws.merge_cells(f"H{rr}:L{rr}")
     dv_list(ws, ["hiring", "patents", "launch", "capex", "pricing", "partnership", "exit", "other"], f"B{a}:B{b}")
@@ -1917,7 +2027,8 @@ def sheet_competitive(wb, L, mode):
     r = _sec(ws, r, "Annual-report seeds for PESTEL (risk factors and management discussion)")
     seeds = [[s.get("dimension"), s.get("kind"), s.get("text"), s.get("pl_line"), len(s.get("firms") or [])]
              for s in (g(L, "ci", "pestel_seeds", default=[]) or [])]
-    a, b = _grid(ws, r, ["PESTEL", "Kind", "Text", "P&L line", "Firms citing it"], seeds, 8, [None, None, None, None, "0"])
+    a, b = _grid(ws, r, ["PESTEL", "Kind", "Text", "P&L line", "Firms citing it"], seeds, 8, [None, None, None, None, "0"],
+                 bind=("ci/pestel_seeds", ["dimension", "kind", "text", "pl_line", None]))
     dv_list(ws, ["P", "E", "S", "T", "Env", "L"], f"A{a}:A{b}")
     dv_list(ws, ["risk_factor", "mdna_trend"], f"B{a}:B{b}")
 
@@ -1927,14 +2038,19 @@ def sheet_drivers(wb, L, mode):
     head(ws, "Trending Influence Factors", "Part 1, step 6. Candidates from PESTEL and Competitive Analysis; a driver must pass "
          "all four tests. Keep 3-5.", [8, 28, 14, 34, 16, 16, 10, 10, 10, 10, 13, 16])
     dr = g(L, "industry_layer", "drivers", default=[]) or []
-    rows = [[d.get("id"), d.get("name"), _ids(d.get("from_pestel")), d.get("transmission"), d.get("pl_line"),
-             _ids(d.get("forces_moved")), "Yes", "Yes", "Yes", "Yes", None, d.get("profit_pool")] for d in dr]
+    yn_ = lambda d, k: "No" if (d.get("tests") or {}).get(k) is False else "Yes"
+    rows = [[d.get("id"), d.get("name"), _ids(d.get("from_pestel") or d.get("from")), d.get("transmission"), d.get("pl_line"),
+             _ids(d.get("forces_moved")), yn_(d, "moves_force"), yn_(d, "moves_pl"), yn_(d, "within_horizon"),
+             yn_(d, "two_sources"), None, d.get("profit_pool")] for d in dr]
     if mode == "example" and not rows:
         rows = [["D1", "[Battery cost curve]", "P1", "[cheaper cells → lower input cost]", "cogs.inputs", "suppliers", "Yes", "Yes", "Yes", "Yes", None, "redistributing"],
                 ["D2", "[Fuel-price spike]", "P7", "[one-off demand pull]", "revenue.volume", "substitutes", "No", "Yes", "Yes", "No", None, "expanding"]]
     hd = ["ID", "Candidate driver", "From (PESTEL / CI ids)", "Mechanism → P&L", "P&L line", "Forces moved",
           "Moves a force ≥1 pt?", "Moves P&L for most firms?", "Acts within horizon?", "Two source types?", "Verdict", "Profit pool"]
-    a, b = _grid(ws, 5, hd, rows, 12, heights=30)
+    a, b = _grid(ws, 5, hd, rows, 12, heights=30,
+                 bind=("industry_layer/drivers", ["id", "name", "from_pestel|list", "transmission", "pl_line", "forces_moved|list",
+                                                  "tests/moves_force|bool", "tests/moves_pl|bool", "tests/within_horizon|bool",
+                                                  "tests/two_sources|bool", None, "profit_pool"]))
     dv_list(ws, ["Yes", "No"], f"G{a}:J{b}")
     dv_list(ws, ["expanding", "compressing", "redistributing"], f"L{a}:L{b}")
     for rr in range(a, b + 1):
@@ -1954,22 +2070,29 @@ def sheet_mapping(wb, L, mode):
     axes = s6.get("axes") or []
     comps = g(L, "competitors", default=[]) or []
     ax_names = [f"v{a}" for a in axes] if axes else []
+    ma = g(L, "company_layer", "map_axes", default={}) or {}
     label(ws, "A5", "Horizontal axis (vector)")
-    inp(ws, "B5", ax_names[0] if ax_names else ("[e.g. Ecosystem integration]" if mode == "example" else None))
+    inp(ws, "B5", ma.get("x") or (ax_names[0] if ax_names else ("[e.g. Ecosystem integration]" if mode == "example" else None)))
+    bindc(ws, "B5", "company_layer/map_axes/x")
     ws.merge_cells("B5:E5")
     label(ws, "A6", "Vertical axis (vector)")
-    inp(ws, "B6", ax_names[1] if len(ax_names) > 1 else ("[e.g. Resale value]" if mode == "example" else None))
+    inp(ws, "B6", ma.get("y") or (ax_names[1] if len(ax_names) > 1 else ("[e.g. Resale value]" if mode == "example" else None)))
+    bindc(ws, "B6", "company_layer/map_axes/y")
     ws.merge_cells("B6:E6")
     rows = []
     for c in comps[:10]:
         p = c.get("positions") or {}
-        x = p.get(ax_names[0]) if ax_names else None
-        y = p.get(ax_names[1]) if len(ax_names) > 1 else None
+        x = p.get(ax_names[0]) if ax_names else p.get("x")
+        y = p.get(ax_names[1]) if len(ax_names) > 1 else p.get("y")
         sc = lambda v: v * 10 if isinstance(v, (int, float)) and v <= 1 else v
-        rows.append([c.get("name"), sc(x), sc(y), None])
+        rows.append([c.get("name"), sc(x), sc(y), c.get("map_size")])
+    pk = (ax_names + [None, None])[:2] if ax_names else ["x", "y"]
+    tenth = any(isinstance(v, (int, float)) and v <= 1 for c in comps for v in (c.get("positions") or {}).values()) and bool(ax_names)
+    pconv = "|div10" if tenth else ""
     if mode == "example" and not rows:
         rows = [["[Firm A]", 3, 4, 5], ["[Firm B]", 8, 6, 2], ["[Firm C]", 5, 3, 3]]
-    a, b = _grid(ws, 8, ["Company", "X score (0-10)", "Y score (0-10)", "Size (share or revenue)"], rows, 10, [None, "0.0", "0.0", "0.0"])
+    a, b = _grid(ws, 8, ["Company", "X score (0-10)", "Y score (0-10)", "Size (share or revenue)"], rows, 10, [None, "0.0", "0.0", "0.0"],
+                 bind=("competitors", ["name", f"positions/{pk[0]}{pconv}", f"positions/{pk[1]}{pconv}", "map_size"]))
     ch = ScatterChart()
     ch.title, ch.height, ch.width = "Strategic map", 9, 14
     ch.scatterStyle = "marker"
@@ -1999,7 +2122,9 @@ def sheet_mapping(wb, L, mode):
     if mode == "example" and not cand:
         cand = [[1, 8.5, 2, "unpriced", "[the empty corner and who it serves]", "[…]", "[…]", "[…]", "[…]", "UNVALIDATED"]]
     a, b = _grid(ws, r, ["Rank", "X", "Y", "Demand", "Thesis", "Eliminate", "Reduce", "Raise", "Create", "Capability (after VRIO)"],
-                 cand, 5, ["0", "0.0", "0.0"] + [None] * 7, heights=36)
+                 cand, 5, ["0", "0.0", "0.0"] + [None] * 7, heights=36,
+                 bind=("company_layer/candidates", ["rank", "at[0]", "at[1]", "demand", "thesis", "errc/eliminate|list",
+                                                    "errc/reduce|list", "errc/raise|list", "errc/create|list", "capability"]))
     dv_list(ws, ["UNVALIDATED", "supported", "gap"], f"J{a}:J{b}")
     dv_list(ws, ["unpriced", "evidence of demand", "tested"], f"D{a}:D{b}")
     traffic(ws, f"J{a}:J{b}", f'J{a}="supported"', f'J{a}="UNVALIDATED"', f'J{a}="gap"')
@@ -2017,7 +2142,9 @@ def sheet_value_chain(wb, L, mode):
                 ["A2", "[Software and connected services]", "Technology", "custom", "in-house", 0.08, 0.20]]
     hd = ["ID", "Activity", "Porter category", "Stage", "Sourcing", "Cost share", "Value share", "Value − cost", "Reading", "Delivers KSF"]
     a, b = _grid(ws, 5, hd, [r_ + [None, None, _ids(v.get("delivers_ksf")) if i < len(vc) and (v := vc[i]) else None]
-                              for i, r_ in enumerate(rows)], 12, [None, None, None, None, None, "0%", "0%", "+0%;-0%;0%"])
+                              for i, r_ in enumerate(rows)], 12, [None, None, None, None, None, "0%", "0%", "+0%;-0%;0%"],
+                 bind=("company_layer/internal/value_chain", ["id", "activity", "porter_category", "stage", "sourcing",
+                                                              "cost_share", "value_share", None, None, "delivers_ksf|list"]))
     dv_list(ws, ["Inbound logistics", "Operations", "Outbound logistics", "Marketing and sales", "Service",
                  "Procurement", "Technology", "HR", "Firm infrastructure"], f"C{a}:C{b}")
     dv_list(ws, ["commodity", "product", "custom", "genesis"], f"D{a}:D{b}")
@@ -2051,9 +2178,13 @@ def sheet_unit_econ(wb, L, mode):
            ("Discount rate", lines.get("discount_rate") or (0.10 if ex else None), "0.0%"),
            ("Service margin per customer per year", lines.get("service_margin_year") or (300 if ex else None), "$#,##0")]
     label(ws, "A5", "Inputs")
+    UE = "company_layer/internal/unit_economics"
+    lk = [None, "price" if ("price" in lines and "asp" not in lines) else "asp", "variable_cost", "fixed_costs", "volume",
+          "cac", "units_per_customer_year", "retention", "discount_rate", "service_margin_year"]
     for i, (k, v, f_) in enumerate(ins):
         label(ws, f"A{6+i}", k, bold=False)
         inp(ws, f"B{6+i}", v, f_)
+        bindc(ws, f"B{6+i}", f"{UE}/unit" if i == 0 else f"{UE}/lines[line={lk[i]}]/value")
     P, V, Fx, Q, CAC, U, RET, DR, SM = "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15"
     label(ws, "D5", "Results")
     res = [("Contribution per unit", f'=IF(OR({P}="",{V}=""),"",{P}-{V})', "$#,##0"),
@@ -2100,19 +2231,23 @@ def sheet_rc(wb, L, mode):
     if ex and not res:
         res = [["R1", "[In-house cell plants]", "tangible", "[GWh of capacity]"], ["R2", "[Brand in home market]", "intangible", "[NPS / share]"]]
     r = _sec(ws, 5, "Resources")
-    a, b = _grid(ws, r, ["ID", "Resource", "Type", "Measure or evidence"], res, 8)
+    IN = "company_layer/internal"
+    a, b = _grid(ws, r, ["ID", "Resource", "Type", "Measure or evidence"], res, 8,
+                 bind=(f"{IN}/resources", ["id", "name", "type", "measure"]))
     dv_list(ws, ["tangible", "intangible", "human", "organisational"], f"C{a}:C{b}")
     cap = [[x.get("id"), x.get("name"), _ids(x.get("combines")), x.get("performance"), _ids(x.get("from_activity")), x.get("class")]
            for x in (I_.get("capabilities") or [])]
     if ex and not cap:
         cap = [["C1", "[Vertical battery integration]", "R1", "[cost per kWh below peers]", "A1", "distinctive"]]
     r = _sec(ws, b + 2, "Capabilities")
-    a2, b2 = _grid(ws, r, ["ID", "Capability", "Combines (resources)", "Performance evidence", "From activity", "Class"], cap, 8)
+    a2, b2 = _grid(ws, r, ["ID", "Capability", "Combines (resources)", "Performance evidence", "From activity", "Class"], cap, 8,
+                   bind=(f"{IN}/capabilities", ["id", "name", "combines|list", "performance", "from_activity|list", "class"]))
     dv_list(ws, ["threshold", "distinctive"], f"F{a2}:F{b2}")
     cc = [[x.get("capability"), x.get("customer_benefit"), x.get("hard_to_imitate"), x.get("extendable"), x.get("status")]
           for x in (I_.get("core_competencies") or [])]
     r = _sec(ws, b2 + 2, "Core competencies (Prahalad and Hamel: customer benefit, hard to imitate, extendable)")
-    a3, b3 = _grid(ws, r, ["Capability", "Customer benefit (KSF)", "Hard to imitate because", "Extends to", "Status"], cc, 5)
+    a3, b3 = _grid(ws, r, ["Capability", "Customer benefit (KSF)", "Hard to imitate because", "Extends to", "Status"], cc, 5,
+                   bind=(f"{IN}/core_competencies", ["capability", "customer_benefit", "hard_to_imitate", "extendable", "status"]))
     dv_list(ws, ["candidate", "confirmed", "removed"], f"E{a3}:E{b3}")
     label(ws, f"A{b3+2}", "Counts")
     fx(ws, f"B{b3+2}", f'=COUNTA(B{a}:B{b})&" resources · "&COUNTA(B{a2}:B{b2})&" capabilities ("&COUNTIF(F{a2}:F{b2},"distinctive")&" distinctive) · "&COUNTIF(E{a3}:E{b3},"confirmed")&" confirmed core competencies"')
@@ -2140,6 +2275,8 @@ def sheet_full_potential(wb, L, mode):
         inp(ws, f"C{r}", d.get("benchmark", (ex.get(k) or (None, None))[1]), "#,##0")
         inp(ws, f"D{r}", d.get("benchmark_source") or ("peer median" if ex else None))
         inp(ws, f"E{r}", d.get("controllability") or ("controllable" if ex else None))
+        for col, fld in zip("BCDE", ["today", "benchmark", "benchmark_source", "controllability"]):
+            bindc(ws, f"{col}{r}", f"company_layer/internal/full_potential/drivers[driver={k}]/{fld}")
         lower = k in ("variable_cost", "fixed_cost")
         fx(ws, f"F{r}", f'=IF(B{r}="","",IF(C{r}="",B{r},{"MIN" if lower else "MAX"}(B{r},C{r})))', "#,##0")
     dv_list(ws, ["controllable", "capability-bound", "structural"], "E6:E10")
@@ -2191,7 +2328,11 @@ def sheet_growth_barriers(wb, L, mode):
             st = {"access": "binding", "capital": "tight"}.get(k, "slack")
         inp(ws, f"B{r}", st)
         inp(ws, f"C{r}", d.get("evidence") if isinstance(d.get("evidence"), str) else None)
-        inp(ws, f"D{r}", gb.get("unlocked") if k == gb.get("binding") else None)
+        inp(ws, f"D{r}", gb.get("unlocked") if k == gb.get("binding") else d.get("unlocks"))
+        GB = "company_layer/internal/growth_barriers"
+        bindc(ws, f"B{r}", f"{GB}/barriers[barrier={k}]/status")
+        bindc(ws, f"C{r}", f"{GB}/barriers[barrier={k}]/evidence")
+        bindc(ws, f"D{r}", f"{GB}/unlocked" if k == gb.get("binding") else f"{GB}/barriers[barrier={k}]/unlocks")
         ws.row_dimensions[r].height = 30
     dv_list(ws, ["binding", "tight", "slack"], "B6:B11")
     traffic(ws, "B6:B11", 'B6="slack"', 'B6="tight"', 'B6="binding"')
@@ -2210,10 +2351,12 @@ def sheet_positioning(wb, L, mode):
             ("Target customers", p.get("target")), ("Source of advantage", p.get("advantage")),
             ("Why now", p.get("why_now")), ("What we will not do", p.get("not_doing")),
             ("Positioning statement (your words)", p.get("statement"))]
+    pkeys = ["strategy", "target", "advantage", "why_now", "not_doing", "statement"]
     for i, (k, v) in enumerate(rows):
         r = 5 + i
         label(ws, f"A{r}", k, bold=False)
         inp(ws, f"B{r}", v)
+        bindc(ws, f"B{r}", f"strategy_layer/positioning/{pkeys[i]}")
         ws.merge_cells(f"B{r}:D{r}")
         ws.row_dimensions[r].height = 30 if i < 5 else 48
     dv_list(ws, ["Low-cost provider", "Broad differentiation", "Best-cost provider", "Focused low-cost",
@@ -2231,7 +2374,9 @@ def sheet_positioning(wb, L, mode):
         label(ws, f"A{r}", lab, bold=False)
         label(ws, f"B{r}", q, bold=False)
         inp(ws, f"C{r}", fit.get(k))
-        inp(ws, f"D{r}", None)
+        inp(ws, f"D{r}", (p.get("fit_evidence") or {}).get(k))
+        bindc(ws, f"C{r}", f"strategy_layer/positioning/fit/{k}")
+        bindc(ws, f"D{r}", f"strategy_layer/positioning/fit_evidence/{k}")
     dv_list(ws, ["supported", "open question", "conflicts"], "C13:C17")
     traffic(ws, "C13:C17", 'C13="supported"', 'C13="open question"', 'C13="conflicts"')
     label(ws, "A19", "Fit summary")
@@ -2248,13 +2393,15 @@ def sheet_options(wb, L, mode):
     for i, (k, lab) in enumerate((("situation", "Situation"), ("complication", "Complication"), ("question", "Question"))):
         label(ws, f"A{5+i}", lab, bold=False)
         inp(ws, f"B{5+i}", scq.get(k))
+        bindc(ws, f"B{5+i}", f"strategy_layer/options/scq/{k}")
         ws.merge_cells(f"B{5+i}:G{5+i}")
     rows = [[x.get("id"), x.get("name"), x.get("route"), _ids(x.get("exploits")), x.get("staged_step"), x.get("gate"),
              "Yes" if x.get("suggested") else "No"] for x in (o.get("options") or [])]
     if ex and not rows:
         rows = [["O-A", "[Build an EU plant]", "build", "ST1", "[pilot line first]", "[orders > X by Q4]", "No"],
                 ["O-0", "Do nothing", "do nothing", "", "", "", "No"]]
-    a, b = _grid(ws, 9, ["ID", "Option", "Route", "Exploits (TOWS ids)", "Staged first step", "Gate to the next stage", "Suggested?"], rows, 8, heights=30)
+    a, b = _grid(ws, 9, ["ID", "Option", "Route", "Exploits (TOWS ids)", "Staged first step", "Gate to the next stage", "Suggested?"], rows, 8, heights=30,
+                 bind=("strategy_layer/options/options", ["id", "name", "route", "exploits|list", "staged_step", "gate", "suggested|bool"]))
     dv_list(ws, ["build", "buy", "partner", "license", "focus", "exit", "do nothing"], f"C{a}:C{b}")
     dv_list(ws, ["Yes", "No"], f"G{a}:G{b}")
     label(ws, f"A{b+2}", "Checks")
@@ -2267,15 +2414,14 @@ def sheet_pricing(wb, L, mode):
     head(ws, "Pricing (optional)", "Part 3. Only when price is a lever. Test price points against the volume you expect at "
          "each; the sheet finds the profit-maximising point inside the acceptable range.", [18, 16, 16, 16, 18, 14])
     ex = mode == "example"
-    label(ws, "A5", "Variable cost per unit", bold=False)
-    inp(ws, "B5", 20000 if ex else None, "$#,##0")
-    label(ws, "A6", "Fixed costs", bold=False)
-    inp(ws, "B6", 180000000 if ex else None, "$#,##0")
-    label(ws, "A7", "Acceptable range: low", bold=False)
-    inp(ws, "B7", 28000 if ex else None, "$#,##0")
-    label(ws, "A8", "Acceptable range: high", bold=False)
-    inp(ws, "B8", 36000 if ex else None, "$#,##0")
-    data = [[28000, 42000], [30000, 39000], [32000, 36000], [34000, 31000], [36000, 26000]] if ex else []
+    pr = g(L, "strategy_layer", "pricing", default={}) or {}
+    for r_, (lab, key, exv) in enumerate([("Variable cost per unit", "variable_cost", 20000), ("Fixed costs", "fixed_costs", 180000000),
+                                          ("Acceptable range: low", "range_low", 28000), ("Acceptable range: high", "range_high", 36000)]):
+        label(ws, f"A{5+r_}", lab, bold=False)
+        inp(ws, f"B{5+r_}", exv if ex else pr.get(key), "$#,##0")
+        bindc(ws, f"B{5+r_}", f"strategy_layer/pricing/{key}")
+    data = [[28000, 42000], [30000, 39000], [32000, 36000], [34000, 31000], [36000, 26000]] if ex else \
+        [[p_.get("price"), p_.get("volume")] for p_ in (pr.get("points") or []) if isinstance(p_, dict)]
     header(ws, 10, ["Price point", "Expected volume", "Revenue", "Contribution", "Operating profit", "In range?"])
     ws.freeze_panes = None
     for i in range(8):
@@ -2283,6 +2429,8 @@ def sheet_pricing(wb, L, mode):
         d = data[i] if i < len(data) else [None, None]
         inp(ws, f"A{r}", d[0], "$#,##0")
         inp(ws, f"B{r}", d[1], "#,##0")
+        bindc(ws, f"A{r}", f"strategy_layer/pricing/points[{i}]/price")
+        bindc(ws, f"B{r}", f"strategy_layer/pricing/points[{i}]/volume")
         fx(ws, f"C{r}", f'=IF(OR(A{r}="",B{r}=""),"",A{r}*B{r})', "$#,##0")
         fx(ws, f"D{r}", f'=IF(C{r}="","",(A{r}-$B$5)*B{r})', "$#,##0")
         fx(ws, f"E{r}", f'=IF(D{r}="","",D{r}-$B$6)', "$#,##0;($#,##0)")
@@ -2309,13 +2457,16 @@ def sheet_stress(wb, L, mode):
         rr = r + 1 + i
         d = asm[i] if i < len(asm) else [None] * 5
         inp(ws, f"A{rr}", d[0]); inp(ws, f"B{rr}", d[1], "#,##0.##"); inp(ws, f"C{rr}", d[2], "#,##0.##"); inp(ws, f"D{rr}", d[3])
+        for col, fld in zip("ABCD", ["assumption", "value", "break_even", "evidence"]):
+            bindc(ws, f"{col}{rr}", f"strategy_layer/stress_test/assumptions[{i}]/{fld}")
         fx(ws, f"E{rr}", f'=IF(OR(B{rr}="",C{rr}="",B{rr}=0),"",ABS(B{rr}-C{rr})/ABS(B{rr}))', "0%")
         fx(ws, f"F{rr}", f'=IF(E{rr}="","",IF(E{rr}<0.1,"Yes","No"))', bold=True)
     traffic(ws, f"F{r+1}:F{r+8}", f'F{r+1}="No"', "FALSE", f'F{r+1}="Yes"')
     r = r + 10
     r = _sec(ws, r, "Competitor war-game")
     wg = [[x.get("rival"), x.get("response"), x.get("effect"), x.get("counter")] for x in (st.get("war_game") or []) if isinstance(x, dict)]
-    a, b = _grid(ws, r, ["Rival", "Most likely response", "Effect on us", "Our counter"], wg, 5, heights=30)
+    a, b = _grid(ws, r, ["Rival", "Most likely response", "Effect on us", "Our counter"], wg, 5, heights=30,
+                 bind=("strategy_layer/stress_test/war_game", ["rival", "response", "effect", "counter"]))
     r = b + 2
     r = _sec(ws, r, "Risk register")
     rk = [[x.get("risk"), x.get("likelihood"), x.get("impact"), None, None, x.get("owner"), x.get("mitigation"), x.get("trigger")]
@@ -2332,6 +2483,8 @@ def sheet_stress(wb, L, mode):
         fx(ws, f"E{rr}", f'=IF(D{rr}="","",IF(D{rr}>=15,"High",IF(D{rr}>=8,"Medium","Low")))', bold=True)
         for col, v in zip("FGH", d[5:]):
             inp(ws, f"{col}{rr}", v)
+        for col, fld in zip("ABCFGH", ["risk", "likelihood", "impact", "owner", "mitigation", "trigger"]):
+            bindc(ws, f"{col}{rr}", f"strategy_layer/stress_test/risks[{i}]/{fld}")
     dv_whole(ws, 1, 5, f"B{r+1}:C{r+10}")
     traffic(ws, f"E{r+1}:E{r+10}", f'E{r+1}="Low"', f'E{r+1}="Medium"', f'E{r+1}="High"')
     label(ws, f"A{r+12}", "High risks without an owner")
@@ -2347,6 +2500,7 @@ def sheet_gtm(wb, L, mode):
     for i, (k, lab) in enumerate((("beachhead", "Beachhead segment"), ("icp", "Ideal customer profile"), ("value_prop", "Value proposition"))):
         label(ws, f"A{5+i}", lab, bold=False)
         inp(ws, f"B{5+i}", gm.get(k))
+        bindc(ws, f"B{5+i}", f"strategy_layer/gtm/{k}")
         ws.merge_cells(f"B{5+i}:I{5+i}")
     ch = [[c.get("channel"), c.get("spend"), c.get("reach"), c.get("lead_rate"), c.get("close_rate")] for c in (gm.get("channels") or []) if isinstance(c, dict)]
     if ex and not ch:
@@ -2358,6 +2512,8 @@ def sheet_gtm(wb, L, mode):
         d = ch[i] if i < len(ch) else [None] * 5
         inp(ws, f"A{r}", d[0]); inp(ws, f"B{r}", d[1], "$#,##0"); inp(ws, f"C{r}", d[2], "#,##0")
         inp(ws, f"D{r}", d[3], "0.0%"); inp(ws, f"E{r}", d[4], "0.0%")
+        for col, fld in zip("ABCDE", ["channel", "spend", "reach", "lead_rate", "close_rate"]):
+            bindc(ws, f"{col}{r}", f"strategy_layer/gtm/channels[{i}]/{fld}")
         fx(ws, f"F{r}", f'=IF(OR(C{r}="",D{r}=""),"",C{r}*D{r})', "#,##0")
         fx(ws, f"G{r}", f'=IF(OR(F{r}="",E{r}=""),"",F{r}*E{r})', "#,##0")
         fx(ws, f"H{r}", f'=IFERROR(IF(G{r}>0,B{r}/G{r},""),"")', "$#,##0")
@@ -2369,7 +2525,8 @@ def sheet_gtm(wb, L, mode):
     fx(ws, "H18", '=IFERROR(B18/G18,"")', "$#,##0", bold=True)
     ph = [[p.get("phase"), p.get("when"), p.get("goal"), p.get("gate")] for p in (gm.get("phases") or []) if isinstance(p, dict)]
     r = _sec(ws, 20, "Launch phases and gates")
-    _grid(ws, r, ["Phase", "When", "Goal", "Gate to the next phase"], ph, 4)
+    _grid(ws, r, ["Phase", "When", "Goal", "Gate to the next phase"], ph, 4,
+          bind=("strategy_layer/gtm/phases", ["phase", "when", "goal", "gate"]))
 
 
 def sheet_initiatives(wb, L, mode):
@@ -2378,17 +2535,17 @@ def sheet_initiatives(wb, L, mode):
          "The binding constraint goes first; every initiative traces to a finding.", [8, 34, 16, 12, 12, 13, 12, 12, 8, 14, 12])
     ini = g(L, "strategy_layer", "initiatives", default=[]) or []
     rows = [[x.get("id"), x.get("initiative"), x.get("traces_to"), x.get("reach"), x.get("impact"), x.get("confidence"),
-             x.get("effort")] for x in ini]
+             x.get("effort"), None, None, x.get("depends_on"), x.get("status")] for x in ini]
     if mode == "example" and not rows:
-        rows = [["I1", "[Secure dealer partners in Germany]", "GB:access", 5000, 2, 0.8, 4],
-                ["I2", "[Cut cell cost 8%]", "K1", 20000, 1, 0.5, 6]]
+        rows = [["I1", "[Secure dealer partners in Germany]", "GB:access", 5000, 2, 0.8, 4, None, None, None, None],
+                ["I2", "[Cut cell cost 8%]", "K1", 20000, 1, 0.5, 6, None, None, None, None]]
     hd = ["ID", "Initiative", "Traces to", "Reach", "Impact (0.25-3)", "Confidence", "Effort (person-months)", "RICE", "Rank", "Depends on", "Status"]
-    a, b = _grid(ws, 5, hd, [r_ + [None, None, None, None] for r_ in rows], 12, [None, None, None, "#,##0", "0.00", "0%", "0.0"])
+    a, b = _grid(ws, 5, hd, rows, 12, [None, None, None, "#,##0", "0.00", "0%", "0.0"],
+                 bind=("strategy_layer/initiatives", ["id", "initiative", "traces_to", "reach", "impact", "confidence", "effort",
+                                                      None, None, "depends_on", "status"]))
     for rr in range(a, b + 1):
         fx(ws, f"H{rr}", f'=IF(OR(D{rr}="",E{rr}="",F{rr}="",G{rr}="",G{rr}=0),"",D{rr}*E{rr}*F{rr}/G{rr})', "#,##0", bold=True)
         fx(ws, f"I{rr}", f'=IF(H{rr}="","",RANK(H{rr},$H${a}:$H${b}))', "0")
-        inp(ws, f"J{rr}", None)
-        inp(ws, f"K{rr}", None)
     dv_list(ws, ["now", "next", "later", "dropped"], f"K{a}:K{b}")
     label(ws, f"A{b+2}", "Initiatives with nothing to trace to")
     fx(ws, f"C{b+2}", f'=COUNTIFS(B{a}:B{b},"<>",C{a}:C{b},"")', "0", bold=True)
@@ -2405,8 +2562,10 @@ def sheet_operating(wb, L, mode):
     if mode == "example" and not rap:
         rap = [["[Enter Germany]", "[Strategy lead]", "[CFO]", "[EU GM]", "[Sales, Legal]", "[CEO]"]]
     r = _sec(ws, 5, "Decision rights (RAPID)")
-    a, b = _grid(ws, r, ["Decision", "Recommend", "Agree", "Perform", "Input", "Decide"], rap, 6)
+    a, b = _grid(ws, r, ["Decision", "Recommend", "Agree", "Perform", "Input", "Decide"], rap, 6,
+                 bind=("strategy_layer/operating_model/decision_rights", ["decision", "recommend", "agree", "perform", "input", "decide"]))
     sh = g(L, "strategy_layer", "stakeholders", default={}) or {}
+    SHK = "strategy_layer/stakeholders/" + ("list" if sh.get("list") else "stakeholders")
     st = [[x.get("name"), None, None, None, None, None, x.get("power"), x.get("interest"), x.get("stance"), None, x.get("action")]
           for x in (sh.get("list") or sh.get("stakeholders") or []) if isinstance(x, dict)]
     if mode == "example" and not st:
@@ -2425,6 +2584,8 @@ def sheet_operating(wb, L, mode):
         inp(ws, f"G{rr}", d[6], "0"); inp(ws, f"H{rr}", d[7], "0"); inp(ws, f"I{rr}", d[8], "+0;-0;0")
         fx(ws, f"J{rr}", f'=IF(OR(G{rr}="",H{rr}=""),"",IF(G{rr}>=3,IF(H{rr}>=3,"Manage closely","Keep satisfied"),IF(H{rr}>=3,"Keep informed","Monitor")))', bold=True)
         inp(ws, f"K{rr}", d[10])
+        for col, fld in zip("AGHIK", ["name", "power", "interest", "stance", "action"]):
+            bindc(ws, f"{col}{rr}", f"{SHK}[{i}]/{fld}")
     dv_whole(ws, 1, 5, f"G{s0}:H{s0+9}")
     dv_whole(ws, -2, 2, f"I{s0}:I{s0+9}")
     ch = ScatterChart()
@@ -2450,8 +2611,8 @@ def sheet_roadmap(wb, L, mode):
     head(ws, "Execution Roadmap (Exhibit S)", "Part 3, step 27. The first 100 days by workstream (the bars fill in from the "
          "start and end weeks), milestones and stage gates.", [30, 16, 8, 8] + [3.2] * 15 + [4])
     rm = g(L, "strategy_layer", "roadmap", default={}) or {}
-    ws_ = [[x.get("action") or x.get("workstream"), x.get("owner"), x.get("start_week"), x.get("end_week")]
-           for x in (rm.get("first_100_days") or []) if isinstance(x, dict)]
+    fd = [x for x in (rm.get("first_100_days") or []) if isinstance(x, dict)]
+    ws_ = [[x.get("action") or x.get("workstream"), x.get("owner"), x.get("start_week"), x.get("end_week")] for x in fd]
     if mode == "example" and not ws_:
         ws_ = [["[Sign two dealer groups]", "[EU GM]", 1, 8], ["[Pilot line ready]", "[COO]", 4, 14]]
     header(ws, 5, ["Workstream / action", "Owner", "Start wk", "End wk"] + [str(w) for w in range(1, 16)])
@@ -2460,6 +2621,9 @@ def sheet_roadmap(wb, L, mode):
         r = 6 + i
         d = ws_[i] if i < len(ws_) else [None] * 4
         inp(ws, f"A{r}", d[0]); inp(ws, f"B{r}", d[1]); inp(ws, f"C{r}", d[2], "0"); inp(ws, f"D{r}", d[3], "0")
+        af = "workstream" if (i < len(fd) and not fd[i].get("action") and fd[i].get("workstream")) else "action"
+        for col, fld in zip("ABCD", [af, "owner", "start_week", "end_week"]):
+            bindc(ws, f"{col}{r}", f"strategy_layer/roadmap/first_100_days[{i}]/{fld}")
         for w in range(1, 16):
             col = get_column_letter(4 + w)
             ws[f"{col}{r}"].border = BOX
@@ -2470,10 +2634,12 @@ def sheet_roadmap(wb, L, mode):
     dv_whole(ws, 1, 15, "C6:D17")
     ms = [[x.get("milestone"), x.get("date"), x.get("kpi"), x.get("target")] for x in (rm.get("milestones") or []) if isinstance(x, dict)]
     r = _sec(ws, 20, "Milestones")
-    a, b = _grid(ws, r, ["Milestone", "Date", "KPI", "Target"], ms, 6)
+    a, b = _grid(ws, r, ["Milestone", "Date", "KPI", "Target"], ms, 6,
+                 bind=("strategy_layer/roadmap/milestones", ["milestone", "date", "kpi", "target"]))
     gt = [[x.get("gate"), x.get("criteria"), x.get("evidence"), x.get("decision_date")] for x in (rm.get("gates") or []) if isinstance(x, dict)]
     r = _sec(ws, b + 2, "Stage gates (go / no-go)")
-    _grid(ws, r, ["Gate", "Criteria to pass", "Evidence we will use", "Decision date"], gt, 4)
+    _grid(ws, r, ["Gate", "Criteria to pass", "Evidence we will use", "Decision date"], gt, 4,
+          bind=("strategy_layer/roadmap/gates", ["gate", "criteria", "evidence", "decision_date"]))
 
 
 def main():
@@ -2542,7 +2708,7 @@ def main():
         season = sheet_season(wb, L, mode, caps, fspec, rspec, syears)
         comp = sheet_competition(wb, caps, mode, syears)
         sheet_kpi_charts(wb, season, comp)
-        sheet_findings(wb, mode, reports)
+        sheet_findings(wb, mode, reports, L)
         part = {"Start": "C9A55C", "Management Interviews": "C9A55C"}
         p1 = ["Industry Overview", "Competitive Analysis", "PESTEL", "Five Forces", "Trending Factors", "KSF Scorecard", "Strategic Mapping"]
         p2 = ["Value Chain", "Unit Economics", "Resources & Capabilities", "VRIO", "Full Potential", "Growth Barriers", "SWOT-TOWS"]
@@ -2551,8 +2717,16 @@ def main():
             ws.sheet_properties.tabColor = part.get(t) or ("457B9D" if t in p1 else "2D936C" if t in p2 else
                                                          "C44536" if (t.startswith("GLO-BUS") or t in ("Season by Year", "Competition by Year", "KPI Charts", "Findings & Questions"))
                                                          else NAVY)
+        mp = wb.create_sheet("_ledger_map")
+        mp.append(["strat-iq-ledger-map", 1, mode, L.get("scope_id") if isinstance(L, dict) else None,
+                   os.path.basename(ledger) if ledger else None])
+        mp.append(["sheet", "cell", "path", "conv", "built"])
+        for b_ in BINDS:
+            mp.append(b_)
+        mp.sheet_state = "veryHidden"
         wb.save(out)
-    print(json.dumps({"out": out, "mode": mode, "sheets": [ws.title for ws in wb.worksheets]}))
+    print(json.dumps({"out": out, "mode": mode, "bound_cells": len(BINDS),
+                      "sheets": [ws.title for ws in wb.worksheets if ws.sheet_state == "visible"]}))
 
 
 if __name__ == "__main__":

@@ -77,7 +77,7 @@ Mode D runs it in four moves, with a checkpoint after each step:
 | Plan | — | Negotiation Prep | `stratiq-negotiation-prep` | Only when a deal must be struck |
 | Plan | 27 | Execution Roadmap | `stratiq-execution-roadmap` | First 100 days, milestones, stage gates (S) |
 | Track | 28 | Value Realization | `stratiq-value-realization` | Balanced Scorecard and Strategy Map now (U); plan vs actual later |
-| Track | — | Strat-IQ Workbook | `stratiq-workbook` | The whole analysis as live Excel worksheets, pre-filled from the ledger, plus the GLO-BUS Decision Planner |
+| Track | — | Strat-IQ Workbook | `stratiq-workbook` | The whole analysis as live Excel worksheets, pre-filled from the ledger, plus the GLO-BUS Decision Planner. Two-way: `read_workbook.py` writes the team's edits back into the ledger |
 | Track | — | Memo Coach | `stratiq-memo-coach` | Checks a case memo draft; never writes it |
 | Track | — | Executive and VC Pitch | `stratiq-pitch` | Board or VC pitch from the ledger, readiness scorecard |
 
@@ -238,6 +238,7 @@ them, `stratiq-case-exhibits` builds H-K from Part 2 and then L-O, instead of st
 | What to do first, organisation, stakeholders, first 100 days | … → Initiative Prioritizer → Operating Model → Stakeholder Map → Execution Roadmap |
 | KPIs, balanced scorecard, strategy map, plan vs actual | Value Realization |
 | An Excel workbook or worksheets of the analysis, or a GLO-BUS decision planner | `stratiq-workbook` (from the ledger as it stands, plus any GLO-BUS capture files) |
+| "We edited the workbook" / "read our workbook back" | `stratiq-workbook` read-back (`read_workbook.py --dry-run`, show the changes, then write them to the ledger) before any other step |
 | Checking GLO-BUS entries against the plan | `stratiq-globus-capture` Step 5 |
 | Feedback on a memo draft | Memo Coach |
 | A board or investor pitch | the Part 3 chain the ledger lacks → Pitch |
