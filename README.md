@@ -1,88 +1,98 @@
-# Strat-IQ Toolkit
+# Strat-IQ Toolkit: AI strategic analysis skills for Claude, with a GLO-BUS weekly coach
 
-**A Claude skill pack that takes a team from industry evidence to a chosen, tested and tracked strategy —
-the way a strategy consultant works, with every claim traced to evidence.** Part 1 reads the industry,
-Part 2 the company, Part 3 makes the strategy work; GLO-BUS tools, an Excel workbook and weekly reviews
-run alongside. 40 skills.
+**Strat-IQ is a free (noncommercial) Claude skill pack that runs a full strategic analysis the way a
+strategy consultant does: industry analysis (PESTEL, Porter's Five Forces, key success factors,
+strategic group maps), company analysis (value chain, unit economics, VRIO, SWOT/TOWS), and strategy
+(options, decision matrix, NPV business case, Monte Carlo risk analysis, expected value, go-to-market,
+Balanced Scorecard).** For the GLO-BUS business simulation it adds a weekly loop that produces three
+files every round: an **executive analysis memo**, an **executive PowerPoint presentation**, and an
+**Excel workbook that is the team's ledger and database**.
 
 [![License: PolyForm Noncommercial + CC BY-NC](https://img.shields.io/badge/License-Noncommercial-orange.svg)](LICENSE)
-![Skills: 40](https://img.shields.io/badge/skills-40-brightgreen)
+![Skills](https://img.shields.io/badge/skills-40%20to%20install-brightgreen)
+![Version](https://img.shields.io/badge/version-3.1.0-1d3557)
 ![Works in: Claude.ai · Claude Code · Cowork](https://img.shields.io/badge/works%20in-Claude.ai%20%C2%B7%20Claude%20Code%20%C2%B7%20Cowork-orange)
 
-Built by **Brad Scheller** for MGT4850 Strategic Management (Northeastern University, Fall 2026) and
-for real client work. Formerly StratOS.
+**[Download the latest release](../../releases/latest)** ·
+**[Install guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/install-guide.html)** ·
+**[Project site](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/)** ·
+**[Process map](docs/img/StratIQ_Process_Flow.png)**
+
+Built by **Brad Scheller** (Harvard MBA; adjunct professor, Northeastern University) for MGT4850
+Strategic Management and for real client work. Formerly *StratOS*.
 
 ---
 
-## What it does
+## The whole process on one page
 
-Pick an industry, list the competitors, choose a base company — and Strat-IQ runs one connected
-external analysis:
+![Strat-IQ process map: Part 1 industry, Part 2 company, Part 3 strategy, deliverables, the 36-sheet two-way workbook, and the weekly GLO-BUS loop](docs/img/StratIQ_Process_Overview.png)
 
-```mermaid
-flowchart LR
-    A[Intake<br/>industry · competitors<br/>base company] --> IO[Industry Overview<br/>size · segments · history ·<br/>life cycle] --> B[Competitive Analysis<br/>10-Ks · financials · news]
-    B --> C[PESTEL Analysis<br/>macro → P&L line]
-    C --> D[Porter's Five Forces<br/>scored 1–5 · profit pool]
-    D --> E[Trending Influence Factors<br/>3–5 drivers · forces re-scored]
-    E --> F[KSFs<br/>industry scorecard +<br/>per-company view]
-    F --> G[Strategic Mapping<br/>36 vectors · whitespace ·<br/>blue ocean · ERRC]
-    G --> H[Detailed research report<br/>+ saved ledger] --> I[Executive<br/>PowerPoint deck]
+Every step reads one shared **strategy ledger** (a JSON file), adds its evidence, and hands it on, so
+the frameworks cannot contradict each other and work resumes across chats. Students make every choice;
+Strat-IQ shows the evidence, does the arithmetic and asks the questions.
+
+The detailed map shows, for each of the 44 skills, what it does, what it passes down, how it reaches
+the P&L or the valuation, and which workbook sheet it fills:
+**[StratIQ_Process_Flow.png](docs/img/StratIQ_Process_Flow.png)** (editable:
+[`.excalidraw`](docs/img/StratIQ_Process_Flow.excalidraw), open at excalidraw.com).
+
+| Part | Question it answers | Skills (and the workbook sheets they fill) |
+|---|---|---|
+| **Start** | What does management need? | Management Interview → *Management Interviews* |
+| **Part 1 · Industry** | What does this industry reward? | Industry Overview, Competitive Analysis, PESTEL, Porter's Five Forces, Trending Influence Factors, KSF Scorecard, Strategic Mapping (blue ocean, ERRC) |
+| **Part 2 · Company** | What can this company do about it? | Value Chain, Unit Economics (LTV/CAC), Resources and Capabilities, VRIO, Full Potential, Growth Barriers, SWOT + TOWS |
+| **Part 3 · Strategy** | Which strategy, is it worth it, and how will we deliver it? | Strategy Interview (positioning), Strategic Options, Decision Matrix, Pricing, Business Case (NPV, IRR), Risk Analysis (tornado, 10,000-run Monte Carlo), Expected Value (EVPI, Bayesian pilot / EVSI), Stress Test, Go-to-Market, Initiative Prioritizer (RICE), Operating Model (RAPID), Stakeholder Map, Execution Roadmap, Balanced Scorecard and Strategy Map |
+| **Deliverables** | What do we hand in or present? | Executive Deck, Case Memo Exhibits, Memo Coach, VC / Board Pitch, Strat-IQ Workbook |
+| **GLO-BUS** | How are we doing in the simulation, week by week? | GLO-BUS Capture (read-only), GLO-BUS Coach, weekly report → memo, deck, workbook |
+
+## Every week: three files for the team
+
+After each GLO-BUS round the team asks for its weekly report. Strat-IQ reads the team's own results and
+the class-wide reports (never another team's screens) and returns:
+
+| File | What is in it |
+|---|---|
+| **Weekly analysis memo** (`.docx`) | Exhibit-style sections W1-W7: scorecard against investor expectations, the competitive position your inputs actually show versus the strategy you chose, cost and margin trends, the contest with rivals, a check against the goals from your management interview, what to watch next round, and questions. Each section leaves an Impact Summary for the team to write. |
+| **Weekly executive presentation** (`.pptx`) | Nine slides with headline titles and charts, ready for the team meeting, with speaker notes that end with the question the instructor is likely to ask. |
+| **Strat-IQ Workbook** (`.xlsx`) | 36 live sheets: one per step, plus Season by Year (every decision and result, year over year), Competition by Year, KPI Charts, the Decision Planner and Findings & Questions. |
+
+It is **feedback, not answers**: no decision values and no list of moves. Every decision is the team's,
+and the team enters every decision in GLO-BUS itself.
+
+<p align="center">
+  <img src="docs/img/weekly-exec-deck.png" alt="Weekly executive presentation: title, scorecard against investor expectations, competitive position map, cost per unit versus the industry" width="72%">
+  <img src="docs/img/weekly-analysis-memo.png" alt="Weekly analysis memo: GLO-BUS weekly review, sections W1-W7 with scorecard and charts" width="26%">
+</p>
+
+### The workbook is the database (two-way)
+
+The Strat-IQ Workbook is built from the ledger, and **reads back into it**. Change a plan, a score or an
+assumption in Excel; `read_workbook.py` lists exactly what changed (sheet, cell, field, was → now) and
+writes only those cells back to the ledger. The next weekly report, memo and deck start from the team's
+latest numbers. New rows add items; cleared rows remove them; fields the workbook doesn't show are kept.
+
+```bash
+python part3/skills/stratiq-workbook/scripts/build_workbook.py --ledger strategy-ledger.json \
+    --capture globus-capture-C-Y6.json --capture globus-capture-C-Y7.json --out StratIQ_Workbook.xlsx
+python part3/skills/stratiq-workbook/scripts/read_workbook.py StratIQ_Workbook.xlsx --ledger strategy-ledger.json --dry-run
 ```
 
-Most AI strategy prompts produce five disconnected frameworks. Strat-IQ treats them as **one evidence
-base rendered five ways**, so they cannot contradict each other:
+In Claude you just say *"build our workbook"* and, after editing it, *"read our workbook back into the
+ledger."*
 
-- **Primary evidence first.** Competitors' 10-K risk factors and MD&A are mined *before* PESTEL —
-  management's own disclosure of what threatens the business, made under legal liability.
-- **Every finding hits the P&L.** Each PESTEL factor, trend and force names the P&L line it moves
-  (price, volume, mix, input costs, opex, capex, financing, levies) and in which direction.
-- **Chain rules, enforced.** No force score without evidence; no trend without at least two source
-  types; no KSF that does not trace to a force or trend; no map axis chosen freely.
-- **KSFs in two tiers.** One industry yardstick scores every competitor comparably — then each firm
-  gets a strategy-weighted view and its own critical success factors.
-- **Maps that find something.** Instead of price vs. quality (where everyone lines up on a diagonal),
-  firms are re-plotted on orthogonal vectors from a 36-vector library to expose empty space.
-- **Honest about whitespace.** Blue-ocean candidates ship stamped `capability: UNVALIDATED` — an empty
-  space may be a *Mirage Trap* that nobody wants or this firm cannot serve.
-- **Nothing is lost between chats.** Every stage writes to one JSON ledger. Swap the base company and
-  only the company layer reruns.
+## Why it is different
 
-## The skills
-
-| Display name | Skill ID | What it produces |
-|---|---|---|
-| **External Analysis** | [`stratiq-orchestrator`](skills/stratiq-orchestrator/SKILL.md) | Intro screen, guided or question mode, intake, chain checks, ledger, final report |
-| **Industry Overview** | [`stratiq-industry-overview`](skills/stratiq-industry-overview/SKILL.md) | Ten-component, business-plan-style introduction: scope, market size, growth, segments, economics, history, players, life-cycle stage, trends, roadmap |
-| **Competitive Analysis** | [`stratiq-competitor-intel`](skills/stratiq-competitor-intel/SKILL.md) | Financial benchmark (3 yrs + LTM), 10-K seeds, hiring/patent/news signals, moats |
-| **PESTEL Analysis** | [`stratiq-pestel`](skills/stratiq-pestel/SKILL.md) | 15–25 findings with impact, certainty, velocity, P&L line, transmission mechanism |
-| **Porter's Five Forces** | [`stratiq-five-forces`](skills/stratiq-five-forces/SKILL.md) | Forces scored 1–5 on evidence, attractiveness, profit-pool close |
-| **Trending Influence Factors** | [`stratiq-driving-forces`](skills/stratiq-driving-forces/SKILL.md) | 3–5 drivers from all sources, forces re-scored at the horizon |
-| **KSFs** | [`stratiq-ksf`](skills/stratiq-ksf/SKILL.md) | 6–10 KSFs, weighted scorecard ([`score_ksf.py`](skills/stratiq-ksf/scripts/score_ksf.py)), sensitivity, white space |
-| **Strategic Mapping** | [`stratiq-strategic-mapping`](skills/stratiq-strategic-mapping/SKILL.md) | Conventional and disruption maps, whitespace, blue-ocean candidates with ERRC |
-| **Executive Deck** | [`stratiq-exec-deck`](skills/stratiq-exec-deck/SKILL.md) | 15-slide executive PowerPoint: action titles, one chart per slide, sources, speaker notes |
-| **Case Memo Exhibits** | [`stratiq-case-exhibits`](skills/stratiq-case-exhibits/SKILL.md) | Builds the course Case Analysis Memo exhibits C–G and L–O in template order; Impact Summaries left for the student |
-| **Decision Criteria** | [`stratiq-decision-criteria`](skills/stratiq-decision-criteria/SKILL.md) | Exhibit L — criteria tied to the goals in the student's Exhibit B, weighted 1–5 |
-| **Decision Matrix** | [`stratiq-decision-matrix`](skills/stratiq-decision-matrix/SKILL.md) | Exhibits N and M — pros/cons, then weighted scoring ([`decision_matrix.py`](skills/stratiq-decision-matrix/scripts/decision_matrix.py)) with ties and sensitivity |
-| **Segment Value** | [`stratiq-segment-value`](skills/stratiq-segment-value/SKILL.md) | Exhibit O — segment CLV × customers ([`segment_value.py`](skills/stratiq-segment-value/scripts/segment_value.py)) |
-| **GLO-BUS Coach** | [`stratiq-globus-coach`](skills/stratiq-globus-coach/SKILL.md) | Decision support for the GLO-BUS simulation: strategy anchor, diagnosis against the five KPIs (EPS, ROE, stock price, credit rating, image rating), 3–5 testable moves with guardrails |
-
-Each stage skill also works on its own — ask for "a PESTEL of the EV industry" and only that skill runs.
-
-### Parts 2 and 3 — the company, and making the strategy work (v3.0.0)
-
-Part 1, above, reads the industry. **[Part 2](part2/README.md)** reads the company: Value Chain, Unit
-Economics, Resources and Capabilities, VRIO, Full Potential, Growth Barriers and SWOT (Case Memo
-Exhibits H-K, with J-1, K-1 and K-2). **[Part 3](part3/README.md)** makes the strategy work: options,
-business case, expected value, a stress test, go-to-market, the plan, KPIs and the pitch (optional
-Exhibits P-T). The release also adds the **GLO-BUS camera and drone industries** to
-[`industries.json`](project-data/industries.json) and a **CIR gap analysis** to the GLO-BUS Coach.
-
-Both parts install together as one upload, `stratiq-part2-3-skills.zip` in the
-[latest release](../../releases/latest), on top of Part 1. Instructions:
-**[the Parts 2 + 3 guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/part2-3-guide.html)**.
-
----
+- **One evidence base, many views.** Competitors' 10-K risk factors and MD&A are mined before PESTEL;
+  every PESTEL factor, trend and force names the P&L line it moves; no KSF without a force or trend
+  behind it; no map axis chosen freely.
+- **Honest about white space.** Blue-ocean candidates ship stamped *capability: UNVALIDATED* until VRIO
+  shows the firm can actually serve them.
+- **Real decision statistics.** NPV and break-even, a tornado and Monte Carlo on the business case,
+  expected value with maximin and the flip point, and Bayes' rule to price a pilot before betting.
+- **Students choose.** The Strategy Interview asks one question at a time and never picks; the Memo Coach
+  returns questions, never text; GLO-BUS feedback never gives decision values.
+- **Nothing is lost.** Every step writes to the ledger; swap the base company and only the company layer
+  reruns.
 
 ## Install
 
@@ -101,7 +111,8 @@ The short version:
    *Instructors:* if your admin provisions the skills org-wide, students skip steps 1–3.
 4. Create a **Project** (e.g. "Strat-IQ — EV industry") and add
    [`project-data/industries.json`](project-data/industries.json) to its **Project knowledge**.
-5. Open a chat in that Project and type **"Run Strat-IQ External Analysis."**
+5. Open a chat in that Project and type **"Run Strat-IQ."** It starts with the management interview
+   and shows the route through Parts 1-3 and the GLO-BUS loop.
 
 ### Claude Code (terminal)
 
@@ -110,7 +121,7 @@ git clone https://github.com/Brads777/Strat-IQ-Strategy-Toolkit.git
 cp -r Strat-IQ-Strategy-Toolkit/skills/stratiq-* Strat-IQ-Strategy-Toolkit/part2/skills/stratiq-* Strat-IQ-Strategy-Toolkit/part3/skills/stratiq-* ~/.claude/skills/
 cd your-analysis-folder && mkdir -p project-data
 cp /path/to/Strat-IQ-Strategy-Toolkit/project-data/industries.json project-data/
-claude    # then: "Run Strat-IQ External Analysis"
+claude    # then: "Run Strat-IQ"
 ```
 
 The KSF scoring script needs Python 3.10+ (`python skills/stratiq-ksf/scripts/score_ksf.py <csv>`).
@@ -125,43 +136,21 @@ Setup: [`openbb-mcp.md`](skills/stratiq-competitor-intel/references/openbb-mcp.m
 
 ## Using it
 
-When the orchestrator opens it shows an intro screen and asks how you want to work:
-
-| Mode | What happens |
+| Say | What happens |
 |---|---|
-| **A. Walk me through it** | All eight steps in order, with a checkpoint after each (continue / revise / stop), ending in a full report: executive summary, an **industry overview** (recent history, market size, level of competition, growth and projections, trends), attractiveness verdict, KSF scorecard, strategic maps, recommended moves, watch list — delivered as a detailed, cited Word report plus a 15-slide executive PowerPoint. |
-| **B. Ask a specific question** | Runs only the steps your question depends on, says which it ran, and answers. |
-| **C. Build my case-memo exhibits** | For the course Case Analysis Memo: enter the case facts you gathered (company, industry, competitors, interview notes) and your Exhibits A–B; it builds Exhibits C–G and L–O. You write the memo and every Impact Summary. |
-| **Resume** | Attach a saved `strategy-ledger-*.json` and continue where you stopped. |
+| *"Run Strat-IQ"* | Resumes from the saved ledger or starts with the management interview, then walks Parts 1-3 with a checkpoint after each step |
+| *"Run the PESTEL for the EV industry"* | Runs only that skill (every skill also works on its own) |
+| *"Make Xiaomi the base company"* | Keeps Part 1 (the industry) and reruns Part 2 for the new company |
+| *"Build my case-memo exhibits"* | Builds the course memo exhibits in template order; every Impact Summary is left for the student |
+| *"Weekly report for Company C, Year 7"* (captures attached) | The weekly analysis memo, executive presentation and workbook |
+| *"Check our Year 8 entries against the plan"* | Compares what the team entered in GLO-BUS with the Decision Planner and flags differences |
+| *"Read our workbook back into the ledger"* | Lists the team's edits in the workbook, then writes them to the ledger |
 
-Example prompts:
-
-- *"Run Strat-IQ External Analysis on the EV industry with BYD as the base company."*
-- *"What are the key success factors for EVs, and who is strongest?"*
-- *"How does Stellantis compare financially with BYD and Xiaomi?"*
-- *"Where is the whitespace in this industry?"*
-- *"Now make Xiaomi the base company."* — keeps the industry analysis, reruns only the company view.
-
-### Adding your own industry
-
-Choose **"Add another industry"** at intake, or add an entry to
-[`project-data/industries.json`](project-data/industries.json):
-
-```json
-{ "id": "dental-dso", "name": "Dental service organisations", "boundary": "…",
-  "geography": "US", "horizon": "2026-2029", "scenario": "Enterprise", "locked": false,
-  "competitors": [ { "name": "…", "ownership": "private", "ticker": null } ] }
-```
-
-Entries with `"locked": true` keep a fixed class competitor list that students cannot edit.
-
-### Where your work is saved
-
-Every stage writes to a single ledger (schema: [`ledger-schema.md`](skills/stratiq-orchestrator/references/ledger-schema.md)).
-In Claude.ai, download it at each checkpoint and add it to the Project's knowledge; in Claude Code it
-lives at `.strategy/ledgers/<scope>.json`.
-
----
+A complete worked example (BYD in global EVs, GLO-BUS Company C) with nine screen-recordable demos is
+in [`demo/`](demo/README.md). Industries, including the GLO-BUS **digital camera and drone** industries,
+are in [`project-data/industries.json`](project-data/industries.json); add your own with "Add another
+industry" at intake. Ledger schema:
+[`ledger-schema.md`](part2/skills/stratiq-orchestrator-final/references/ledger-schema.md).
 
 ## What is not included
 
@@ -188,3 +177,13 @@ ironyjk (`strategy-frameworks`) and Yoichi Ojima (`consultant`). Full provenance
 [`SOURCES.md`](skills/stratiq-orchestrator/references/SOURCES.md) and [`NOTICE`](NOTICE).
 
 Issues and pull requests are welcome.
+
+---
+
+<sub>Keywords: Claude skills, Claude AI strategy, AI strategic analysis, strategic management, business
+strategy toolkit, PESTEL analysis, Porter's Five Forces, key success factors, strategic group map, blue
+ocean strategy, ERRC grid, value chain analysis, unit economics, VRIO, SWOT, TOWS matrix, decision
+matrix, business case NPV, Monte Carlo simulation, tornado chart, expected value, Bayesian decision
+analysis, go-to-market, RICE prioritization, RAPID decision rights, Balanced Scorecard, strategy map,
+case analysis memo, GLO-BUS simulation, GLO-BUS strategy, business simulation coach, executive memo,
+executive presentation, Excel strategy workbook, MBA strategy course.</sub>

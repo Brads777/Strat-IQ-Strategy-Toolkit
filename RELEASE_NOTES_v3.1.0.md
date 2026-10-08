@@ -10,6 +10,29 @@ researchers and educational institutions use it free. Commercial, consulting, pr
 use needs a commercial licence: BScheller@ToolsIQ.ai (see COMMERCIAL-LICENSE.md). Earlier versions
 remain under Apache 2.0.
 
+**End to end, every week.** After each GLO-BUS round the GLO-BUS Coach produces three files: a
+**weekly analysis memo** (`.docx`, sections W1-W7 with an Impact Summary for the team in each), a
+**weekly executive presentation** (`.pptx`, nine slides, 16 pt speaker notes) and the **Strat-IQ
+Workbook** (`.xlsx`). Feedback, not recommendations: no decision values, no list of moves.
+
+**Management Interview (new skill).** The process now starts with the team's interview of management:
+central problem, decisions, required goals, management's questions, nine required questions, the team's
+own questions and five takeaways. It feeds the memo's Key Issues and Exhibit B, the decision criteria,
+the Strategy Interview and the weekly check against management's goals.
+
+**The workbook is now the team's database (two-way).** 36 sheets, one per step in process order, plus
+Season by Year, Competition by Year, KPI Charts and Findings & Questions. New `read_workbook.py` reads
+the team's edits back into the ledger: it lists every change (sheet, cell, field, was → now) and writes
+only the cells that changed. Rows added in Excel become new items; cleared rows are removed.
+
+**GLO-BUS cameras and drones** are in `industries.json`: teams can run Strat-IQ from the beginning on
+their own GLO-BUS industry.
+
+**Demo.** The BYD / Company C demo ledger now fills every sheet of Parts 1-3; the demo workbook
+recalculates with zero formula errors.
+
+**Process maps** (Excalidraw, editable) show the workbook sheet each skill fills and the weekly loop.
+
 Everything below is unchanged from v3.0.0 apart from the names.
 
 ---
