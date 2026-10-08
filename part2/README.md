@@ -48,7 +48,7 @@ against the guardrails. **The team still makes and enters every decision.**
 ## Install
 
 Step by step, with links:
-**[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**
+**[the Parts 2 + 3 guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/part2-3-guide.html)**
 (source: [`../docs/part2-3-guide.html`](../docs/part2-3-guide.html)). The short version:
 
 ### Claude.ai
@@ -56,7 +56,7 @@ Step by step, with links:
 1. In **Settings → Capabilities → Skills**, **delete every skill whose name starts with `stratos-`**
    (the old StratOS names, Parts 1-3).
 2. Download **`stratiq-toolkit-skills.zip`** from the
-   **[latest release](https://github.com/Brads777/stratos-external-analysis/releases/latest)** and unzip
+   **[latest release](https://github.com/Brads777/Strat-IQ-Strategy-Toolkit/releases/latest)** and unzip
    it once. Inside are 40 zips, one per skill (Parts 1-3). Leave those zipped.
 3. Upload all 40 zips. You should have **40 Strat-IQ skills on**.
 4. Replace `industries.json` in your Project knowledge with the new version (it adds `cameras` and
@@ -69,8 +69,8 @@ using this week switched on; the others still run from the standard framework, w
 ### Claude Code
 
 ```bash
-cp -r stratos-external-analysis/part2/skills/stratiq-* ~/.claude/skills/
-cp -r stratos-external-analysis/part3/skills/stratiq-* ~/.claude/skills/
+cp -r Strat-IQ-Strategy-Toolkit/part2/skills/stratiq-* ~/.claude/skills/
+cp -r Strat-IQ-Strategy-Toolkit/part3/skills/stratiq-* ~/.claude/skills/
 rm -r ~/.claude/skills/stratiq-orchestrator      # the final orchestrator replaces it
 ```
 

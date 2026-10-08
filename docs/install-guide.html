@@ -44,7 +44,7 @@
 <main>
   <h1>Strat-IQ External Analysis — Install &amp; Use Guide</h1>
   <p class="sub">Fourteen Claude skills that run a full industry and competitor analysis. © 2026 Brad Scheller · free for noncommercial use (PolyForm NC / CC BY-NC) · commercial licences BScheller@ToolsIQ.ai ·
-    <a href="https://github.com/Brads777/stratos-external-analysis">GitHub repo</a></p>
+    <a href="https://github.com/Brads777/Strat-IQ-Strategy-Toolkit">GitHub repo</a></p>
 
   <nav>
     <a href="#students">Students (Claude.ai)</a>
@@ -63,7 +63,7 @@
     <li><strong>Turn on code execution.</strong> Open <a href="https://claude.ai/settings/capabilities">Claude.ai → Settings → Capabilities</a>
       and switch on <strong>Code execution and file creation</strong>. Skills need it.</li>
     <li><strong>Download the skills.</strong> Go to the
-      <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest">latest release</a> and download
+      <a href="https://github.com/Brads777/Strat-IQ-Strategy-Toolkit/releases/latest">latest release</a> and download
       <code>stratiq-all-skills.zip</code>. Unzip it — inside are <strong>fourteen</strong> smaller zips, one per skill.
       Do not unzip those fourteen.</li>
     <li><strong>Upload the fourteen skills.</strong> In <a href="https://claude.ai/settings/capabilities">Settings → Capabilities</a>, find
@@ -72,7 +72,7 @@
     <li><strong>Create a Project.</strong> In the left sidebar choose <a href="https://claude.ai/projects">Projects</a> →
       <strong>New project</strong>, and name it, for example, <em>Strat-IQ — EV industry</em>.</li>
     <li><strong>Add the class data.</strong> Download
-      <a href="https://github.com/Brads777/stratos-external-analysis/blob/main/project-data/industries.json"><code>industries.json</code></a>
+      <a href="https://github.com/Brads777/Strat-IQ-Strategy-Toolkit/blob/main/project-data/industries.json"><code>industries.json</code></a>
       (use the download button) and add it to the Project's <strong>knowledge</strong>.</li>
     <li><strong>Start.</strong> Open a new chat inside the Project and type:
       <pre>Run Strat-IQ External Analysis</pre>
@@ -84,7 +84,7 @@
     <li><strong>Ask your Claude admin</strong> (for NEU, the team that manages the Canvas-linked Claude.ai) whether members can upload
       custom skills, and whether web search is enabled — Competitive Analysis needs it for financials and news.</li>
     <li><strong>Provision org-wide if you can.</strong> An admin can add the fourteen skills for everyone, so students skip steps 1–3 above.
-      Use the per-skill zips from the <a href="https://github.com/Brads777/stratos-external-analysis/releases/latest">latest release</a>.</li>
+      Use the per-skill zips from the <a href="https://github.com/Brads777/Strat-IQ-Strategy-Toolkit/releases/latest">latest release</a>.</li>
     <li><strong>Set the class list.</strong> Edit <code>project-data/industries.json</code>: keep your course industry at
       <code>"locked": true</code> so students analyse exactly the competitors you choose.</li>
     <li><strong>Dry-run it yourself</strong> in guided mode on the class industry before assigning it, and keep any worked answers out of
@@ -94,11 +94,11 @@
   <h2 id="code">3. Claude Code (terminal users)</h2>
   <ol class="steps">
     <li>Clone the repo and copy the skills:
-      <pre>git clone https://github.com/Brads777/stratos-external-analysis.git
-cp -r stratos-external-analysis/skills/stratiq-* ~/.claude/skills/</pre></li>
+      <pre>git clone https://github.com/Brads777/Strat-IQ-Strategy-Toolkit.git
+cp -r Strat-IQ-Strategy-Toolkit/skills/stratiq-* ~/.claude/skills/</pre></li>
     <li>In the folder where you want to work, copy the project data:
       <pre>mkdir -p project-data
-cp /path/to/stratos-external-analysis/project-data/industries.json project-data/</pre></li>
+cp /path/to/Strat-IQ-Strategy-Toolkit/project-data/industries.json project-data/</pre></li>
     <li>Start <code>claude</code> and type <code>Run Strat-IQ External Analysis</code>. The ledger is saved to
       <code>.strategy/ledgers/</code>.</li>
     <li>The KSF scorer needs Python 3.10 or newer:
@@ -114,7 +114,7 @@ openbb-mcp --transport streamable-http --default-categories admin</pre></li>
     <li>Optionally add provider keys to <code>~/.openbb_platform/user_settings.json</code> under <code>credentials</code>
       (for example an <a href="https://site.financialmodelingprep.com/">FMP</a> key). Free providers work without keys.</li>
     <li>Connect the server to Claude as an MCP server. Details and tool list:
-      <a href="https://github.com/Brads777/stratos-external-analysis/blob/main/skills/stratiq-competitor-intel/references/openbb-mcp.md">openbb-mcp.md</a>
+      <a href="https://github.com/Brads777/Strat-IQ-Strategy-Toolkit/blob/main/skills/stratiq-competitor-intel/references/openbb-mcp.md">openbb-mcp.md</a>
       · <a href="https://github.com/OpenBB-finance/OpenBB">OpenBB on GitHub</a> (AGPLv3).</li>
   </ol>
 

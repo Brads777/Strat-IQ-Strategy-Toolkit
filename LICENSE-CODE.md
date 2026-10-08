@@ -2,7 +2,7 @@
 
 Applies to the software in this repository (scripts and build tools). See LICENSE for which files this covers.
 
-Required Notice: Copyright (c) 2026 G. Bradley Scheller (https://github.com/Brads777/stratos-external-analysis)
+Required Notice: Copyright (c) 2026 G. Bradley Scheller (https://github.com/Brads777/Strat-IQ-Strategy-Toolkit)
 
 Required Notice: Commercial licences: BScheller@ToolsIQ.ai
 

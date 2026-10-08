@@ -93,4 +93,4 @@ GLO-BUS tabs. Scripts and sheets agree (unit economics, full potential, business
 - `StratIQ_v3_Process_Walkthrough.pptx` — the process video deck, with nine live-demo slides
 - `demo/` (in the repo) — demo kit: sample EV ledger, GLO-BUS files, a weak memo draft, the demo workbook and the run sheet
 
-Guide: https://brads777.github.io/stratos-external-analysis/part2-3-guide.html
+Guide: https://brads777.github.io/Strat-IQ-Strategy-Toolkit/part2-3-guide.html

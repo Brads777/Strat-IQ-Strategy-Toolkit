@@ -7,7 +7,7 @@ pitches it.
 
 Part 3 ships **together with Part 2** in release v3.0.0 (`stratiq-part2-3-skills.zip`). Install
 instructions: [`../part2/README.md`](../part2/README.md#install) and
-**[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**.
+**[the Parts 2 + 3 guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/part2-3-guide.html)**.
 
 ## The seventeen skills
 

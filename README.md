@@ -1,10 +1,12 @@
 # Strat-IQ Toolkit
 
-**A Claude skill pack that analyses an industry and its competitors the way a strategy consultant
-does — from annual reports to blue-ocean whitespace — with every claim traced to evidence.**
+**A Claude skill pack that takes a team from industry evidence to a chosen, tested and tracked strategy —
+the way a strategy consultant works, with every claim traced to evidence.** Part 1 reads the industry,
+Part 2 the company, Part 3 makes the strategy work; GLO-BUS tools, an Excel workbook and weekly reviews
+run alongside. 40 skills.
 
 [![License: PolyForm Noncommercial + CC BY-NC](https://img.shields.io/badge/License-Noncommercial-orange.svg)](LICENSE)
-![Skills: 14](https://img.shields.io/badge/skills-14-brightgreen)
+![Skills: 40](https://img.shields.io/badge/skills-40-brightgreen)
 ![Works in: Claude.ai · Claude Code · Cowork](https://img.shields.io/badge/works%20in-Claude.ai%20%C2%B7%20Claude%20Code%20%C2%B7%20Cowork-orange)
 
 Built by **Brad Scheller** for MGT4850 Strategic Management (Northeastern University, Fall 2026) and
@@ -78,13 +80,13 @@ Exhibits P-T). The release also adds the **GLO-BUS camera and drone industries**
 
 Both parts install together as one upload, `stratiq-part2-3-skills.zip` in the
 [latest release](../../releases/latest), on top of Part 1. Instructions:
-**[the Parts 2 + 3 guide](https://brads777.github.io/stratos-external-analysis/part2-3-guide.html)**.
+**[the Parts 2 + 3 guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/part2-3-guide.html)**.
 
 ---
 
 ## Install
 
-A full step-by-step guide with links is in **[the install guide](https://brads777.github.io/stratos-external-analysis/install-guide.html)** (source: [docs/install-guide.html](docs/install-guide.html)).
+A full step-by-step guide with links is in **[the install guide](https://brads777.github.io/Strat-IQ-Strategy-Toolkit/install-guide.html)** (source: [docs/install-guide.html](docs/install-guide.html)).
 The short version:
 
 ### Claude.ai (web — no install; what MGT4850 students use)
@@ -104,10 +106,10 @@ The short version:
 ### Claude Code (terminal)
 
 ```bash
-git clone https://github.com/Brads777/stratos-external-analysis.git
-cp -r stratos-external-analysis/skills/stratiq-* stratos-external-analysis/part2/skills/stratiq-* stratos-external-analysis/part3/skills/stratiq-* ~/.claude/skills/
+git clone https://github.com/Brads777/Strat-IQ-Strategy-Toolkit.git
+cp -r Strat-IQ-Strategy-Toolkit/skills/stratiq-* Strat-IQ-Strategy-Toolkit/part2/skills/stratiq-* Strat-IQ-Strategy-Toolkit/part3/skills/stratiq-* ~/.claude/skills/
 cd your-analysis-folder && mkdir -p project-data
-cp /path/to/stratos-external-analysis/project-data/industries.json project-data/
+cp /path/to/Strat-IQ-Strategy-Toolkit/project-data/industries.json project-data/
 claude    # then: "Run Strat-IQ External Analysis"
 ```
 

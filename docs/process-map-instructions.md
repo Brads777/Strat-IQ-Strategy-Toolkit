@@ -50,6 +50,6 @@ first.
 - Your edits stay in your own browser and on your own computer; nothing is shared unless you share the file.
 
 The diagrams describe Strat-IQ Toolkit v3.1.0. The install guide and the skills are on the Strat-IQ GitHub page
-(github.com/Brads777/stratos-external-analysis), under Releases.
+(github.com/Brads777/Strat-IQ-Strategy-Toolkit), under Releases.
 
 © 2026 G. Bradley Scheller · Strat-IQ Strategy Lab
